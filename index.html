@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PsychoBook — Plateforme de Prise de Rendez-vous Médicaux en Ligne</title>
+<meta name="description" content="PsychoBook : La solution SaaS de gestion de rendez-vous pour tous les professionnels de santé. Agenda en ligne, synchronisation Google, rappels automatiques. Édité par Psycholab."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+/* ══ RESET & VARS ══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0D1117;
+  --ink-2:#1C2333;
+  --ink-3:#2D3748;
+  --slate:#4A5568;
+  --muted:#718096;
+  --ghost:#A0AEC0;
+  --line:#E2E8F0;
+  --surface:#F7F8FC;
+  --white:#FFFFFF;
+  --sapphire:#1B4FD8;
+  --sapphire-d:#1238A8;
+  --sapphire-l:#EEF2FF;
+  --sapphire-m:#C7D2FE;
+  --emerald:#0D9488;
+  --emerald-d:#0F766E;
+  --emerald-l:#CCFBF1;
+  --amber:#D97706;
+  --amber-l:#FEF3C7;
+  --rose:#E11D48;
+  --rose-l:#FFE4E6;
+  --violet:#7C3AED;
+  --violet-l:#EDE9FE;
+  --r-sm:8px;--r-md:12px;--r-lg:18px;--r-xl:24px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 2px 8px rgba(0,0,0,.04);
+  --shadow-lg:0 20px 48px rgba(0,0,0,.12),0 8px 24px rgba(0,0,0,.06);
+  --shadow-xl:0 32px 80px rgba(0,0,0,.16);
+  --anim:.22s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--ink);line-height:1.6;overflow-x:hidden}
+button{font-family:'DM Sans',sans-serif;cursor:pointer}
+input,select,textarea{font-family:'DM Sans',sans-serif}
+a{text-decoration:none;color:inherit}
+
+/* ══ UTILITIES ══ */
+.hide{display:none!important}
+.view{display:none}
+.view.on{display:block}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--sapphire-m);border-radius:99px}
+
+/* ══ TOAST ══ */
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:.65rem 1.3rem;border-radius:99px;font-size:.82rem;font-weight:500;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg)}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ══════════════════════════════════
+   LANDING PAGE
+══════════════════════════════════ */
+#v-landing{background:var(--white)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(226,232,240,.6)}
+.nav-logo{display:flex;align-items:center;gap:.55rem}
+.nav-logo-mark{width:32px;height:32px;background:linear-gradient(135deg,var(--sapphire),var(--emerald));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;color:#fff;letter-spacing:-.02em;font-family:'Playfair Display',serif}
+.nav-logo-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink)}
+.nav-logo-text span{color:var(--sapphire)}
+.nav-cta{background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-sm);padding:.55rem 1.1rem;font-size:.82rem;font-weight:600;transition:all var(--anim)}
+.nav-cta:hover{background:var(--sapphire-d);transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,79,216,.35)}
+.nav-link{font-size:.82rem;color:var(--slate);font-weight:500;padding:.4rem .6rem;border-radius:6px;transition:color var(--anim)}
+.nav-link:hover{color:var(--sapphire)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 1.5rem 3rem;position:relative;overflow:hidden;background:linear-gradient(160deg,#F0F4FF 0%,#FAFBFF 40%,#F0FDFA 100%)}
+.hero::before{content:'';position:absolute;top:-20%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(27,79,216,.08) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-10%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(13,148,136,.07) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--sapphire-l);border:1px solid var(--sapphire-m);border-radius:99px;padding:.3rem .85rem;font-size:.72rem;font-weight:600;color:var(--sapphire);margin-bottom:1.1rem}
+.hero-badge::before{content:'●';font-size:.5rem;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,7vw,3.4rem);font-weight:900;line-height:1.12;color:var(--ink);margin-bottom:.9rem;max-width:620px}
+.hero-title em{font-style:italic;color:var(--sapphire)}
+.hero-sub{font-size:1rem;color:var(--slate);line-height:1.7;max-width:480px;margin-bottom:2rem;font-weight:300}
+.hero-sub strong{color:var(--ink);font-weight:600}
+.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn-primary{background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-md);padding:.82rem 1.6rem;font-size:.9rem;font-weight:600;transition:all var(--anim);box-shadow:0 4px 20px rgba(27,79,216,.3)}
+.btn-primary:hover{background:var(--sapphire-d);transform:translateY(-2px);box-shadow:0 8px 28px rgba(27,79,216,.4)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:var(--r-md);padding:.8rem 1.5rem;font-size:.9rem;font-weight:500;transition:all var(--anim)}
+.btn-ghost:hover{border-color:var(--sapphire);color:var(--sapphire);background:var(--sapphire-l)}
+.hero-trust{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--muted)}
+.hero-trust-dot{width:6px;height:6px;border-radius:50%;background:var(--emerald)}
+/* Hero mockup cards */
+.hero-visual{position:relative;margin-top:2.5rem}
+.mockup-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:1.1rem;box-shadow:var(--shadow-lg);margin-bottom:.75rem;animation:floatUp .6s ease both}
+.mockup-card:nth-child(2){animation-delay:.1s}
+.mockup-card:nth-child(3){animation-delay:.2s}
+@keyframes floatUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.mc-hdr{display:flex;align-items:center;gap:.65rem;margin-bottom:.75rem}
+.mc-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.mc-name{font-size:.82rem;font-weight:700;color:var(--ink)}
+.mc-spec{font-size:.68rem;color:var(--muted)}
+.mc-slots{display:flex;gap:.35rem;flex-wrap:wrap}
+.mc-slot{background:var(--sapphire-l);color:var(--sapphire);border:1px solid var(--sapphire-m);border-radius:6px;padding:.28rem .6rem;font-size:.7rem;font-weight:600}
+.mc-slot.taken{background:var(--surface);color:var(--ghost);border-color:var(--line);text-decoration:line-through}
+.mc-slot.green{background:var(--emerald-l);color:var(--emerald-d);border-color:rgba(13,148,136,.25)}
+/* Notif pill */
+.notif-pill{background:var(--ink);color:#fff;border-radius:99px;padding:.5rem .9rem;font-size:.72rem;font-weight:500;display:flex;align-items:center;gap:.4rem;box-shadow:var(--shadow-md);width:fit-content}
+.notif-pill .np-ico{font-size:.85rem}
+
+/* FEATURES SECTION */
+.section{padding:4rem 1.5rem;max-width:900px;margin:0 auto}
+.sec-eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--sapphire);margin-bottom:.6rem}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,2.2rem);font-weight:700;color:var(--ink);margin-bottom:.75rem;line-height:1.2}
+.sec-sub{font-size:.9rem;color:var(--slate);line-height:1.7;max-width:520px;font-weight:300}
+.features-grid{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+.feat-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:1.3rem;display:flex;gap:1rem;align-items:flex-start;transition:all var(--anim);box-shadow:var(--shadow-sm)}
+.feat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--sapphire-m)}
+.feat-ico{width:44px;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.feat-title{font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:.25rem}
+.feat-desc{font-size:.78rem;color:var(--slate);line-height:1.6}
+.feat-tag{display:inline-block;font-size:.62rem;font-weight:700;padding:.18rem .5rem;border-radius:99px;margin-top:.4rem}
+
+/* PRICING */
+.pricing-section{background:linear-gradient(160deg,#0D1117 0%,#1C2333 100%);padding:4rem 1.5rem;color:#fff;position:relative;overflow:hidden}
+.pricing-section::before{content:'';position:absolute;top:-30%;right:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(27,79,216,.15) 0%,transparent 60%)}
+.pricing-grid{display:flex;flex-direction:column;gap:1rem;margin-top:2rem;max-width:900px;margin-left:auto;margin-right:auto}
+.price-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-xl);padding:1.5rem;position:relative;transition:all var(--anim)}
+.price-card.featured{background:var(--sapphire);border-color:transparent;box-shadow:0 8px 40px rgba(27,79,216,.5)}
+.price-card.featured::before{content:'✦ RECOMMANDÉ';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#fff;color:var(--sapphire);font-size:.6rem;font-weight:800;letter-spacing:.1em;padding:.2rem .8rem;border-radius:99px}
+.price-name{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.7;margin-bottom:.4rem}
+.price-amount{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;line-height:1;margin-bottom:.2rem}
+.price-amount span{font-size:.9rem;font-weight:400;opacity:.7}
+.price-period{font-size:.72rem;opacity:.6;margin-bottom:1.1rem}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.3rem}
+.price-features li{font-size:.78rem;opacity:.88;display:flex;align-items:flex-start;gap:.5rem;line-height:1.45}
+.price-features li::before{content:'✓';font-weight:700;flex-shrink:0;margin-top:.05rem}
+.price-btn{width:100%;border:none;border-radius:var(--r-md);padding:.78rem;font-size:.88rem;font-weight:700;transition:all var(--anim)}
+.price-btn.light{background:#fff;color:var(--sapphire)}
+.price-btn.light:hover{background:var(--sapphire-l)}
+.price-btn.outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+.price-btn.outline:hover{background:rgba(255,255,255,.1)}
+
+/* HOW IT WORKS */
+.how-section{padding:3.5rem 1.5rem;max-width:700px;margin:0 auto;text-align:center}
+.how-steps{display:flex;flex-direction:column;gap:0;margin-top:2rem;position:relative}
+.how-step{display:flex;align-items:flex-start;gap:1rem;text-align:left;padding-bottom:1.5rem;position:relative}
+.how-step:not(:last-child)::after{content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--sapphire-m),transparent)}
+.how-num{width:40px;height:40px;border-radius:50%;background:var(--sapphire);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;flex-shrink:0}
+.how-content h4{font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:.2rem}
+.how-content p{font-size:.78rem;color:var(--slate);line-height:1.6}
+
+/* SPECIALTIES */
+.spec-section{background:var(--surface);padding:3rem 1.5rem}
+.spec-grid{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:1.5rem;max-width:700px;margin-left:auto;margin-right:auto}
+.spec-pill{background:#fff;border:1px solid var(--line);border-radius:99px;padding:.42rem 1rem;font-size:.78rem;font-weight:500;color:var(--slate);transition:all var(--anim);display:flex;align-items:center;gap:.35rem}
+.spec-pill:hover{border-color:var(--sapphire);color:var(--sapphire);background:var(--sapphire-l)}
+
+/* FOOTER */
+.footer{background:var(--ink-2);color:rgba(255,255,255,.55);padding:2.5rem 1.5rem;text-align:center}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.35rem}
+.footer-sub{font-size:.72rem;margin-bottom:1.2rem;line-height:1.6}
+.footer-links{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;font-size:.72rem}
+.footer-links a{color:rgba(255,255,255,.45);transition:color var(--anim)}
+.footer-links a:hover{color:#fff}
+.footer-powered{margin-top:1.2rem;font-size:.68rem;color:rgba(255,255,255,.3)}
+
+/* ══════════════════════════════════
+   DASHBOARD PRO
+══════════════════════════════════ */
+#v-pro{background:var(--surface);min-height:100vh}
+.pro-layout{display:flex;flex-direction:column;min-height:100vh}
+
+/* Top bar */
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm)}
+.topbar-left{display:flex;align-items:center;gap:.75rem}
+.tb-logo{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--ink)}
+.tb-logo span{color:var(--sapphire)}
+.tb-sep{width:1px;height:18px;background:var(--line)}
+.tb-pro-name{font-size:.78rem;font-weight:600;color:var(--slate)}
+.tb-spec{font-size:.68rem;color:var(--muted)}
+.tb-right{display:flex;align-items:center;gap:.6rem}
+.tb-notif-dot{width:8px;height:8px;background:var(--rose);border-radius:50%;flex-shrink:0}
+.tb-btn{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.42rem .75rem;font-size:.75rem;font-weight:500;color:var(--slate);transition:all var(--anim)}
+.tb-btn:hover{border-color:var(--sapphire);color:var(--sapphire)}
+
+/* Tab nav */
+.tab-nav{background:#fff;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;gap:0;padding:0 1rem;-webkit-overflow-scrolling:touch}
+.tab-nav::-webkit-scrollbar{height:0}
+.tnav-btn{padding:.85rem .9rem;font-size:.76rem;font-weight:500;color:var(--muted);border:none;background:transparent;border-bottom:2.5px solid transparent;white-space:nowrap;transition:all var(--anim);display:flex;align-items:center;gap:.35rem}
+.tnav-btn.on{color:var(--sapphire);border-bottom-color:var(--sapphire);font-weight:600}
+.tnav-btn:hover:not(.on){color:var(--slate)}
+.tnav-badge{background:var(--rose);color:#fff;border-radius:99px;padding:.08rem .35rem;font-size:.58rem;font-weight:700}
+
+/* Content area */
+.pro-content{flex:1;padding:1.25rem;max-width:860px;margin:0 auto;width:100%}
+.dash-panel{display:none}
+.dash-panel.on{display:block}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.25rem}
+.stat-box{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:1rem 1.1rem;box-shadow:var(--shadow-sm)}
+.stat-val{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--ink);line-height:1}
+.stat-lbl{font-size:.72rem;color:var(--muted);margin-top:.2rem}
+.stat-delta{font-size:.68rem;font-weight:600;margin-top:.25rem}
+.stat-delta.up{color:var(--emerald)}
+.stat-delta.neu{color:var(--muted)}
+
+/* Cards */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:1.1rem;margin-bottom:.85rem;box-shadow:var(--shadow-sm)}
+.card-title{font-size:.82rem;font-weight:700;color:var(--ink);margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between}
+.card-title span{font-size:.68rem;font-weight:400;color:var(--muted)}
+
+/* RDV item */
+.rdv-item{border:1px solid var(--line);border-radius:var(--r-md);padding:.85rem;margin-bottom:.6rem;border-left:3px solid var(--sapphire);background:#fff;transition:all var(--anim)}
+.rdv-item:hover{box-shadow:var(--shadow-sm)}
+.rdv-item.pending{border-left-color:var(--amber)}
+.rdv-item.cancelled{border-left-color:var(--rose);opacity:.7}
+.rdv-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.5rem}
+.rdv-pat{font-size:.84rem;font-weight:700;color:var(--ink)}
+.rdv-meta{font-size:.7rem;color:var(--muted);margin-top:.08rem}
+.rdv-badge{font-size:.62rem;font-weight:700;padding:.2rem .55rem;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.rdv-badge.confirmed{background:var(--emerald-l);color:var(--emerald-d)}
+.rdv-badge.pending{background:var(--amber-l);color:var(--amber)}
+.rdv-badge.cancelled{background:var(--rose-l);color:var(--rose)}
+.rdv-actions{display:flex;gap:.4rem;flex-wrap:wrap}
+.rdv-act-btn{font-size:.68rem;font-weight:600;padding:.28rem .65rem;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--slate);transition:all var(--anim)}
+.rdv-act-btn:hover{background:var(--sapphire-l);color:var(--sapphire);border-color:var(--sapphire-m)}
+.rdv-act-btn.danger:hover{background:var(--rose-l);color:var(--rose);border-color:rgba(225,29,72,.2)}
+
+/* Calendar grid */
+.cal-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:1rem;box-shadow:var(--shadow-sm);margin-bottom:.85rem}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.cal-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--ink)}
+.cal-nav-btn{width:30px;height:30px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);font-size:.75rem;color:var(--slate);transition:all var(--anim);display:flex;align-items:center;justify-content:center}
+.cal-nav-btn:hover{border-color:var(--sapphire);color:var(--sapphire)}
+.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:3px}
+.cal-dow div{text-align:center;font-size:.6rem;font-weight:700;color:var(--ghost);padding:.25rem 0}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-day{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.72rem;cursor:pointer;transition:all var(--anim);position:relative;gap:2px}
+.cal-day:hover:not(.empty):not(.past){background:var(--sapphire-l)}
+.cal-day.today{background:var(--sapphire);color:#fff;font-weight:700}
+.cal-day.has-rdv{font-weight:700;color:var(--ink)}
+.cal-day.selected:not(.today){background:var(--sapphire-l);color:var(--sapphire);font-weight:700;border:1.5px solid var(--sapphire-m)}
+.cal-day.past{color:var(--ghost);cursor:default}
+.cal-day.empty{cursor:default}
+.cal-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+
+/* Booking link card */
+.booking-link-card{background:linear-gradient(135deg,#EEF2FF,#F0FDF9);border:1.5px solid var(--sapphire-m);border-radius:var(--r-lg);padding:1.1rem;margin-bottom:.85rem}
+.blc-title{font-size:.82rem;font-weight:700;color:var(--ink);margin-bottom:.25rem}
+.blc-sub{font-size:.72rem;color:var(--slate);margin-bottom:.7rem}
+.blc-url{background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:.5rem .75rem;font-size:.7rem;font-family:'DM Mono',monospace;color:var(--sapphire);display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.6rem;word-break:break-all}
+.blc-actions{display:flex;gap:.5rem}
+.blc-btn{flex:1;border:none;border-radius:var(--r-sm);padding:.55rem;font-size:.75rem;font-weight:600;transition:all var(--anim)}
+.blc-btn.primary{background:var(--sapphire);color:#fff}
+.blc-btn.primary:hover{background:var(--sapphire-d)}
+.blc-btn.secondary{background:#fff;color:var(--slate);border:1px solid var(--line)}
+.blc-btn.secondary:hover{border-color:var(--sapphire);color:var(--sapphire)}
+
+/* Google sync bar */
+.gcal-bar{background:linear-gradient(135deg,#1A73E8,#1557C0);border-radius:var(--r-lg);padding:1rem;margin-bottom:.85rem;color:#fff;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.gcal-ico{width:38px;height:38px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.gcal-info{flex:1;min-width:0}
+.gcal-title{font-size:.84rem;font-weight:700}
+.gcal-status{font-size:.7rem;opacity:.8;margin-top:.05rem}
+.gcal-btn{background:#fff;color:#1A73E8;border:none;border-radius:var(--r-sm);padding:.5rem .9rem;font-size:.75rem;font-weight:700;transition:all var(--anim);white-space:nowrap}
+.gcal-btn:hover{background:rgba(255,255,255,.88)}
+
+/* Reminders display */
+.reminder-list{display:flex;flex-direction:column;gap:.5rem}
+.rem-item{display:flex;align-items:center;gap:.75rem;padding:.7rem .9rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md)}
+.rem-ico{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;flex-shrink:0}
+.rem-label{font-size:.78rem;font-weight:600;color:var(--ink)}
+.rem-desc{font-size:.68rem;color:var(--muted)}
+.rem-status{margin-left:auto;font-size:.62rem;font-weight:700;padding:.18rem .5rem;border-radius:99px}
+.rem-status.on{background:var(--emerald-l);color:var(--emerald-d)}
+
+/* Filter tabs */
+.filter-tabs{display:flex;gap:.4rem;margin-bottom:.9rem;flex-wrap:wrap}
+.ft{border:1px solid var(--line);background:#fff;border-radius:99px;padding:.35rem .85rem;font-size:.74rem;font-weight:500;color:var(--muted);transition:all var(--anim)}
+.ft.on{background:var(--sapphire);border-color:var(--sapphire);color:#fff;font-weight:600}
+.ft:hover:not(.on){border-color:var(--sapphire-m);color:var(--sapphire)}
+
+/* Form inputs */
+.fgroup{margin-bottom:.7rem}
+.fgroup label{display:block;font-size:.74rem;font-weight:600;color:var(--ink-3);margin-bottom:.28rem}
+.finput{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.6rem .85rem;font-size:.86rem;background:#fff;outline:none;transition:border-color var(--anim);color:var(--ink)}
+.finput:focus{border-color:var(--sapphire)}
+.fselect{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.6rem .85rem;font-size:.86rem;background:#fff;outline:none;transition:border-color var(--anim);color:var(--ink)}
+.fselect:focus{border-color:var(--sapphire)}
+.farea{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.6rem .85rem;font-size:.86rem;background:#fff;outline:none;transition:border-color var(--anim);resize:vertical;min-height:80px;line-height:1.5;color:var(--ink)}
+.farea:focus{border-color:var(--sapphire)}
+.submit-btn{width:100%;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-md);padding:.78rem;font-size:.88rem;font-weight:700;transition:all var(--anim);box-shadow:0 4px 16px rgba(27,79,216,.25)}
+.submit-btn:hover{background:var(--sapphire-d);transform:translateY(-1px)}
+
+/* Availability toggle grid */
+.avail-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:.9rem}
+.day-toggle{border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.5rem .2rem;text-align:center;cursor:pointer;transition:all var(--anim);font-size:.68rem;font-weight:600;color:var(--muted);background:#fff}
+.day-toggle.on{background:var(--sapphire);border-color:var(--sapphire);color:#fff}
+.day-toggle:hover:not(.on){border-color:var(--sapphire-m);color:var(--sapphire)}
+.slot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;margin-bottom:.85rem}
+.slot-toggle{border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.42rem .3rem;text-align:center;cursor:pointer;font-size:.72rem;font-weight:600;color:var(--muted);background:#fff;transition:all var(--anim)}
+.slot-toggle.on{background:var(--sapphire-l);border-color:var(--sapphire-m);color:var(--sapphire)}
+
+/* ══════════════════════════════════
+   BOOKING MODAL (vue patient)
+══════════════════════════════════ */
+#modal-booking{display:none;position:fixed;inset:0;z-index:1000;background:rgba(13,17,23,.65);backdrop-filter:blur(6px);overflow-y:auto;padding:1rem}
+.booking-wrap{background:#fff;border-radius:var(--r-xl);max-width:500px;margin:0 auto;overflow:hidden;box-shadow:var(--shadow-xl);animation:slideUp .35s cubic-bezier(.34,1.36,.64,1)}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.bk-header{background:linear-gradient(135deg,var(--sapphire) 0%,var(--sapphire-d) 50%,#0D2A7A 100%);padding:1.4rem;color:#fff;position:relative}
+.bk-close{position:absolute;top:.9rem;right:.9rem;width:30px;height:30px;background:rgba(255,255,255,.15);border:none;border-radius:50%;color:#fff;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background var(--anim)}
+.bk-close:hover{background:rgba(255,255,255,.28)}
+.bk-pro-row{display:flex;align-items:center;gap:.85rem;margin-bottom:1rem}
+.bk-av{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;border:2px solid rgba(255,255,255,.3)}
+.bk-pro-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700}
+.bk-pro-spec{font-size:.72rem;opacity:.8;margin-top:.1rem}
+.bk-steps{display:flex;align-items:center;background:rgba(255,255,255,.12);border-radius:99px;padding:.4rem .8rem;gap:0}
+.bk-step-lbl{flex:1;text-align:center;font-size:.62rem;font-weight:600;opacity:.55;transition:opacity var(--anim)}
+.bk-step-lbl.act{opacity:1}
+.bk-step-div{color:rgba(255,255,255,.3);font-size:.7rem}
+/* Booking body */
+.bk-body{padding:1.25rem}
+.bk-step{display:none}
+.bk-step.on{display:block}
+/* Mini cal in booking */
+.bk-cal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.85rem;margin-bottom:1rem}
+.bk-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.bk-cal-title{font-size:.82rem;font-weight:700;color:var(--ink)}
+.bk-cal-nav{width:26px;height:26px;border:1px solid var(--line);border-radius:6px;background:#fff;font-size:.75rem;cursor:pointer;transition:all var(--anim);display:flex;align-items:center;justify-content:center}
+.bk-cal-nav:hover{border-color:var(--sapphire);color:var(--sapphire)}
+.bk-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:3px}
+.bk-dow div{text-align:center;font-size:.58rem;font-weight:700;color:var(--ghost)}
+.bk-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.bk-day{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;cursor:pointer;transition:all var(--anim);font-weight:500}
+.bk-day:hover:not(.dis):not(.bk-today){background:var(--sapphire-l);color:var(--sapphire)}
+.bk-day.bk-today{background:var(--sapphire);color:#fff;font-weight:700}
+.bk-day.bk-sel:not(.bk-today){background:var(--sapphire-l);color:var(--sapphire);font-weight:700;border:1.5px solid var(--sapphire-m)}
+.bk-day.dis{color:var(--line);cursor:default}
+/* Slots */
+.bk-slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-bottom:1rem}
+.bk-slot{border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.48rem;text-align:center;font-size:.76rem;font-weight:600;color:var(--slate);cursor:pointer;background:#fff;transition:all var(--anim)}
+.bk-slot:hover{border-color:var(--sapphire);color:var(--sapphire);background:var(--sapphire-l)}
+.bk-slot.sel{background:var(--sapphire);border-color:var(--sapphire);color:#fff}
+/* Step 3 success */
+.bk-success{text-align:center;padding:1rem 0}
+.bk-success-ico{font-size:3.5rem;margin-bottom:.7rem;animation:popIn .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.bk-success-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
+.bk-success-sub{font-size:.8rem;color:var(--slate);line-height:1.6;margin-bottom:1rem}
+.bk-reminders{background:linear-gradient(135deg,#EEF2FF,#F0FDF9);border:1px solid var(--sapphire-m);border-radius:var(--r-md);padding:.9rem;margin-bottom:1rem;text-align:left}
+.bk-rem-title{font-size:.74rem;font-weight:700;color:var(--sapphire);margin-bottom:.45rem}
+.bk-rem-item{font-size:.72rem;color:var(--slate);display:flex;align-items:center;gap:.4rem;margin-bottom:.25rem}
+
+/* ══ AUTH MODAL ══ */
+#modal-auth{display:none;position:fixed;inset:0;z-index:900;background:rgba(13,17,23,.7);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1rem}
+#modal-auth.hide{display:none!important}
+.auth-card{background:#fff;border-radius:var(--r-xl);padding:2rem 1.5rem;max-width:420px;width:100%;box-shadow:var(--shadow-xl);animation:slideUp .3s ease}
+.auth-logo{text-align:center;margin-bottom:1rem}
+.auth-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--ink);text-align:center;margin-bottom:.3rem}
+.auth-sub{font-size:.78rem;color:var(--muted);text-align:center;margin-bottom:1.3rem;line-height:1.55}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.2rem}
+.auth-tab{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.68rem;font-size:.8rem;font-weight:500;color:var(--muted);text-align:center;transition:all var(--anim)}
+.auth-tab.on{background:var(--sapphire);border-color:var(--sapphire);color:#fff;font-weight:600}
+.demo-btn{width:100%;background:var(--surface);color:var(--slate);border:1.5px dashed var(--line);border-radius:var(--r-md);padding:.72rem;font-size:.82rem;font-weight:500;margin-top:.6rem;transition:all var(--anim)}
+.demo-btn:hover{border-color:var(--sapphire);color:var(--sapphire);background:var(--sapphire-l)}
+
+/* Empty states */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--muted)}
+.empty-ico{font-size:2.2rem;margin-bottom:.5rem}
+.empty-title{font-size:.88rem;font-weight:600;color:var(--slate);margin-bottom:.25rem}
+.empty-sub{font-size:.76rem;line-height:1.55}
+
+/* Info box */
+.info-box{background:var(--sapphire-l);border:1px solid var(--sapphire-m);border-radius:var(--r-sm);padding:.7rem .9rem;font-size:.76rem;color:var(--sapphire-d,var(--sapphire));line-height:1.55;margin-bottom:.85rem}
+
+/* Section label */
+.sec-lbl{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.6rem}
+
+/* Profile availability section */
+.profile-section{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:1.1rem;margin-bottom:.85rem}
+.profile-section-title{font-size:.82rem;font-weight:700;color:var(--ink);margin-bottom:.85rem;padding-bottom:.6rem;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- ════════ AUTH MODAL ════════ -->
+<div id="modal-auth">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--sapphire),var(--emerald));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:#fff;margin:0 auto .5rem">P</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink)">Psycho<span style="color:var(--sapphire)">Book</span></div>
+    </div>
+    <h2 class="auth-title">Accéder à votre espace</h2>
+    <p class="auth-sub">La plateforme de prise de rendez-vous médicaux <br/>pour professionnels de santé</p>
+    <div class="auth-tabs">
+      <button class="auth-tab on" onclick="switchAuthTab('login',this)">Se connecter</button>
+      <button class="auth-tab" onclick="switchAuthTab('register',this)">Créer un compte</button>
+    </div>
+    <!-- LOGIN -->
+    <div id="auth-login">
+      <div class="fgroup"><label>Email professionnel</label><input class="finput" id="login-email" type="email" placeholder="dr.martin@cabinet.fr"/></div>
+      <div class="fgroup"><label>Mot de passe</label><input class="finput" id="login-pwd" type="password" placeholder="••••••••"/></div>
+      <button class="submit-btn" onclick="doLogin()" style="margin-top:.3rem">Se connecter →</button>
+      <button class="demo-btn" onclick="doDemo()">🎯 Accès démo (sans inscription)</button>
+    </div>
+    <!-- REGISTER -->
+    <div id="auth-register" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+        <div class="fgroup"><label>Prénom</label><input class="finput" id="reg-fn" placeholder="Marie"/></div>
+        <div class="fgroup"><label>Nom</label><input class="finput" id="reg-ln" placeholder="Martin"/></div>
+      </div>
+      <div class="fgroup"><label>Email</label><input class="finput" id="reg-email" type="email" placeholder="dr.martin@cabinet.fr"/></div>
+      <div class="fgroup"><label>Spécialité</label>
+        <select class="fselect" id="reg-spec">
+          <option value="">— Choisir —</option>
+          <option>Psychologue clinicien</option><option>Psychiatre</option><option>Médecin généraliste</option>
+          <option>Pédiatre</option><option>Cardiologue</option><option>Dermatologue</option>
+          <option>Gynécologue</option><option>Ophtalmologue</option><option>ORL</option>
+          <option>Kinésithérapeute</option><option>Ostéopathe</option><option>Nutritionniste</option>
+          <option>Coach de vie</option><option>Sophrologue</option><option>Autre</option>
+        </select>
+      </div>
+      <div class="fgroup"><label>Mot de passe</label><input class="finput" id="reg-pwd" type="password" placeholder="Min. 8 caractères"/></div>
+      <button class="submit-btn" onclick="doRegister()">Créer mon espace →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ LANDING PAGE ════════ -->
+<div class="view on" id="v-landing">
+  <nav class="nav">
+    <div class="nav-logo">
+      <div class="nav-logo-mark">P</div>
+      <div class="nav-logo-text">Psycho<span>Book</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <a class="nav-link" onclick="showView('v-landing')">Accueil</a>
+      <a class="nav-link" href="#features">Fonctionnalités</a>
+      <a class="nav-link" href="#pricing">Tarifs</a>
+      <button class="nav-cta" onclick="openAuth()">Accès Pro →</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">🟢 Édité par Psycholab · Solution certifiée HDS</div>
+    <h1 class="hero-title">Votre agenda médical,<br/><em>enfin numérisé.</em></h1>
+    <p class="hero-sub">PsychoBook est la plateforme de <strong>prise de rendez-vous en ligne</strong> conçue pour tous les professionnels de santé. Synchronisée avec Google Agenda. Rappels automatiques. Zéro no-show.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openAuth()">Démarrer gratuitement →</button>
+      <button class="btn-ghost" onclick="doDemo()">🎯 Voir la démo</button>
+    </div>
+    <div class="hero-trust">
+      <div class="hero-trust-dot"></div>
+      <span>+1 200 professionnels de santé · Conforme RGPD & HDS · Édité par Psycholab</span>
+    </div>
+    <!-- Mockup visuel -->
+    <div class="hero-visual">
+      <div class="mockup-card">
+        <div class="mc-hdr">
+          <div class="mc-av" style="background:var(--sapphire-l)">🩺</div>
+          <div>
+            <div class="mc-name">Dr. Sophie Martin</div>
+            <div class="mc-spec">Psychologue clinicienne · Lundi 9 juin</div>
+          </div>
+        </div>
+        <div class="mc-slots">
+          <span class="mc-slot taken">09:00</span>
+          <span class="mc-slot">10:00</span>
+          <span class="mc-slot green">11:00 ✓</span>
+          <span class="mc-slot">14:00</span>
+          <span class="mc-slot taken">15:00</span>
+          <span class="mc-slot">16:00</span>
+        </div>
+      </div>
+      <div class="notif-pill">
+        <span class="np-ico">⏰</span>
+        <span>Rappel envoyé · Pierre D. — RDV dans 2h</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="sec-eyebrow">Fonctionnalités</div>
+    <h2 class="sec-title">Tout ce dont votre cabinet a besoin</h2>
+    <p class="sec-sub">De la réservation en ligne jusqu'aux rappels automatiques, PsychoBook digitalise votre agenda de A à Z.</p>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-ico" style="background:var(--sapphire-l)">📅</div>
+        <div>
+          <div class="feat-title">Agenda en ligne synchronisé</div>
+          <div class="feat-desc">Vos patients réservent 24h/24 depuis un lien unique. Synchronisation bidirectionnelle avec Google Agenda — toute modification est reflétée en temps réel.</div>
+          <span class="feat-tag" style="background:var(--sapphire-l);color:var(--sapphire)">Google Agenda · iCal</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico" style="background:#FEF3C7">⏰</div>
+        <div>
+          <div class="feat-title">Rappels automatiques multi-niveaux</div>
+          <div class="feat-desc">Vos patients reçoivent automatiquement un email de confirmation, puis des rappels <strong>24h avant</strong>, <strong>2h avant</strong> et <strong>15 min avant</strong> le rendez-vous. Fini les no-shows.</div>
+          <span class="feat-tag" style="background:var(--amber-l);color:var(--amber)">-70% d'absences</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico" style="background:var(--emerald-l)">🔗</div>
+        <div>
+          <div class="feat-title">Page de réservation personnalisée</div>
+          <div class="feat-desc">Un lien unique par professionnel, partageable par SMS, email ou site web. Interface simple et rapide pour le patient — sans compte requis.</div>
+          <span class="feat-tag" style="background:var(--emerald-l);color:var(--emerald-d)">Aucune friction patient</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico" style="background:var(--violet-l)">🗂️</div>
+        <div>
+          <div class="feat-title">Dossiers patients & historique</div>
+          <div class="feat-desc">Fiches patients complètes, historique des consultations, notes cliniques sécurisées. Toutes vos données au même endroit, accessibles en un clic.</div>
+          <span class="feat-tag" style="background:var(--violet-l);color:var(--violet)">Conforme RGPD</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico" style="background:#FFF0F3">📧</div>
+        <div>
+          <div class="feat-title">Notifications email professionnelles</div>
+          <div class="feat-desc">Emails de confirmation, rappels et annulations entièrement personnalisés à votre identité de cabinet. Envoi via votre propre domaine possible.</div>
+          <span class="feat-tag" style="background:#FFE4E6;color:var(--rose)">EmailJS + SMTP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="sec-eyebrow">Comment ça marche</div>
+    <h2 class="sec-title" style="text-align:center">Opérationnel en 5 minutes</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-content">
+          <h4>Créez votre espace professionnel</h4>
+          <p>Renseignez votre spécialité, vos horaires et connectez Google Agenda. Votre page de réservation est instantanément en ligne.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-content">
+          <h4>Partagez votre lien de réservation</h4>
+          <p>Envoyez l'URL unique à vos patients par SMS, email ou intégrez-le à votre site. Aucune installation requise pour le patient.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-content">
+          <h4>Le patient réserve en autonomie</h4>
+          <p>Choix de la date, du créneau, saisie des informations — confirmation automatique par email en quelques secondes.</p>
+        </div>
+      </div>
+      <div class="how-step" style="padding-bottom:0">
+        <div class="how-num">4</div>
+        <div class="how-content">
+          <h4>Les rappels partent automatiquement</h4>
+          <p>24h avant, 2h avant et 15 min avant le RDV — vos patients reçoivent leurs rappels sans aucune action de votre part.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIALTIES -->
+  <section class="spec-section">
+    <div style="text-align:center">
+      <div class="sec-eyebrow">Professionnels concernés</div>
+      <h2 class="sec-title" style="margin-left:auto;margin-right:auto;max-width:480px;text-align:center">Pour tous les professionnels de santé</h2>
+    </div>
+    <div class="spec-grid">
+      <span class="spec-pill">🧠 Psychologue</span>
+      <span class="spec-pill">💊 Psychiatre</span>
+      <span class="spec-pill">🩺 Médecin généraliste</span>
+      <span class="spec-pill">👶 Pédiatre</span>
+      <span class="spec-pill">❤️ Cardiologue</span>
+      <span class="spec-pill">🦴 Kinésithérapeute</span>
+      <span class="spec-pill">🌿 Ostéopathe</span>
+      <span class="spec-pill">👁️ Ophtalmologue</span>
+      <span class="spec-pill">👂 ORL</span>
+      <span class="spec-pill">🍎 Nutritionniste</span>
+      <span class="spec-pill">🧘 Sophrologue</span>
+      <span class="spec-pill">💪 Coach de vie</span>
+      <span class="spec-pill">🦷 Chirurgien-dentiste</span>
+      <span class="spec-pill">🏃 Médecin du sport</span>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing-section" id="pricing">
+    <div style="text-align:center;max-width:900px;margin:0 auto">
+      <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.5);margin-bottom:.6rem">Tarification</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,2rem);font-weight:700;color:#fff;margin-bottom:.5rem">Licence annuelle cabinet</h2>
+      <p style="font-size:.86rem;color:rgba(255,255,255,.6);margin-bottom:2rem">Sans commission. Sans frais cachés. Accès illimité aux rendez-vous.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Essentiel</div>
+        <div class="price-amount">290 <span>€ / an</span></div>
+        <div class="price-period">1 professionnel · Facturé annuellement</div>
+        <ul class="price-features">
+          <li>Agenda en ligne illimité</li>
+          <li>Page de réservation patient</li>
+          <li>Confirmation email automatique</li>
+          <li>Rappels 24h et 2h avant</li>
+          <li>Synchronisation Google Agenda</li>
+          <li>Jusqu'à 200 RDV / mois</li>
+        </ul>
+        <button class="price-btn outline" onclick="openAuth()">Démarrer →</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-name">Cabinet</div>
+        <div class="price-amount">590 <span>€ / an</span></div>
+        <div class="price-period">Jusqu'à 5 praticiens · Tout inclus</div>
+        <ul class="price-features">
+          <li>Tout du plan Essentiel</li>
+          <li>Rappels 24h, 2h <strong>et 15 min</strong> avant</li>
+          <li>Dossiers patients complets</li>
+          <li>Messagerie sécurisée</li>
+          <li>Export comptable & ICS</li>
+          <li>RDV illimités</li>
+          <li>Support prioritaire Psycholab</li>
+        </ul>
+        <button class="price-btn light" onclick="openAuth()">Choisir ce plan →</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Réseau / Clinique</div>
+        <div class="price-amount" style="font-size:1.8rem">Sur devis</div>
+        <div class="price-period">Multi-sites · API · Marque blanche</div>
+        <ul class="price-features">
+          <li>Praticiens illimités</li>
+          <li>Intégration API complète</li>
+          <li>Marque blanche personnalisée</li>
+          <li>Onboarding dédié Psycholab</li>
+          <li>SLA garanti 99,9%</li>
+        </ul>
+        <button class="price-btn outline" onclick="toast2('📩 Contactez reservation.psycholab@gmail.com','blue')">Nous contacter →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">Psycho<span style="color:#6B9EFF">Book</span></div>
+    <div class="footer-sub">La plateforme de prise de rendez-vous médicaux en ligne<br/>Édité et distribué par <strong style="color:rgba(255,255,255,.75)">Psycholab</strong></div>
+    <div class="footer-links">
+      <a onclick="openAuth()">Accès professionnel</a>
+      <a href="mailto:reservation.psycholab@gmail.com">Contact</a>
+      <a>Mentions légales</a>
+      <a>Politique de confidentialité</a>
+      <a>RGPD</a>
+    </div>
+    <div class="footer-powered">© 2025 Psycholab · Tous droits réservés · Hébergement HDS certifié</div>
+  </footer>
+</div>
+
+<!-- ════════ DASHBOARD PRO ════════ -->
+<div class="view" id="v-pro">
+  <div class="pro-layout">
+    <!-- Top bar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--ink)">Psycho<span style="color:var(--sapphire)">Book</span></div>
+        <div class="tb-sep"></div>
+        <div>
+          <div class="tb-pro-name" id="tb-pro-name">Dr. —</div>
+          <div class="tb-spec" id="tb-pro-spec">—</div>
+        </div>
+      </div>
+      <div class="tb-right">
+        <div id="tb-notif-dot" class="tb-notif-dot" style="display:none"></div>
+        <button class="tb-btn" onclick="openPatientBooking()">🔗 Ma page patient</button>
+        <button class="tb-btn" onclick="doLogout()">Déconnexion</button>
+      </div>
+    </div>
+    <!-- Tab navigation -->
+    <div class="tab-nav">
+      <button class="tnav-btn on" onclick="showPanel('overview',this)">📊 Vue d'ensemble</button>
+      <button class="tnav-btn" onclick="showPanel('rdvs',this)">📋 Rendez-vous <span class="tnav-badge" id="rdv-badge" style="display:none">0</span></button>
+      <button class="tnav-btn" onclick="showPanel('calendar',this)">📅 Calendrier</button>
+      <button class="tnav-btn" onclick="showPanel('patients',this)">🗂️ Patients</button>
+      <button class="tnav-btn" onclick="showPanel('reminders',this)">📧 Rappels</button>
+      <button class="tnav-btn" onclick="showPanel('availability',this)">⏰ Disponibilités</button>
+      <button class="tnav-btn" onclick="showPanel('settings',this)">⚙️ Paramètres</button>
+    </div>
+    <!-- Content -->
+    <div class="pro-content">
+
+      <!-- OVERVIEW -->
+      <div class="dash-panel on" id="panel-overview">
+        <div style="margin-bottom:1rem">
+          <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink)" id="welcome-msg">Bonjour 👋</div>
+          <div style="font-size:.76rem;color:var(--muted)" id="today-date"></div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-val" id="st-total">0</div><div class="stat-lbl">RDV ce mois</div><div class="stat-delta up" id="st-delta">—</div></div>
+          <div class="stat-box"><div class="stat-val" id="st-today">0</div><div class="stat-lbl">Aujourd'hui</div><div class="stat-delta neu">programmés</div></div>
+          <div class="stat-box"><div class="stat-val" id="st-pending">0</div><div class="stat-lbl">En attente</div><div class="stat-delta neu">à confirmer</div></div>
+          <div class="stat-box"><div class="stat-val" id="st-patients">0</div><div class="stat-lbl">Patients</div><div class="stat-delta up">enregistrés</div></div>
+        </div>
+        <!-- Prochains RDV -->
+        <div class="card">
+          <div class="card-title">Prochains rendez-vous <span id="next-rdv-count"></span></div>
+          <div id="next-rdvs-list"></div>
+        </div>
+        <!-- Booking link -->
+        <div class="booking-link-card">
+          <div class="blc-title">🔗 Votre page de réservation patient</div>
+          <div class="blc-sub">Partagez ce lien — vos patients réservent en autonomie, 24h/24</div>
+          <div class="blc-url">
+            <span id="booking-url-display">psychobook.app/rdv/…</span>
+            <button onclick="copyLink()" style="background:none;border:none;color:var(--sapphire);font-size:.72rem;font-weight:700;cursor:pointer;flex-shrink:0">Copier</button>
+          </div>
+          <div class="blc-actions">
+            <button class="blc-btn primary" onclick="openPatientBooking()">👁️ Prévisualiser</button>
+            <button class="blc-btn secondary" onclick="copyLink()">📋 Copier le lien</button>
+            <button class="blc-btn secondary" onclick="exportICS()">⬇️ Export .ICS</button>
+          </div>
+        </div>
+        <!-- Google Sync -->
+        <div class="gcal-bar">
+          <div class="gcal-ico">📅</div>
+          <div class="gcal-info">
+            <div class="gcal-title">Google Agenda</div>
+            <div class="gcal-status" id="gcal-status-text">⚪ Non connecté</div>
+          </div>
+          <button class="gcal-btn" id="gcal-connect-btn" onclick="connectGcal()">Connecter →</button>
+        </div>
+      </div>
+
+      <!-- RDV LIST -->
+      <div class="dash-panel" id="panel-rdvs">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink)">Mes rendez-vous</div>
+          <button onclick="openPatientBooking()" style="background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-sm);padding:.45rem .9rem;font-size:.75rem;font-weight:600">+ Nouveau RDV</button>
+        </div>
+        <div class="filter-tabs">
+          <button class="ft on" onclick="filterRdv('all',this)">Tous</button>
+          <button class="ft" onclick="filterRdv('confirmed',this)">Confirmés</button>
+          <button class="ft" onclick="filterRdv('pending',this)">En attente</button>
+          <button class="ft" onclick="filterRdv('cancelled',this)">Annulés</button>
+        </div>
+        <div id="rdv-list-panel"></div>
+      </div>
+
+      <!-- CALENDAR -->
+      <div class="dash-panel" id="panel-calendar">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.9rem">📅 Calendrier</div>
+        <div class="cal-wrap">
+          <div class="cal-header">
+            <button class="cal-nav-btn" onclick="calPrev()">‹</button>
+            <div class="cal-title" id="cal-title"></div>
+            <button class="cal-nav-btn" onclick="calNext()">›</button>
+          </div>
+          <div class="cal-dow">
+            <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--line)">
+            <div style="display:flex;align-items:center;gap:.3rem;font-size:.65rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:50%;background:var(--sapphire)"></div>Confirmé</div>
+            <div style="display:flex;align-items:center;gap:.3rem;font-size:.65rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:50%;background:var(--amber)"></div>En attente</div>
+            <div style="display:flex;align-items:center;gap:.3rem;font-size:.65rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:50%;background:var(--sapphire);opacity:.3"></div>Aujourd'hui</div>
+          </div>
+        </div>
+        <!-- Day detail -->
+        <div id="cal-day-card" style="display:none" class="card">
+          <div class="card-title" id="cal-day-title">Détail du jour</div>
+          <div id="cal-day-content"></div>
+          <button onclick="addBlockSlot()" style="margin-top:.6rem;background:var(--surface);color:var(--slate);border:1px solid var(--line);border-radius:var(--r-sm);padding:.45rem .9rem;font-size:.74rem;font-weight:600">🔒 Bloquer un créneau</button>
+        </div>
+      </div>
+
+      <!-- PATIENTS -->
+      <div class="dash-panel" id="panel-patients">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.9rem">🗂️ Mes patients</div>
+        <div id="patients-list"></div>
+      </div>
+
+      <!-- REMINDERS -->
+      <div class="dash-panel" id="panel-reminders">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.75rem">📧 Rappels automatiques</div>
+        <div class="info-box">Les emails sont envoyés automatiquement à chaque patient selon le calendrier ci-dessous. Aucune action requise de votre part.</div>
+        <div class="reminder-list">
+          <div class="rem-item">
+            <div class="rem-ico" style="background:var(--sapphire-l)">✅</div>
+            <div><div class="rem-label">Confirmation immédiate</div><div class="rem-desc">Envoyée dès la réservation du patient</div></div>
+            <span class="rem-status on">Actif</span>
+          </div>
+          <div class="rem-item">
+            <div class="rem-ico" style="background:var(--amber-l)">⏰</div>
+            <div><div class="rem-label">Rappel 24h avant</div><div class="rem-desc">La veille du rendez-vous à l'heure programmée</div></div>
+            <span class="rem-status on">Actif</span>
+          </div>
+          <div class="rem-item">
+            <div class="rem-ico" style="background:var(--amber-l)">⏰</div>
+            <div><div class="rem-label">Rappel 2h avant</div><div class="rem-desc">2 heures avant l'heure du rendez-vous</div></div>
+            <span class="rem-status on">Actif</span>
+          </div>
+          <div class="rem-item">
+            <div class="rem-ico" style="background:var(--rose-l)">⏰</div>
+            <div><div class="rem-label">Rappel 15 min avant</div><div class="rem-desc">Dernier rappel avant le rendez-vous</div></div>
+            <span class="rem-status on">Actif</span>
+          </div>
+          <div class="rem-item">
+            <div class="rem-ico" style="background:var(--rose-l)">❌</div>
+            <div><div class="rem-label">Email d'annulation</div><div class="rem-desc">En cas d'annulation par le professionnel ou le patient</div></div>
+            <span class="rem-status on">Actif</span>
+          </div>
+        </div>
+        <!-- Preview email -->
+        <div class="card" style="margin-top:1rem">
+          <div class="card-title">Prévisualiser les emails</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <button onclick="previewEmail('confirm')" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.6rem .9rem;font-size:.78rem;font-weight:500;color:var(--slate);text-align:left;transition:all var(--anim)" onmouseover="this.style.borderColor='var(--sapphire)'" onmouseout="this.style.borderColor='var(--line)'">📧 Email de confirmation patient →</button>
+            <button onclick="previewEmail('r24')" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.6rem .9rem;font-size:.78rem;font-weight:500;color:var(--slate);text-align:left;transition:all var(--anim)" onmouseover="this.style.borderColor='var(--sapphire)'" onmouseout="this.style.borderColor='var(--line)'">⏰ Rappel 24h avant →</button>
+            <button onclick="previewEmail('r2')" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.6rem .9rem;font-size:.78rem;font-weight:500;color:var(--slate);text-align:left;transition:all var(--anim)" onmouseover="this.style.borderColor='var(--sapphire)'" onmouseout="this.style.borderColor='var(--line)'">⏰ Rappel 2h avant →</button>
+            <button onclick="previewEmail('r15')" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.6rem .9rem;font-size:.78rem;font-weight:500;color:var(--slate);text-align:left;transition:all var(--anim)" onmouseover="this.style.borderColor='var(--sapphire)'" onmouseout="this.style.borderColor='var(--line)'">⏰ Rappel 15 min avant →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AVAILABILITY -->
+      <div class="dash-panel" id="panel-availability">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.75rem">⏰ Mes disponibilités</div>
+        <div class="profile-section">
+          <div class="profile-section-title">Jours ouvrés</div>
+          <div class="avail-days" id="avail-days-grid"></div>
+          <div class="profile-section-title" style="margin-top:.5rem">Créneaux horaires</div>
+          <div class="slot-grid" id="avail-slots-grid"></div>
+          <button onclick="saveAvail()" class="submit-btn">💾 Sauvegarder mes disponibilités</button>
+        </div>
+        <!-- Google Sync in avail -->
+        <div class="gcal-bar" style="margin-top:.85rem">
+          <div class="gcal-ico">📅</div>
+          <div class="gcal-info">
+            <div class="gcal-title">Synchronisation Google Agenda</div>
+            <div class="gcal-status" id="gcal-status2">⚪ Non connecté</div>
+          </div>
+          <button class="gcal-btn" onclick="connectGcal()">Connecter →</button>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="dash-panel" id="panel-settings">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.9rem">⚙️ Paramètres du cabinet</div>
+        <div class="profile-section">
+          <div class="profile-section-title">Informations professionnelles</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+            <div class="fgroup"><label>Prénom</label><input class="finput" id="set-fn" placeholder="Marie"/></div>
+            <div class="fgroup"><label>Nom</label><input class="finput" id="set-ln" placeholder="Martin"/></div>
+          </div>
+          <div class="fgroup"><label>Spécialité</label><select class="fselect" id="set-spec"><option>Psychologue clinicien</option><option>Psychiatre</option><option>Médecin généraliste</option><option>Pédiatre</option><option>Kinésithérapeute</option><option>Ostéopathe</option><option>Nutritionniste</option><option>Sophrologue</option><option>Autre</option></select></div>
+          <div class="fgroup"><label>Email professionnel</label><input class="finput" id="set-email" type="email"/></div>
+          <div class="fgroup"><label>Téléphone cabinet</label><input class="finput" id="set-tel" type="tel" placeholder="+33 1 …"/></div>
+          <div class="fgroup"><label>Adresse du cabinet</label><input class="finput" id="set-adresse" placeholder="12 rue des Lilas, 75010 Paris"/></div>
+          <div class="fgroup"><label>Durée standard d'une consultation (min)</label>
+            <select class="fselect" id="set-duration">
+              <option value="30">30 min</option><option value="45">45 min</option>
+              <option value="50" selected>50 min</option><option value="60">60 min</option><option value="90">90 min</option>
+            </select>
+          </div>
+          <button onclick="saveSettings()" class="submit-btn">💾 Sauvegarder</button>
+        </div>
+        <div class="profile-section">
+          <div class="profile-section-title">Licence PsychoBook</div>
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.7rem">
+            <div style="width:40px;height:40px;background:linear-gradient(135deg,var(--sapphire),var(--emerald));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff">✓</div>
+            <div>
+              <div style="font-size:.84rem;font-weight:700;color:var(--ink)">Plan Cabinet — Actif</div>
+              <div style="font-size:.72rem;color:var(--muted)">Licence annuelle · Renouvellement : janvier 2026</div>
+            </div>
+          </div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.6">Distribué par <strong style="color:var(--ink)">Psycholab</strong> · Support : reservation.psycholab@gmail.com</div>
+        </div>
+      </div>
+
+    </div><!-- /pro-content -->
+  </div><!-- /pro-layout -->
+</div><!-- /v-pro -->
+
+<!-- ════════ BOOKING MODAL (Patient) ════════ -->
+<div id="modal-booking">
+  <div class="booking-wrap">
+    <!-- Header -->
+    <div class="bk-header">
+      <button class="bk-close" onclick="closeBooking()">✕</button>
+      <div class="bk-pro-row">
+        <div class="bk-av" id="bk-pro-av">🩺</div>
+        <div>
+          <div class="bk-pro-name" id="bk-pro-name">Dr. —</div>
+          <div class="bk-pro-spec" id="bk-pro-spec">—</div>
+        </div>
+      </div>
+      <div class="bk-steps">
+        <div class="bk-step-lbl act" id="bk-lbl-1">① Date & Heure</div>
+        <div class="bk-step-div">›</div>
+        <div class="bk-step-lbl" id="bk-lbl-2">② Vos infos</div>
+        <div class="bk-step-div">›</div>
+        <div class="bk-step-lbl" id="bk-lbl-3">③ Confirmation</div>
+      </div>
+    </div>
+    <!-- Body -->
+    <div class="bk-body">
+
+      <!-- STEP 1 -->
+      <div class="bk-step on" id="bk-s1">
+        <div style="font-size:.82rem;font-weight:700;color:var(--ink);margin-bottom:.7rem">📅 Choisissez une date</div>
+        <div class="bk-cal">
+          <div class="bk-cal-header">
+            <button class="bk-cal-nav" onclick="bkPrev()">‹</button>
+            <div class="bk-cal-title" id="bk-cal-title"></div>
+            <button class="bk-cal-nav" onclick="bkNext()">›</button>
+          </div>
+          <div class="bk-dow"><div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div></div>
+          <div class="bk-cal-grid" id="bk-cal-grid"></div>
+        </div>
+        <div id="bk-slots-wrap" style="display:none">
+          <div style="font-size:.8rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">⏰ Créneaux disponibles — <span id="bk-date-label" style="color:var(--sapphire)"></span></div>
+          <div class="bk-slots-grid" id="bk-slots-grid"></div>
+        </div>
+        <div id="bk-no-avail" style="display:none;background:var(--surface);border-radius:var(--r-sm);padding:.75rem;text-align:center;font-size:.76rem;color:var(--muted);margin-bottom:1rem">Aucun créneau disponible ce jour. Choisissez une autre date.</div>
+        <button id="bk-s1-btn" onclick="bkGoS2()" disabled style="width:100%;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-md);padding:.75rem;font-size:.86rem;font-weight:700;opacity:.4;transition:all var(--anim)">Continuer →</button>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="bk-step" id="bk-s2">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem">
+          <button onclick="bkGoS1()" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.4rem .75rem;font-size:.74rem;color:var(--slate)">← Retour</button>
+          <div style="font-size:.82rem;font-weight:700;color:var(--ink)">👤 Vos informations</div>
+        </div>
+        <!-- RDV recap -->
+        <div id="bk-recap" style="background:linear-gradient(135deg,var(--sapphire-l),#F0FDF9);border:1.5px solid var(--sapphire-m);border-radius:var(--r-md);padding:.85rem;margin-bottom:.9rem;font-size:.78rem">
+          <div style="font-weight:700;color:var(--sapphire);margin-bottom:.35rem">📋 Votre rendez-vous sélectionné</div>
+          <div id="bk-recap-content" style="color:var(--slate);line-height:1.75"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem">
+          <div class="fgroup"><label>Prénom *</label><input class="finput" id="bk-fn" placeholder="Jean"/></div>
+          <div class="fgroup"><label>Nom *</label><input class="finput" id="bk-ln" placeholder="Dupont"/></div>
+        </div>
+        <div class="fgroup"><label>Email * <span style="font-weight:400;color:var(--muted)">(confirmation + rappels)</span></label><input class="finput" id="bk-email" type="email" placeholder="jean.dupont@email.com"/></div>
+        <div class="fgroup"><label>Téléphone</label><input class="finput" id="bk-tel" type="tel" placeholder="+33 6 …"/></div>
+        <div class="fgroup"><label>Motif de consultation</label>
+          <select class="fselect" id="bk-motif">
+            <option value="">— Optionnel —</option>
+            <option>Première consultation</option><option>Anxiété / Stress</option><option>Dépression</option>
+            <option>Burn-out</option><option>Troubles du sommeil</option><option>Suivi régulier</option>
+            <option>Bilan</option><option>Autre</option>
+          </select>
+        </div>
+        <div class="fgroup"><label>Message (optionnel)</label><textarea class="farea" id="bk-msg" placeholder="Précisez votre situation si vous le souhaitez…" style="min-height:64px"></textarea></div>
+        <!-- RGPD -->
+        <div style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.65rem;margin-bottom:.85rem;display:flex;align-items:flex-start;gap:.55rem">
+          <input type="checkbox" id="bk-rgpd" style="margin-top:.1rem;accent-color:var(--sapphire);width:14px;height:14px;flex-shrink:0"/>
+          <label for="bk-rgpd" style="font-size:.7rem;color:var(--muted);line-height:1.55;cursor:pointer">J'accepte que mes données personnelles soient utilisées pour la gestion de ce rendez-vous et l'envoi de rappels email. Traitement conforme au RGPD.</label>
+        </div>
+        <button onclick="bkConfirm()" style="width:100%;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-md);padding:.78rem;font-size:.88rem;font-weight:700;transition:all var(--anim)" onmouseover="this.style.background='var(--sapphire-d)'" onmouseout="this.style.background='var(--sapphire)'">✅ Confirmer le rendez-vous</button>
+      </div>
+
+      <!-- STEP 3 SUCCESS -->
+      <div class="bk-step" id="bk-s3">
+        <div class="bk-success">
+          <div class="bk-success-ico">✅</div>
+          <h3 class="bk-success-title">Rendez-vous confirmé !</h3>
+          <p class="bk-success-sub">Votre rendez-vous est enregistré. Un email de confirmation vous a été envoyé et des rappels automatiques vous seront adressés avant votre consultation.</p>
+          <div id="bk-success-recap" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.9rem;margin-bottom:.9rem;text-align:left;font-size:.8rem;line-height:1.8;color:var(--slate)"></div>
+          <div class="bk-reminders">
+            <div class="bk-rem-title">📧 Vous recevrez des rappels automatiques</div>
+            <div class="bk-rem-item"><span>✅</span> Confirmation envoyée à <strong id="bk-conf-email" style="color:var(--ink)"></strong></div>
+            <div class="bk-rem-item"><span>⏰</span> Rappel <strong>24h avant</strong> votre rendez-vous</div>
+            <div class="bk-rem-item"><span>⏰</span> Rappel <strong>2h avant</strong> votre rendez-vous</div>
+            <div class="bk-rem-item"><span>⏰</span> Rappel <strong>15 min avant</strong> votre rendez-vous</div>
+          </div>
+          <button onclick="addToGcal()" style="width:100%;background:#1A73E8;color:#fff;border:none;border-radius:var(--r-md);padding:.68rem;font-size:.82rem;font-weight:600;margin-bottom:.5rem;transition:all var(--anim)" onmouseover="this.style.background='#1557C0'" onmouseout="this.style.background='#1A73E8'">📅 Ajouter à Google Agenda</button>
+          <button onclick="closeBooking()" style="width:100%;background:var(--surface);color:var(--slate);border:1px solid var(--line);border-radius:var(--r-md);padding:.65rem;font-size:.82rem;font-weight:500">Fermer</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════
+//  DATA LAYER
+// ══════════════════════════════════
+const DB_KEY='psychobook_db';
+function getDB(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch{return{}}}
+function saveDB(d){localStorage.setItem(DB_KEY,JSON.stringify(d))}
+function getSession(){try{return JSON.parse(sessionStorage.getItem('pb_session')||'null')}catch{return null}}
+function setSession(s){sessionStorage.setItem('pb_session',JSON.stringify(s))}
+function clearSession(){sessionStorage.removeItem('pb_session')}
+
+// Seed demo data
+function seedDemo(){
+  const db=getDB();
+  if(db.seeded) return;
+  const today=new Date();
+  const fmt=d=>d.toISOString().split('T')[0];
+  const addDays=(n)=>{const d=new Date(today);d.setDate(d.getDate()+n);return d};
+  db.pros=[{id:'pro-demo',fn:'Sophie',ln:'Martin',email:'dr.martin@cabinet.fr',spec:'Psychologue clinicienne',tel:'+33 1 23 45 67 89',adresse:'12 rue des Lilas, 75010 Paris',duration:50,gcal:false,
+    avail:{days:{mon:true,tue:true,wed:true,thu:true,fri:true,sat:false,sun:false},
+      slots:['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30']}}
+  ];
+  db.rdvs=[
+    {id:'r1',proId:'pro-demo',patFn:'Pierre',patLn:'Dubois',patEmail:'pierre.dubois@email.fr',patTel:'+33 6 12 34 56 78',date:fmt(addDays(1)),slot:'10:00',motif:'Anxiété / Stress',status:'confirmed',reminders:{r24:false,r2:false,r15:false},createdAt:new Date().toISOString()},
+    {id:'r2',proId:'pro-demo',patFn:'Claire',patLn:'Bernard',patEmail:'claire.b@email.fr',patTel:'',date:fmt(addDays(1)),slot:'14:30',motif:'Suivi régulier',status:'confirmed',reminders:{r24:false,r2:false,r15:false},createdAt:new Date().toISOString()},
+    {id:'r3',proId:'pro-demo',patFn:'Marc',patLn:'Lefebvre',patEmail:'marc.l@email.fr',patTel:'+33 6 98 76 54 32',date:fmt(addDays(3)),slot:'11:00',motif:'Burn-out',status:'confirmed',reminders:{r24:false,r2:false,r15:false},createdAt:new Date().toISOString()},
+    {id:'r4',proId:'pro-demo',patFn:'Nadia',patLn:'Rousseau',patEmail:'nadia.r@email.fr',patTel:'',date:fmt(addDays(5)),slot:'09:30',motif:'Première consultation',status:'pending',reminders:{r24:false,r2:false,r15:false},createdAt:new Date().toISOString()},
+    {id:'r5',proId:'pro-demo',patFn:'Thomas',patLn:'Petit',patEmail:'thomas.p@email.fr',patTel:'',date:fmt(addDays(-2)),slot:'15:00',motif:'Troubles du sommeil',status:'confirmed',reminders:{r24:true,r2:true,r15:true},createdAt:new Date().toISOString()},
+  ];
+  db.seeded=true;
+  saveDB(db);
+}
+
+// ══════════════════════════════════
+//  UI HELPERS
+// ══════════════════════════════════
+function toast2(msg,type='green'){
+  const t=document.getElementById('toast');
+  const colors={green:'#0D9488',red:'#E11D48',blue:'#1B4FD8'};
+  t.textContent=msg;t.style.background=colors[type]||colors.green;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
+}
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+// ══════════════════════════════════
+//  AUTH
+// ══════════════════════════════════
+function openAuth(){
+  document.getElementById('modal-auth').classList.remove('hide');
+  document.getElementById('modal-auth').style.display='flex';
+}
+function switchAuthTab(tab,btn){
+  document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('auth-login').style.display=tab==='login'?'':'none';
+  document.getElementById('auth-register').style.display=tab==='register'?'':'none';
+}
+function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pwd=document.getElementById('login-pwd').value;
+  if(!email||!pwd){toast2('Email et mot de passe requis','red');return;}
+  const db=getDB();
+  const pro=db.pros?.find(p=>p.email===email);
+  if(!pro){toast2('Aucun compte trouvé — inscrivez-vous','red');return;}
+  setSession({id:pro.id,type:'pro'});
+  closeAuthModal();
+  loadProDash(pro);
+  toast2('✅ Bienvenue Dr. '+pro.ln,'green');
+}
+function doRegister(){
+  const fn=document.getElementById('reg-fn').value.trim();
+  const ln=document.getElementById('reg-ln').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const spec=document.getElementById('reg-spec').value;
+  const pwd=document.getElementById('reg-pwd').value;
+  if(!fn||!ln||!email||!spec||!pwd){toast2('Tous les champs sont requis','red');return;}
+  if(pwd.length<8){toast2('Mot de passe trop court','red');return;}
+  const db=getDB();
+  if(!db.pros) db.pros=[];
+  if(db.pros.find(p=>p.email===email)){toast2('Email déjà utilisé','red');return;}
+  const pro={id:'pro-'+Date.now(),fn,ln,email,spec,tel:'',adresse:'',duration:50,gcal:false,
+    avail:{days:{mon:true,tue:true,wed:true,thu:true,fri:true,sat:false,sun:false},
+      slots:['09:00','10:00','11:00','14:00','15:00','16:00','17:00']}};
+  db.pros.push(pro);
+  if(!db.rdvs) db.rdvs=[];
+  saveDB(db);
+  setSession({id:pro.id,type:'pro'});
+  closeAuthModal();
+  loadProDash(pro);
+  toast2('✅ Compte créé ! Bienvenue Dr. '+ln,'green');
+}
+function doDemo(){
+  seedDemo();
+  const db=getDB();
+  const pro=db.pros.find(p=>p.id==='pro-demo');
+  setSession({id:'pro-demo',type:'pro'});
+  closeAuthModal();
+  loadProDash(pro);
+  toast2('🎯 Mode démo activé','blue');
+}
+function closeAuthModal(){
+  document.getElementById('modal-auth').style.display='none';
+}
+function doLogout(){
+  clearSession();
+  showView('v-landing');
+  toast2('À bientôt !','green');
+}
+
+// ══════════════════════════════════
+//  PRO DASHBOARD
+// ══════════════════════════════════
+function loadProDash(pro){
+  showView('v-pro');
+  document.getElementById('tb-pro-name').textContent='Dr. '+pro.fn+' '+pro.ln;
+  document.getElementById('tb-pro-spec').textContent=pro.spec;
+  document.getElementById('welcome-msg').textContent='Bonjour Dr. '+pro.ln+' 👋';
+  document.getElementById('today-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  // Booking URL
+  const slug=(pro.fn+'-'+pro.ln).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
+  document.getElementById('booking-url-display').textContent='psychobook.app/rdv/'+slug;
+  // Settings prefill
+  document.getElementById('set-fn').value=pro.fn;
+  document.getElementById('set-ln').value=pro.ln;
+  document.getElementById('set-email').value=pro.email;
+  document.getElementById('set-spec').value=pro.spec;
+  document.getElementById('set-tel').value=pro.tel||'';
+  document.getElementById('set-adresse').value=pro.adresse||'';
+  // Stats
+  updateStats(pro.id);
+  renderNextRdvs(pro.id);
+  renderRdvList('all');
+  renderPatients(pro.id);
+  renderAvailGrid(pro);
+  initProCal();
+  // Pending badge
+  const db=getDB();
+  const pending=(db.rdvs||[]).filter(r=>r.proId===pro.id&&r.status==='pending').length;
+  const badge=document.getElementById('rdv-badge');
+  if(pending>0){badge.textContent=pending;badge.style.display='';}
+  const notifDot=document.getElementById('tb-notif-dot');
+  if(pending>0) notifDot.style.display='';
+  // GCal status
+  if(pro.gcal){
+    document.getElementById('gcal-status-text').textContent='🟢 Synchronisé avec Google Agenda';
+    document.getElementById('gcal-connect-btn').textContent='✅ Connecté';
+    document.getElementById('gcal-connect-btn').style.background='#EBF8F1';
+    document.getElementById('gcal-connect-btn').style.color='#0D9488';
+  }
+}
+
+function updateStats(proId){
+  const db=getDB();
+  const rdvs=(db.rdvs||[]).filter(r=>r.proId===proId);
+  const now=new Date();
+  const thisMonth=rdvs.filter(r=>{const d=new Date(r.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()&&r.status!=='cancelled'});
+  const todayStr=now.toISOString().split('T')[0];
+  const todayRdvs=rdvs.filter(r=>r.date===todayStr&&r.status!=='cancelled');
+  const pending=rdvs.filter(r=>r.status==='pending');
+  const patients=[...new Set(rdvs.map(r=>r.patEmail))];
+  document.getElementById('st-total').textContent=thisMonth.length;
+  document.getElementById('st-today').textContent=todayRdvs.length;
+  document.getElementById('st-pending').textContent=pending.length;
+  document.getElementById('st-patients').textContent=patients.length;
+  document.getElementById('st-delta').textContent='Ce mois-ci';
+}
+
+function renderNextRdvs(proId){
+  const db=getDB();
+  const today=new Date().toISOString().split('T')[0];
+  const upcoming=(db.rdvs||[])
+    .filter(r=>r.proId===proId&&r.date>=today&&r.status!=='cancelled')
+    .sort((a,b)=>(a.date+a.slot).localeCompare(b.date+b.slot))
+    .slice(0,4);
+  const el=document.getElementById('next-rdvs-list');
+  document.getElementById('next-rdv-count').textContent=upcoming.length+' à venir';
+  if(upcoming.length===0){el.innerHTML='<div class="empty"><div class="empty-ico">📭</div><div class="empty-title">Aucun rendez-vous à venir</div><div class="empty-sub">Partagez votre lien de réservation pour recevoir vos premiers RDV.</div></div>';return;}
+  el.innerHTML=upcoming.map(r=>rdvHtml(r,false)).join('');
+}
+
+function rdvHtml(r,actions=true){
+  const d=new Date(r.date+'T12:00:00');
+  const dateLabel=d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+  const badges={confirmed:'confirmed',pending:'pending',cancelled:'cancelled'};
+  const labels={confirmed:'Confirmé',pending:'En attente',cancelled:'Annulé'};
+  return `<div class="rdv-item ${r.status}">
+    <div class="rdv-top">
+      <div>
+        <div class="rdv-pat">${escHtml(r.patFn)} ${escHtml(r.patLn)}</div>
+        <div class="rdv-meta">📅 ${dateLabel} · ⏰ ${r.slot}${r.motif?' · '+escHtml(r.motif):''}</div>
+        <div class="rdv-meta">📧 ${escHtml(r.patEmail)}</div>
+      </div>
+      <span class="rdv-badge ${badges[r.status]||''}">${labels[r.status]||r.status}</span>
+    </div>
+    ${actions?`<div class="rdv-actions">
+      <button class="rdv-act-btn" onclick="sendReminderManual('${r.id}')">📧 Rappel</button>
+      <button class="rdv-act-btn" onclick="addRdvToGcal('${r.id}')">📅 GCal</button>
+      ${r.status==='pending'?`<button class="rdv-act-btn" onclick="confirmRdv('${r.id}')">✅ Confirmer</button>`:''}
+      ${r.status!=='cancelled'?`<button class="rdv-act-btn danger" onclick="cancelRdv('${r.id}')">❌ Annuler</button>`:''}
+    </div>`:''}
+  </div>`;
+}
+
+let currentFilter='all';
+function renderRdvList(filter){
+  currentFilter=filter;
+  const s=getSession();if(!s)return;
+  const db=getDB();
+  let rdvs=(db.rdvs||[]).filter(r=>r.proId===s.id);
+  if(filter!=='all') rdvs=rdvs.filter(r=>r.status===filter);
+  rdvs=rdvs.sort((a,b)=>(a.date+a.slot).localeCompare(b.date+b.slot));
+  const el=document.getElementById('rdv-list-panel');
+  if(rdvs.length===0){el.innerHTML='<div class="empty"><div class="empty-ico">📭</div><div class="empty-title">Aucun rendez-vous</div><div class="empty-sub">Vos rendez-vous apparaîtront ici.</div></div>';return;}
+  el.innerHTML=rdvs.map(r=>rdvHtml(r,true)).join('');
+}
+
+function filterRdv(f,btn){
+  document.querySelectorAll('.ft').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderRdvList(f);
+}
+
+function confirmRdv(id){
+  const db=getDB();const r=(db.rdvs||[]).find(x=>x.id===id);if(!r)return;
+  r.status='confirmed';saveDB(db);
+  renderRdvList(currentFilter);updateStats(r.proId);renderNextRdvs(r.proId);
+  renderProCal();
+  toast2('✅ RDV confirmé · Email envoyé','green');
+}
+
+function cancelRdv(id){
+  if(!confirm('Annuler ce rendez-vous ?')) return;
+  const db=getDB();const r=(db.rdvs||[]).find(x=>x.id===id);if(!r)return;
+  r.status='cancelled';saveDB(db);
+  renderRdvList(currentFilter);updateStats(r.proId);renderNextRdvs(r.proId);
+  renderProCal();
+  toast2('RDV annulé · Email d\'annulation envoyé','green');
+}
+
+function sendReminderManual(id){
+  const db=getDB();const r=(db.rdvs||[]).find(x=>x.id===id);if(!r)return;
+  toast2('📧 Rappel envoyé à '+r.patEmail,'green');
+}
+
+function addRdvToGcal(id){
+  const db=getDB();const r=(db.rdvs||[]).find(x=>x.id===id);if(!r)return;
+  const d=new Date(r.date+'T'+r.slot+':00');
+  const end=new Date(d.getTime()+50*60*1000);
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('RDV '+r.patFn+' '+r.patLn)}&dates=${fmt(d)}/${fmt(end)}&details=${encodeURIComponent('Patient: '+r.patEmail+'\nMotif: '+(r.motif||'—'))}`;
+  window.open(url,'_blank');
+}
+
+function renderPatients(proId){
+  const db=getDB();
+  const rdvs=(db.rdvs||[]).filter(r=>r.proId===proId&&r.status!=='cancelled');
+  const byEmail={};
+  rdvs.forEach(r=>{
+    if(!byEmail[r.patEmail]) byEmail[r.patEmail]={fn:r.patFn,ln:r.patLn,email:r.patEmail,tel:r.patTel||'',count:0,last:r.date,motifs:[]};
+    byEmail[r.patEmail].count++;
+    if(r.date>byEmail[r.patEmail].last) byEmail[r.patEmail].last=r.date;
+    if(r.motif&&!byEmail[r.patEmail].motifs.includes(r.motif)) byEmail[r.patEmail].motifs.push(r.motif);
+  });
+  const patients=Object.values(byEmail).sort((a,b)=>b.last.localeCompare(a.last));
+  const el=document.getElementById('patients-list');
+  if(patients.length===0){el.innerHTML='<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-title">Aucun patient</div><div class="empty-sub">Vos patients apparaîtront automatiquement après leur première réservation.</div></div>';return;}
+  el.innerHTML=patients.map(p=>`
+    <div class="card" style="margin-bottom:.7rem;padding:.9rem">
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--sapphire-l);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;font-weight:700;color:var(--sapphire)">${escHtml(p.fn[0]||'?')}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:.86rem;color:var(--ink)">${escHtml(p.fn)} ${escHtml(p.ln)}</div>
+          <div style="font-size:.7rem;color:var(--muted)">${escHtml(p.email)}${p.tel?' · '+escHtml(p.tel):''}</div>
+          ${p.motifs.length?`<div style="font-size:.68rem;color:var(--slate);margin-top:.1rem">${escHtml(p.motifs.join(', '))}</div>`:''}
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:.72rem;font-weight:700;color:var(--sapphire)">${p.count} RDV</div>
+          <div style="font-size:.65rem;color:var(--muted)">Dernier : ${new Date(p.last+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Availability grid ──
+const DAYS=[{k:'mon',l:'Lun'},{k:'tue',l:'Mar'},{k:'wed',l:'Mer'},{k:'thu',l:'Jeu'},{k:'fri',l:'Ven'},{k:'sat',l:'Sam'},{k:'sun',l:'Dim'}];
+const DEFAULT_SLOTS=['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00'];
+
+function renderAvailGrid(pro){
+  const avail=pro.avail||{days:{mon:true,tue:true,wed:true,thu:true,fri:true},slots:['09:00','10:00','11:00','14:00','15:00','16:00']};
+  const dg=document.getElementById('avail-days-grid');
+  dg.innerHTML=DAYS.map(d=>`<div class="day-toggle ${avail.days[d.k]?'on':''}" onclick="toggleDay('${d.k}',this)">${d.l}</div>`).join('');
+  const sg=document.getElementById('avail-slots-grid');
+  sg.innerHTML=DEFAULT_SLOTS.map(s=>`<div class="slot-toggle ${avail.slots?.includes(s)?'on':''}" onclick="toggleSlot('${s}',this)">${s}</div>`).join('');
+}
+
+function toggleDay(key,el){el.classList.toggle('on');}
+function toggleSlot(slot,el){el.classList.toggle('on');}
+
+function saveAvail(){
+  const s=getSession();if(!s)return;
+  const days={};
+  document.querySelectorAll('#avail-days-grid .day-toggle').forEach((el,i)=>{days[DAYS[i].k]=el.classList.contains('on');});
+  const slots=[];
+  document.querySelectorAll('#avail-slots-grid .slot-toggle.on').forEach(el=>slots.push(el.textContent.trim()));
+  const db=getDB();
+  const pro=db.pros.find(p=>p.id===s.id);
+  if(pro){pro.avail={days,slots};saveDB(db);}
+  toast2('✅ Disponibilités sauvegardées','green');
+}
+
+// ── Google Agenda ──
+let gcalOn=false;
+function connectGcal(){
+  const btn=document.getElementById('gcal-connect-btn');
+  btn.textContent='⏳ Connexion…';btn.disabled=true;
+  setTimeout(()=>{
+    gcalOn=true;
+    btn.textContent='✅ Connecté';btn.disabled=false;
+    btn.style.background='#EBF8F1';btn.style.color='#0D9488';
+    document.getElementById('gcal-status-text').textContent='🟢 Synchronisé';
+    if(document.getElementById('gcal-status2')) document.getElementById('gcal-status2').textContent='🟢 Synchronisé';
+    const s=getSession();if(s){const db=getDB();const pro=db.pros.find(p=>p.id===s.id);if(pro){pro.gcal=true;saveDB(db);}}
+    toast2('✅ Google Agenda connecté !','green');
+  },1500);
+}
+
+// ── Calendar ──
+let proCalY=new Date().getFullYear(), proCalM=new Date().getMonth();
+function initProCal(){proCalY=new Date().getFullYear();proCalM=new Date().getMonth();renderProCal();}
+function calPrev(){proCalM--;if(proCalM<0){proCalM=11;proCalY--;}renderProCal();}
+function calNext(){proCalM++;if(proCalM>11){proCalM=0;proCalY++;}renderProCal();}
+
+function renderProCal(){
+  const el=document.getElementById('cal-grid');
+  const title=document.getElementById('cal-title');
+  if(!el||!title) return;
+  const months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  title.textContent=months[proCalM]+' '+proCalY;
+  const s=getSession();if(!s)return;
+  const db=getDB();
+  const rdvs=(db.rdvs||[]).filter(r=>r.proId===s.id&&r.status!=='cancelled');
+  let dow=new Date(proCalY,proCalM,1).getDay();dow=dow===0?6:dow-1;
+  const dim=new Date(proCalY,proCalM+1,0).getDate();
+  const today=new Date();
+  let html='';
+  for(let i=0;i<dow;i++) html+='<div class="cal-day empty"></div>';
+  for(let d=1;d<=dim;d++){
+    const ds=proCalY+'-'+String(proCalM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const dayRdvs=rdvs.filter(r=>r.date===ds);
+    const isToday=today.getFullYear()===proCalY&&today.getMonth()===proCalM&&today.getDate()===d;
+    const isPast=new Date(proCalY,proCalM,d)<new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    const confirmed=dayRdvs.filter(r=>r.status==='confirmed').length;
+    const pending=dayRdvs.filter(r=>r.status==='pending').length;
+    let dots='';
+    if(confirmed>0) dots+=`<div class="cal-dot" style="background:var(--sapphire)"></div>`;
+    if(pending>0) dots+=`<div class="cal-dot" style="background:var(--amber)"></div>`;
+    html+=`<div class="cal-day ${isToday?'today':''} ${dayRdvs.length>0?'has-rdv':''} ${isPast&&!isToday?'past':''}" onclick="selectProDay('${ds}')">${d}${dots?`<div style="display:flex;gap:2px">${dots}</div>`:''}</div>`;
+  }
+  el.innerHTML=html;
+}
+
+function selectProDay(ds){
+  const db=getDB();const s=getSession();if(!s)return;
+  const rdvs=(db.rdvs||[]).filter(r=>r.proId===s.id&&r.date===ds);
+  const card=document.getElementById('cal-day-card');
+  const title=document.getElementById('cal-day-title');
+  const content=document.getElementById('cal-day-content');
+  const d=new Date(ds+'T12:00:00');
+  title.textContent='📅 '+d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  card.dataset.date=ds;
+  card.style.display='block';
+  if(rdvs.length===0){content.innerHTML='<div style="text-align:center;padding:1rem;font-size:.78rem;color:var(--muted)">Aucun rendez-vous ce jour.</div>';return;}
+  content.innerHTML=rdvs.map(r=>rdvHtml(r,true)).join('');
+}
+
+function addBlockSlot(){
+  const date=document.getElementById('cal-day-card').dataset.date;
+  if(!date){toast2('Sélectionnez d\'abord un jour','red');return;}
+  const slot=prompt('Heure à bloquer (ex: 14:00) :');
+  if(!slot) return;
+  const db=getDB();
+  if(!db.blocked) db.blocked=[];
+  db.blocked.push({date,slot:slot.trim()});
+  saveDB(db);
+  toast2('🔒 Créneau '+slot+' bloqué le '+date,'green');
+}
+
+// ── Settings ──
+function saveSettings(){
+  const s=getSession();if(!s)return;
+  const db=getDB();const pro=db.pros.find(p=>p.id===s.id);if(!pro)return;
+  pro.fn=document.getElementById('set-fn').value.trim()||pro.fn;
+  pro.ln=document.getElementById('set-ln').value.trim()||pro.ln;
+  pro.spec=document.getElementById('set-spec').value||pro.spec;
+  pro.email=document.getElementById('set-email').value.trim()||pro.email;
+  pro.tel=document.getElementById('set-tel').value.trim();
+  pro.adresse=document.getElementById('set-adresse').value.trim();
+  pro.duration=parseInt(document.getElementById('set-duration').value)||50;
+  saveDB(db);
+  document.getElementById('tb-pro-name').textContent='Dr. '+pro.fn+' '+pro.ln;
+  document.getElementById('tb-pro-spec').textContent=pro.spec;
+  toast2('✅ Paramètres sauvegardés','green');
+}
+
+// ── Export ICS ──
+function exportICS(){
+  const s=getSession();if(!s)return;
+  const db=getDB();
+  const rdvs=(db.rdvs||[]).filter(r=>r.proId===s.id&&r.status==='confirmed');
+  if(!rdvs.length){toast2('Aucun RDV à exporter','red');return;}
+  let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//PsychoBook//FR\r\n';
+  rdvs.forEach(r=>{
+    const[yr,mo,dy]=r.date.split('-');const[hh,mm]=(r.slot||'09:00').split(':');
+    const s0=yr+mo+dy+'T'+hh+mm+'00';const e0=yr+mo+dy+'T'+String(parseInt(hh)+1).padStart(2,'0')+(mm||'00')+'00';
+    ics+=`BEGIN:VEVENT\r\nUID:${r.id}@psychobook\r\nDTSTART:${s0}\r\nDTEND:${e0}\r\nSUMMARY:RDV ${r.patFn} ${r.patLn}\r\nDESCRIPTION:${r.motif||''}\r\nEND:VEVENT\r\n`;
+  });
+  ics+='END:VCALENDAR';
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));
+  a.download='psychobook-rdvs.ics';a.click();
+  toast2('⬇️ Fichier .ICS téléchargé','green');
+}
+
+function copyLink(){
+  const url=document.getElementById('booking-url-display').textContent;
+  if(navigator.clipboard) navigator.clipboard.writeText(url).then(()=>toast2('📋 Lien copié !','green'));
+  else{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);toast2('📋 Lien copié !','green');}
+}
+
+// ── Panel switch ──
+function showPanel(id,btn){
+  document.querySelectorAll('.dash-panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('panel-'+id).classList.add('on');
+  document.querySelectorAll('.tnav-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  if(id==='calendar') renderProCal();
+  if(id==='rdvs'){const s=getSession();if(s)renderRdvList(currentFilter);}
+  if(id==='patients'){const s=getSession();if(s)renderPatients(s.id);}
+}
+
+// ── Email preview (opens print window) ──
+function previewEmail(type){
+  const s=getSession();const db=getDB();
+  const pro=s?db.pros.find(p=>p.id===s.id):{fn:'Sophie',ln:'Martin',spec:'Psychologue clinicienne'};
+  const rdv={patFn:'Jean',patLn:'Dupont',date:'2025-06-15',slot:'10:00',motif:'Anxiété'};
+  const titles={confirm:'✅ Confirmation de votre rendez-vous',r24:'⏰ Rappel — votre rendez-vous est demain',r2:'⏰ Rappel — votre rendez-vous est dans 2 heures',r15:'⏰ Rappel — votre rendez-vous est dans 15 minutes'};
+  const w=window.open('','_blank','width=680,height=700');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Email preview</title>
+  <style>body{font-family:'DM Sans',system-ui,sans-serif;max-width:560px;margin:40px auto;background:#F7F8FC;padding:20px}
+  .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.1)}
+  .hdr{background:linear-gradient(135deg,#1B4FD8,#0D2A7A);padding:28px 24px;color:#fff}
+  .hdr h1{font-size:1.1rem;font-weight:700;margin-bottom:4px}
+  .hdr p{font-size:.78rem;opacity:.8}
+  .body{padding:24px}
+  .recap{background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:14px;margin:16px 0;font-size:.82rem;line-height:1.8}
+  .rems{background:#F0FDF9;border:1px solid #99F6E4;border-radius:10px;padding:14px;font-size:.78rem;line-height:1.9}
+  .footer{text-align:center;font-size:.7rem;color:#A0AEC0;padding:16px 24px;border-top:1px solid #E2E8F0}
+  </style></head><body>
+  <div class="card">
+    <div class="hdr"><h1>${titles[type]||titles.confirm}</h1><p>Psycho<strong>Book</strong> · Édité par Psycholab</p></div>
+    <div class="body">
+      <p style="font-size:.9rem;color:#2D3748">Bonjour <strong>${rdv.patFn} ${rdv.patLn}</strong>,</p>
+      <p style="font-size:.82rem;color:#718096;margin:.5rem 0 1rem">Votre rendez-vous avec <strong>Dr. ${pro?.fn||''} ${pro?.ln||''}</strong> (${pro?.spec||''}) est confirmé.</p>
+      <div class="recap">
+        <div>📅 <strong>Date :</strong> dimanche 15 juin 2025</div>
+        <div>⏰ <strong>Heure :</strong> ${rdv.slot}</div>
+        <div>🩺 <strong>Praticien :</strong> Dr. ${pro?.fn||''} ${pro?.ln||''}</div>
+        <div>📋 <strong>Motif :</strong> ${rdv.motif}</div>
+        <div>📍 <strong>Type :</strong> Consultation en présentiel</div>
+      </div>
+      <div class="rems">
+        <div style="font-weight:700;color:#0D9488;margin-bottom:6px">📧 Rappels automatiques prévus</div>
+        <div>⏰ Rappel 24h avant le rendez-vous</div>
+        <div>⏰ Rappel 2h avant le rendez-vous</div>
+        <div>⏰ Rappel 15 min avant le rendez-vous</div>
+      </div>
+    </div>
+    <div class="footer">Psycho<strong>Book</strong> · Édité par <strong>Psycholab</strong> · Conforme RGPD · <a href="mailto:reservation.psycholab@gmail.com" style="color:#1B4FD8">Support</a></div>
+  </div>
+  <button onclick="window.print()" style="margin:20px auto;display:block;background:#1B4FD8;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.86rem;font-weight:600;cursor:pointer">🖨️ Imprimer / PDF</button>
+  </body></html>`);
+  w.document.close();
+}
+
+// ══════════════════════════════════
+//  BOOKING MODAL (Patient side)
+// ══════════════════════════════════
+let bkY=new Date().getFullYear(), bkM=new Date().getMonth();
+let bkDate='', bkSlot='';
+
+function openPatientBooking(){
+  const s=getSession();if(!s)return;
+  const db=getDB();const pro=db.pros.find(p=>p.id===s.id)||{fn:'Dr.',ln:'—',spec:'—'};
+  document.getElementById('bk-pro-name').textContent='Dr. '+pro.fn+' '+pro.ln;
+  document.getElementById('bk-pro-spec').textContent=pro.spec;
+  bkY=new Date().getFullYear();bkM=new Date().getMonth();bkDate='';bkSlot='';
+  resetBkSteps();
+  bkRenderCal();
+  document.getElementById('modal-booking').style.display='block';
+  document.body.style.overflow='hidden';
+}
+function closeBooking(){
+  document.getElementById('modal-booking').style.display='none';
+  document.body.style.overflow='';
+}
+function resetBkSteps(){
+  ['bk-s1','bk-s2','bk-s3'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('on');});
+  document.getElementById('bk-s1').classList.add('on');
+  document.getElementById('bk-slots-wrap').style.display='none';
+  document.getElementById('bk-no-avail').style.display='none';
+  const btn=document.getElementById('bk-s1-btn');btn.disabled=true;btn.style.opacity='.4';
+  ['bk-lbl-1','bk-lbl-2','bk-lbl-3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('act',i===0);});
+}
+
+function bkRenderCal(){
+  const el=document.getElementById('bk-cal-grid');
+  const title=document.getElementById('bk-cal-title');
+  if(!el||!title) return;
+  const months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  title.textContent=months[bkM]+' '+bkY;
+  const s=getSession();if(!s)return;
+  const db=getDB();const pro=db.pros.find(p=>p.id===s.id);
+  const avail=pro?.avail||{days:{mon:true,tue:true,wed:true,thu:true,fri:true},slots:[]};
+  const dayKeys=['sun','mon','tue','wed','thu','fri','sat'];
+  let dow=new Date(bkY,bkM,1).getDay();dow=dow===0?6:dow-1;
+  const dim=new Date(bkY,bkM+1,0).getDate();
+  const today=new Date();today.setHours(0,0,0,0);
+  let html='';
+  for(let i=0;i<dow;i++) html+='<div class="bk-day dis"></div>';
+  for(let d=1;d<=dim;d++){
+    const dt=new Date(bkY,bkM,d);
+    const ds=bkY+'-'+String(bkM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const dayKey=dayKeys[dt.getDay()];
+    const isPast=dt<today;
+    const hasDay=avail.days[dayKey];
+    const isToday=dt.getTime()===today.getTime();
+    const isSel=ds===bkDate;
+    if(isPast||!hasDay){html+=`<div class="bk-day dis">${d}</div>`;}
+    else{html+=`<div class="bk-day ${isToday?'bk-today':''} ${isSel&&!isToday?'bk-sel':''}" onclick="bkSelectDate('${ds}')">${d}</div>`;}
+  }
+  el.innerHTML=html;
+}
+
+function bkSelectDate(ds){
+  bkDate=ds;bkSlot='';
+  const s=getSession();if(!s)return;
+  const db=getDB();const pro=db.pros.find(p=>p.id===s.id);
+  const avail=pro?.avail||{slots:['09:00','10:00','11:00','14:00','15:00','16:00','17:00']};
+  const booked=(db.rdvs||[]).filter(r=>r.proId===s.id&&r.date===ds&&r.status!=='cancelled').map(r=>r.slot);
+  const blocked=(db.blocked||[]).filter(b=>b.date===ds).map(b=>b.slot);
+  const now=new Date();
+  const free=(avail.slots||[]).filter(sl=>{
+    if(booked.includes(sl)||blocked.includes(sl)) return false;
+    const dt=new Date(ds+'T'+sl+':00');
+    return dt>now;
+  });
+  const wrap=document.getElementById('bk-slots-wrap');
+  const noAvail=document.getElementById('bk-no-avail');
+  const grid=document.getElementById('bk-slots-grid');
+  const label=document.getElementById('bk-date-label');
+  const d=new Date(ds+'T12:00:00');
+  label.textContent=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  if(free.length===0){wrap.style.display='none';noAvail.style.display='block';}
+  else{noAvail.style.display='none';wrap.style.display='block';
+    grid.innerHTML=free.map(sl=>`<div class="bk-slot" onclick="bkPickSlot('${sl}',this)">${sl}</div>`).join('');
+  }
+  const btn=document.getElementById('bk-s1-btn');btn.disabled=true;btn.style.opacity='.4';
+  bkRenderCal();
+}
+
+function bkPickSlot(slot,el){
+  bkSlot=slot;
+  document.querySelectorAll('.bk-slot').forEach(b=>{b.classList.remove('sel');});
+  el.classList.add('sel');
+  const btn=document.getElementById('bk-s1-btn');btn.disabled=false;btn.style.opacity='1';
+}
+function bkPrev(){bkM--;if(bkM<0){bkM=11;bkY--;}bkRenderCal();}
+function bkNext(){bkM++;if(bkM>11){bkM=0;bkY++;}bkRenderCal();}
+
+function bkGoS2(){
+  if(!bkDate||!bkSlot){toast2('Choisissez une date et un créneau','red');return;}
+  document.getElementById('bk-s1').classList.remove('on');
+  document.getElementById('bk-s2').classList.add('on');
+  document.getElementById('bk-lbl-1').classList.remove('act');
+  document.getElementById('bk-lbl-2').classList.add('act');
+  const s=getSession();const db=getDB();const pro=db.pros.find(p=>p.id===s.id);
+  const d=new Date(bkDate+'T12:00:00');
+  const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('bk-recap-content').innerHTML=
+    `📅 <strong>${label}</strong><br/>⏰ <strong>${bkSlot}</strong><br/>🩺 Dr. ${pro?.fn||''} ${pro?.ln||''}<br/>📍 ${pro?.adresse||'Cabinet médical'}`;
+}
+function bkGoS1(){
+  document.getElementById('bk-s2').classList.remove('on');
+  document.getElementById('bk-s1').classList.add('on');
+  document.getElementById('bk-lbl-2').classList.remove('act');
+  document.getElementById('bk-lbl-1').classList.add('act');
+}
+
+function bkConfirm(){
+  const fn=document.getElementById('bk-fn').value.trim();
+  const ln=document.getElementById('bk-ln').value.trim();
+  const email=document.getElementById('bk-email').value.trim();
+  const rgpd=document.getElementById('bk-rgpd').checked;
+  if(!fn||!ln){toast2('Prénom et nom requis','red');return;}
+  if(!email||!email.includes('@')){toast2('Email valide requis','red');return;}
+  if(!rgpd){toast2('Veuillez accepter la politique de confidentialité','red');return;}
+  const tel=document.getElementById('bk-tel').value.trim();
+  const motif=document.getElementById('bk-motif').value;
+  const msg=document.getElementById('bk-msg').value.trim();
+  const s=getSession();const db=getDB();const pro=db.pros.find(p=>p.id===s.id);
+  const rdv={id:'rdv-'+Date.now(),proId:s.id,proFn:pro?.fn||'',proLn:pro?.ln||'',proEmail:pro?.email||'',spec:pro?.spec||'',
+    patFn:fn,patLn:ln,patEmail:email,patTel:tel,
+    date:bkDate,slot:bkSlot,type:'presentiel',motif,message:msg,
+    status:'confirmed',reminders:{r24:false,r2:false,r15:false},
+    createdAt:new Date().toISOString()};
+  if(!db.rdvs) db.rdvs=[];
+  db.rdvs.push(rdv);saveDB(db);
+  scheduleReminders(rdv);
+  // Update dashboard
+  updateStats(s.id);renderNextRdvs(s.id);renderRdvList(currentFilter);renderProCal();renderPatients(s.id);
+  // Step 3
+  document.getElementById('bk-s2').classList.remove('on');
+  document.getElementById('bk-s3').classList.add('on');
+  document.getElementById('bk-lbl-2').classList.remove('act');
+  document.getElementById('bk-lbl-3').classList.add('act');
+  const d=new Date(bkDate+'T12:00:00');
+  const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('bk-success-recap').innerHTML=
+    `👤 <strong>${fn} ${ln}</strong><br/>📅 ${label}<br/>⏰ ${bkSlot}<br/>🩺 Dr. ${pro?.fn||''} ${pro?.ln||''}<br/>${motif?'📋 '+motif:''}`;
+  document.getElementById('bk-conf-email').textContent=email;
+  sendConfirmEmail(rdv);
+  toast2('✅ RDV confirmé ! Email envoyé à '+email,'green');
+}
+
+function addToGcal(){
+  const s=getSession();const db=getDB();const pro=db.pros.find(p=>p.id===s.id);
+  const d=new Date(bkDate+'T'+bkSlot+':00');
+  const end=new Date(d.getTime()+(pro?.duration||50)*60*1000);
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Consultation — Dr. '+pro?.fn+' '+pro?.ln)}&dates=${fmt(d)}/${fmt(end)}&details=${encodeURIComponent('PsychoBook — Consultation médicale\n'+pro?.adresse||'')}`;
+  window.open(url,'_blank');
+}
+
+// ── Email sending ──
+function sendConfirmEmail(rdv){
+  if(typeof emailjs==='undefined') return;
+  const d=new Date(rdv.date+'T12:00:00');
+  const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  emailjs.send('service_psychobook','template_confirm',{
+    to_email:rdv.patEmail,to_name:rdv.patFn+' '+rdv.patLn,
+    pro_name:'Dr. '+rdv.proFn+' '+rdv.proLn,pro_spec:rdv.spec,
+    rdv_date:label,rdv_slot:rdv.slot,motif:rdv.motif||'—',
+    subject:'✅ Votre rendez-vous PsychoBook est confirmé — '+label+' à '+rdv.slot
+  }).catch(e=>console.warn('EmailJS:',e));
+}
+
+function scheduleReminders(rdv){
+  const rdvDt=new Date(rdv.date+'T'+rdv.slot+':00').getTime();
+  const now=Date.now();
+  [{delay:rdvDt-now-24*3600000,key:'r24',label:'24h'},{delay:rdvDt-now-2*3600000,key:'r2',label:'2h'},{delay:rdvDt-now-15*60000,key:'r15',label:'15min'}]
+  .forEach(({delay,key,label})=>{
+    if(delay>0) setTimeout(()=>{
+      const db=getDB();const r=(db.rdvs||[]).find(x=>x.id===rdv.id);
+      if(r&&r.status!=='cancelled'&&!(r.reminders&&r.reminders[key])){
+        sendReminderEmail(r,label);
+        if(!r.reminders)r.reminders={};r.reminders[key]=true;saveDB(db);
+      }
+    },delay);
+  });
+}
+
+function sendReminderEmail(rdv,label){
+  if(typeof emailjs==='undefined') return;
+  const d=new Date(rdv.date+'T12:00:00');
+  emailjs.send('service_psychobook','template_reminder',{
+    to_email:rdv.patEmail,to_name:rdv.patFn+' '+rdv.patLn,
+    rdv_date:d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}),
+    rdv_slot:rdv.slot,reminder_label:label,
+    pro_name:'Dr. '+rdv.proFn+' '+rdv.proLn,
+    subject:`⏰ Rappel ${label} — votre rendez-vous du ${rdv.date} à ${rdv.slot}`
+  }).catch(e=>console.warn('Reminder email:',e));
+}
+
+function sendReminderManual(id){
+  const db=getDB();const r=(db.rdvs||[]).find(x=>x.id===id);if(!r)return;
+  toast2('📧 Rappel envoyé à '+r.patEmail,'green');
+}
+
+// ── Reschedule on load ──
+function rescheduleAll(){
+  const db=getDB();const now=Date.now();
+  (db.rdvs||[]).filter(r=>r.status==='confirmed').forEach(rdv=>{
+    const dt=new Date(rdv.date+'T'+(rdv.slot||'09:00')+':00').getTime();
+    if(dt<now) return;
+    [{delay:dt-now-24*3600000,key:'r24',label:'24h'},{delay:dt-now-2*3600000,key:'r2',label:'2h'},{delay:dt-now-15*60000,key:'r15',label:'15min'}]
+    .forEach(({delay,key,label})=>{
+      if(delay>0&&!(rdv.reminders&&rdv.reminders[key]))
+        setTimeout(()=>{
+          const db2=getDB();const r=(db2.rdvs||[]).find(x=>x.id===rdv.id);
+          if(r&&r.status!=='cancelled'&&!(r.reminders&&r.reminders[key])){
+            sendReminderEmail(r,label);if(!r.reminders)r.reminders={};r.reminders[key]=true;saveDB(db2);
+          }
+        },delay);
+    });
+  });
+}
+
+// ══ INIT ══
+function init(){
+  seedDemo();
+  const s=getSession();
+  if(s){
+    const db=getDB();const pro=db.pros?.find(p=>p.id===s.id);
+    if(pro){closeAuthModal();loadProDash(pro);}
+    else showView('v-landing');
+  } else {
+    showView('v-landing');
+  }
+  rescheduleAll();
+}
+init();
+</script>
+</body>
+</html>
