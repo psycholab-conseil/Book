@@ -212,18 +212,20 @@ a{text-decoration:none;color:inherit}
 /* ══ DASHBOARD PRO ══ */
 #v-pro{background:var(--surface);min-height:100vh}
 .pro-layout{display:flex;flex-direction:column;min-height:100vh}
-.topbar{background:#fff;border-bottom:1px solid var(--line);padding:.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm)}
-.topbar-left{display:flex;align-items:center;gap:.75rem}
-.tb-logo{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--ink)}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);gap:.5rem;min-height:52px}
+.topbar-left{display:flex;align-items:center;gap:.5rem;min-width:0;flex:1}
+.tb-logo{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--ink);flex-shrink:0}
 .tb-logo span{color:var(--sapphire)}
-.tb-sep{width:1px;height:18px;background:var(--line)}
-.tb-pro-name{font-size:.78rem;font-weight:600;color:var(--slate)}
-.tb-spec{font-size:.68rem;color:var(--muted)}
-.tb-right{display:flex;align-items:center;gap:.6rem}
-.tb-notif-dot{width:8px;height:8px;background:var(--rose);border-radius:50%;flex-shrink:0}
-.tb-btn{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.42rem .75rem;font-size:.75rem;font-weight:500;color:var(--slate);transition:all var(--anim)}
+.tb-sep{width:1px;height:16px;background:var(--line);flex-shrink:0}
+.tb-pro-name{font-size:.72rem;font-weight:600;color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.tb-spec{font-size:.62rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.tb-right{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
+.tb-notif-dot{width:7px;height:7px;background:var(--rose);border-radius:50%;flex-shrink:0}
+.tb-btn{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.38rem .6rem;font-size:.7rem;font-weight:500;color:var(--slate);transition:all var(--anim);white-space:nowrap}
 .tb-btn:hover{border-color:var(--sapphire);color:var(--sapphire)}
-.tb-trial-badge{background:linear-gradient(90deg,var(--sapphire),var(--emerald));color:#fff;border:none;border-radius:99px;padding:.3rem .8rem;font-size:.68rem;font-weight:700}
+.tb-btn.primary-btn{background:var(--sapphire);color:#fff;border-color:var(--sapphire);font-weight:700}
+.tb-btn.primary-btn:hover{background:var(--sapphire-d)}
+.tb-trial-badge{background:linear-gradient(90deg,var(--sapphire),var(--emerald));color:#fff;border:none;border-radius:99px;padding:.25rem .65rem;font-size:.62rem;font-weight:700;white-space:nowrap}
 
 /* Tab nav */
 .tab-nav{background:#fff;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;gap:0;padding:0 1rem;-webkit-overflow-scrolling:touch}
@@ -749,8 +751,8 @@ a{text-decoration:none;color:inherit}
       <div class="tb-right">
         <div id="tb-notif-dot" class="tb-notif-dot" style="display:none"></div>
         <span id="tb-trial-badge" class="tb-trial-badge" style="display:none">Essai</span>
-        <button class="tb-btn" onclick="openPatientBooking()">🔗 Ma page patient</button>
-        <button class="tb-btn" onclick="doLogout()">Déconnexion</button>
+        <button class="tb-btn primary-btn" onclick="openShareSheet()">🔗 Partager</button>
+        <button class="tb-btn" onclick="doLogout()">Quitter</button>
       </div>
     </div>
 
@@ -794,9 +796,9 @@ a{text-decoration:none;color:inherit}
             <button onclick="copyLink()" style="background:none;border:none;color:var(--sapphire);font-size:.72rem;font-weight:700;cursor:pointer;flex-shrink:0">Copier</button>
           </div>
           <div class="blc-actions">
-            <button class="blc-btn primary" onclick="openPatientBooking()">👁️ Prévisualiser</button>
-            <button class="blc-btn secondary" onclick="copyLink()">📋 Copier le lien</button>
-            <button class="blc-btn secondary" onclick="shareWhatsApp()">📱 Partager WhatsApp</button>
+            <button class="blc-btn primary" onclick="openShareSheet()">🔗 Partager ma page</button>
+            <button class="blc-btn secondary" onclick="openPatientBooking()">👁️ Prévisualiser</button>
+            <button class="blc-btn secondary" onclick="copyLink()">📋 Copier</button>
             <button class="blc-btn secondary" onclick="exportICS()">⬇️ Export .ICS</button>
           </div>
         </div>
@@ -1408,6 +1410,38 @@ a{text-decoration:none;color:inherit}
   </div>
 </div>
 
+<!-- ════ SHARE SHEET MODAL ════ -->
+<div class="modal-overlay" id="modal-sharesheet">
+  <div class="modal-box" style="max-width:380px">
+    <div class="modal-hdr">
+      <div class="modal-hdr-title">🔗 Partager ma page patient</div>
+      <button class="modal-close" onclick="closeModal('sharesheet')">✕</button>
+    </div>
+    <p style="font-size:.8rem;color:var(--slate);margin-bottom:1rem">Partagez ce lien — vos patients réservent en autonomie, sans compte requis.</p>
+    <div class="blc-url" style="margin-bottom:.85rem">
+      <span id="share-url-display" style="font-family:'DM Mono',monospace;font-size:.74rem;color:var(--sapphire);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+      <button onclick="copyLink()" style="background:none;border:none;color:var(--sapphire);font-size:.72rem;font-weight:700;cursor:pointer;flex-shrink:0">Copier</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.5rem">
+      <button onclick="copyLink();closeModal('sharesheet')" style="display:flex;align-items:center;gap:.75rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.75rem 1rem;font-size:.84rem;font-weight:600;color:var(--ink);text-align:left;transition:all var(--anim)">
+        <span style="font-size:1.2rem">📋</span><div><div>Copier le lien</div><div style="font-size:.68rem;font-weight:400;color:var(--muted)">Coller dans SMS ou email</div></div>
+      </button>
+      <button onclick="shareWhatsApp();closeModal('sharesheet')" style="display:flex;align-items:center;gap:.75rem;background:#E7F7E9;border:1px solid #B2DFBB;border-radius:var(--r-md);padding:.75rem 1rem;font-size:.84rem;font-weight:600;color:#1B5E20;text-align:left;transition:all var(--anim)">
+        <span style="font-size:1.2rem">📱</span><div><div>Partager via WhatsApp</div><div style="font-size:.68rem;font-weight:400;color:#388E3C">Envoyer à vos patients</div></div>
+      </button>
+      <button onclick="openPatientBooking();closeModal('sharesheet')" style="display:flex;align-items:center;gap:.75rem;background:var(--sapphire-l);border:1px solid var(--sapphire-m);border-radius:var(--r-md);padding:.75rem 1rem;font-size:.84rem;font-weight:600;color:var(--sapphire);text-align:left;transition:all var(--anim)">
+        <span style="font-size:1.2rem">👁️</span><div><div>Prévisualiser ma page</div><div style="font-size:.68rem;font-weight:400;color:var(--sapphire)">Vue patient de votre agenda</div></div>
+      </button>
+      <button onclick="exportICS();closeModal('sharesheet')" style="display:flex;align-items:center;gap:.75rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.75rem 1rem;font-size:.84rem;font-weight:600;color:var(--slate);text-align:left;transition:all var(--anim)">
+        <span style="font-size:1.2rem">⬇️</span><div><div>Exporter mes RDV (.ics)</div><div style="font-size:.68rem;font-weight:400;color:var(--muted)">Compatible Google Agenda & Outlook</div></div>
+      </button>
+    </div>
+    <div style="margin-top:1rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.75rem;font-size:.72rem;color:var(--muted)">
+      💡 <strong style="color:var(--ink)">Conseil :</strong> Ajoutez le lien dans votre bio Instagram, votre site web ou votre signature email pour recevoir des RDV automatiquement.
+    </div>
+  </div>
+</div>
+
 <script>
 // ══════════════════════════════════
 //  DATA LAYER
@@ -1428,7 +1462,8 @@ function seedDemo(){
   const trialStart=new Date(today);trialStart.setDate(trialStart.getDate()-2);
   db.pros=[{
     id:'pro-demo',fn:'Amira',ln:'Ben Salah',email:'dr.bensalah@cabinet.tn',
-    spec:'Psychiatre',tel:'+216 71 234 567',adresse:'12 Avenue de la Liberté, Tunis',
+    spec:'Psychiatre',tel:'+216 71 234 567',
+    adresse:'Bureau N102, BLOC B, Résidence ERRIHAB, Lac 1, Tunis 1053',
     ville:'Tunis',duration:50,price:100,consultType:'Th. individuelle',gcal:false,lang:'fr',
     subscription:{plan:'trial',status:'trial',startDate:trialStart.toISOString(),trialDays:30},
     avail:{days:{mon:true,tue:true,wed:true,thu:true,fri:true,sat:false,sun:false},
@@ -1767,11 +1802,21 @@ function sendReminderManual(id){
 }
 function addRdvToGcal(id){
   const db=getDB();const r=(db.rdvs||[]).find(x=>x.id===id);if(!r)return;
+  const s=getSession();const pro=s?db.pros.find(p=>p.id===s.id):null;
   const d=new Date(r.date+'T'+r.slot+':00');
-  const end=new Date(d.getTime()+50*60*1000);
-  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
-  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('RDV '+r.patFn+' '+r.patLn)}&dates=${fmt(d)}/${fmt(end)}&details=${encodeURIComponent('Patient: '+r.patEmail+'\nMotif: '+(r.motif||'—'))}`;
-  window.open(url,'_blank');
+  const end=new Date(d.getTime()+(pro?.duration||50)*60*1000);
+  const fmtDt=dt=>{const pad=n=>String(n).padStart(2,'0');return `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;}
+  const typeLabel=(pro?.consultType||'Consultation')+(pro?.price?' ('+pro.price+' DT/'+pro.duration+'min)':'');
+  const adresse=pro?.adresse||'';
+  const params=new URLSearchParams({
+    action:'TEMPLATE',
+    text:typeLabel+' — '+r.patFn+' '+r.patLn+' & Dr. '+r.proLn,
+    dates:fmtDt(d)+'/'+fmtDt(end),
+    details:'PsychoBook — Patient: '+r.patEmail+(r.patTel?' — Tél: '+r.patTel:'')+(r.motif?' — Motif: '+r.motif:'')+(adresse?' — Adresse: '+adresse:''),
+    location:adresse,
+    ctz:'Africa/Tunis'
+  });
+  window.open('https://calendar.google.com/calendar/render?'+params.toString(),'_blank');
 }
 
 // ══ PATIENTS ══
@@ -1877,6 +1922,16 @@ function copyLink(){
   const url=document.getElementById('booking-url-display').textContent;
   navigator.clipboard?.writeText('https://'+url).catch(()=>{});
   toast2('🔗 Lien copié dans le presse-papier','green');
+}
+function openShareSheet(){
+  const url=document.getElementById('booking-url-display').textContent;
+  const el=document.getElementById('share-url-display');
+  if(el) el.textContent=url;
+  if(navigator.share){
+    navigator.share({title:'Réservation — PsychoBook',text:'Prenez rendez-vous en ligne :',url:'https://'+url}).catch(()=>{openModal('sharesheet');});
+  } else {
+    openModal('sharesheet');
+  }
 }
 function shareWhatsApp(){
   const url=document.getElementById('booking-url-display').textContent;
@@ -2124,19 +2179,51 @@ function addToGcal(){
   const s=getSession();const db=getDB();const pro=db.pros.find(p=>p.id===s.id);
   const d=new Date(bkDate+'T'+bkSlot+':00');
   const end=new Date(d.getTime()+(pro?.duration||50)*60*1000);
-  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  const fmt=dt=>{
+    const pad=n=>String(n).padStart(2,'0');
+    return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`.replace(/\d{8}T\d{6}/, m=>m);
+  };
+  const fmtDt=dt=>{const pad=n=>String(n).padStart(2,'0');return `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;}
   const typeLabel=(pro?.consultType||'Consultation')+(pro?.price?' ('+pro.price+' DT/'+pro.duration+'min)':'');
-  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(typeLabel+' — Dr. '+pro?.fn+' '+pro?.ln)}&dates=${fmt(d)}/${fmt(end)}&details=${encodeURIComponent('PsychoBook — Consultation médicale\nAdresse : '+(pro?.adresse||''))}&location=${encodeURIComponent(pro?.adresse||'')}`;
-  window.open(url,'_blank');
+  const title=typeLabel+' — Dr. '+pro?.fn+' '+pro?.ln;
+  const adresse=pro?.adresse||'';
+  const details='PsychoBook — Consultation médicale'+(adresse?'\nAdresse : '+adresse:'')+(pro?.tel?'\nTél : '+pro.tel:'');
+  const params=new URLSearchParams({
+    action:'TEMPLATE',
+    text:title,
+    dates:fmtDt(d)+'/'+fmtDt(end),
+    details:details,
+    location:adresse,
+    ctz:'Africa/Tunis'
+  });
+  window.open('https://calendar.google.com/calendar/render?'+params.toString(),'_blank');
 }
 function addToIcal(){
   const s=getSession();const db=getDB();const pro=db.pros.find(p=>p.id===s.id);
   const d=new Date(bkDate+'T'+bkSlot+':00');
   const end=new Date(d.getTime()+(pro?.duration||50)*60*1000);
-  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  const fmtDt=dt=>{const pad=n=>String(n).padStart(2,'0');return `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;}
   const typeLabel=(pro?.consultType||'Consultation')+(pro?.price?' ('+pro.price+' DT/'+pro.duration+'min)':'');
-  const ics=`BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//PsychoBook//TN//FR\nBEGIN:VEVENT\nSUMMARY:${typeLabel} — Dr. ${pro?.fn} ${pro?.ln}\nDTSTART:${fmt(d)}\nDTEND:${fmt(end)}\nLOCATION:${pro?.adresse||''}\nDESCRIPTION:PsychoBook — Consultation médicale\\nAdresse : ${pro?.adresse||''}\nEND:VEVENT\nEND:VCALENDAR`;
-  const blob=new Blob([ics],{type:'text/calendar'});
+  const adresse=pro?.adresse||'';
+  const uid='rdv-'+Date.now()+'@psychobook.tn';
+  const ics=[
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//PsychoBook//TN//FR',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    'UID:'+uid,
+    'SUMMARY:'+typeLabel+' — Dr. '+pro?.fn+' '+pro?.ln,
+    'DTSTART;TZID=Africa/Tunis:'+fmtDt(d),
+    'DTEND;TZID=Africa/Tunis:'+fmtDt(end),
+    'LOCATION:'+adresse,
+    'DESCRIPTION:PsychoBook — Consultation médicale'+(adresse?' — Adresse : '+adresse:'')+(pro?.tel?' — Tél : '+pro.tel:''),
+    'STATUS:CONFIRMED',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rdv-psychobook.ics';a.click();
   toast2('📆 Fichier .ics téléchargé','green');
 }
