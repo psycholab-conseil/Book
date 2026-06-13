@@ -848,6 +848,186 @@ a{text-decoration:none;color:inherit}
 .tb-profile-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--sapphire),var(--emerald));display:flex;align-items:center;justify-content:center;font-size:.7rem;overflow:hidden;flex-shrink:0}
 .tb-profile-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 
+
+/* ══ PAGE RDV PATIENT ══ */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0D1117;--slate:#4A5568;--muted:#718096;--ghost:#A0AEC0;
+  --line:#E2E8F0;--surface:#F7F8FC;--white:#fff;
+  --sapphire:#1B4FD8;--sapphire-d:#1238A8;--sapphire-l:#EEF2FF;--sapphire-m:#C7D2FE;
+  --emerald:#0D9488;--emerald-d:#0F766E;--emerald-l:#CCFBF1;
+  --amber:#D97706;--amber-l:#FEF3C7;
+  --rose:#E11D48;--rose-l:#FFE4E6;
+  --r-sm:8px;--r-md:12px;--r-lg:18px;--r-xl:24px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 16px rgba(0,0,0,.08);--shadow-lg:0 20px 48px rgba(0,0,0,.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:#f0f4ff;color:var(--ink);min-height:100dvh;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font-family:"DM Sans",sans-serif}
+input,select,textarea{appearance:none;-webkit-appearance:none}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:.6rem 1.2rem;border-radius:99px;font-size:.8rem;font-weight:600;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── NOT FOUND ── */
+#not-found{display:none;min-height:100dvh;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
+#not-found.on{display:flex}
+.nf-ico{font-size:3rem;margin-bottom:1rem}
+.nf-title{font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:.5rem}
+.nf-sub{font-size:.86rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem}
+.nf-btn{background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-md);padding:.75rem 1.5rem;font-size:.88rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+
+/* ── LOADING ── */
+#loading{position:fixed;inset:0;background:#f0f4ff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100}
+#loading.hide{display:none}
+.loading-spinner{width:40px;height:40px;border:3px solid var(--sapphire-m);border-top-color:var(--sapphire);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:.82rem;color:var(--muted)}
+
+/* ── HEADER ── */
+.bp-header{background:linear-gradient(145deg,#1B4FD8 0%,#0D9488 100%);padding:2rem 1.25rem 4.5rem;text-align:center;position:relative;overflow:hidden}
+.bp-header::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.bp-wave{position:absolute;bottom:-1px;left:0;right:0;height:48px;background:#f0f4ff;border-radius:50% 50% 0 0 / 100% 100% 0 0}
+.bp-av{width:88px;height:88px;border-radius:50%;border:4px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 1rem;position:relative;z-index:1;overflow:hidden;backdrop-filter:blur(8px);box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.bp-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.bp-name{font-family:"Playfair Display",serif;font-size:1.5rem;font-weight:900;color:#fff;position:relative;z-index:1;text-shadow:0 2px 8px rgba(0,0,0,.15)}
+.bp-titre{font-size:.74rem;color:rgba(255,255,255,.75);margin-top:.25rem;position:relative;z-index:1}
+.bp-spec{font-size:.84rem;color:rgba(255,255,255,.88);margin-top:.2rem;position:relative;z-index:1;font-weight:500}
+.bp-location{font-size:.72rem;color:rgba(255,255,255,.65);margin-top:.3rem;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:.3rem}
+.bp-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:.35rem;margin-top:.75rem;position:relative;z-index:1}
+.bp-badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:.22rem .65rem;font-size:.65rem;font-weight:600;color:#fff;backdrop-filter:blur(4px)}
+.bp-stats{display:flex;justify-content:center;gap:2rem;margin-top:1rem;position:relative;z-index:1}
+.bp-stat-val{font-size:1.1rem;font-weight:800;color:#fff}
+.bp-stat-lbl{font-size:.62rem;color:rgba(255,255,255,.65);margin-top:.05rem}
+
+/* ── MAIN CARD ── */
+.bp-card{background:#fff;border-radius:var(--r-xl);box-shadow:var(--shadow-lg);margin:-2rem 1rem 0;position:relative;z-index:2;overflow:hidden}
+
+/* ── BIO ── */
+.bp-bio-wrap{padding:1.1rem 1.1rem .75rem}
+.bp-bio-text{font-size:.82rem;color:var(--slate);line-height:1.75;white-space:pre-wrap}
+.bp-info-pills{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.65rem}
+.bp-pill{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:.25rem .7rem;font-size:.7rem;color:var(--slate);display:flex;align-items:center;gap:.3rem;text-decoration:none}
+.bp-pill:hover{border-color:var(--sapphire-m);color:var(--sapphire)}
+.bp-map-link{display:flex;align-items:center;gap:.5rem;background:var(--sapphire-l);border:1px solid var(--sapphire-m);border-radius:var(--r-sm);padding:.6rem .85rem;font-size:.76rem;color:var(--sapphire);font-weight:600;margin-top:.65rem;text-decoration:none;border-radius:var(--r-md)}
+
+/* ── DIVIDER ── */
+.bp-divider{height:1px;background:var(--line);margin:0 1.1rem}
+
+/* ── SERVICES ── */
+.bp-services-wrap{padding:1rem 1.1rem}
+.bp-section-lbl{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.7rem}
+.bp-svc{display:flex;align-items:center;gap:.75rem;border:1.5px solid var(--line);border-radius:var(--r-lg);padding:.9rem 1rem;margin-bottom:.55rem;cursor:pointer;transition:all .2s;background:#fff;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+.bp-svc:hover,.bp-svc:active{border-color:var(--sapphire-m);background:var(--sapphire-l)}
+.bp-svc.selected{border-color:var(--sapphire);background:var(--sapphire-l);box-shadow:0 0 0 3px var(--sapphire-m)}
+.bp-svc-ico{width:42px;height:42px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.bp-svc-name{font-size:.88rem;font-weight:700;color:var(--ink)}
+.bp-svc-meta{font-size:.72rem;color:var(--muted);margin-top:.06rem}
+.bp-svc-price{font-size:.92rem;font-weight:800;color:var(--sapphire);margin-left:auto;white-space:nowrap;padding-left:.5rem}
+
+/* ── CALENDAR ── */
+.bp-cal-wrap{padding:.75rem 1.1rem 1rem}
+.bp-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem}
+.bp-cal-title{font-family:"Playfair Display",serif;font-size:.95rem;font-weight:700;color:var(--ink)}
+.bp-cal-nav{width:34px;height:34px;border:1.5px solid var(--line);border-radius:var(--r-sm);background:#fff;font-size:.85rem;color:var(--slate);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.bp-cal-nav:hover{border-color:var(--sapphire);color:var(--sapphire)}
+.bp-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.bp-dow div{text-align:center;font-size:.6rem;font-weight:700;color:var(--ghost);padding:.2rem 0}
+.bp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.bp-day{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.78rem;cursor:pointer;transition:all .18s;position:relative;font-weight:500;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+.bp-day.avail:hover{background:var(--sapphire-l);color:var(--sapphire)}
+.bp-day.avail:active{background:var(--sapphire-m)}
+.bp-day.today{background:var(--sapphire);color:#fff;font-weight:700}
+.bp-day.selected:not(.today){background:var(--sapphire-l);color:var(--sapphire);font-weight:700;box-shadow:inset 0 0 0 2px var(--sapphire-m)}
+.bp-day.past,.bp-day.unavail{color:var(--line);cursor:default;pointer-events:none}
+.bp-day.empty{cursor:default}
+
+/* ── SLOTS ── */
+.bp-slots-wrap{padding:0 1.1rem 1rem}
+.bp-slots-day{font-size:.78rem;font-weight:700;color:var(--ink);margin-bottom:.55rem}
+.bp-slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem}
+.bp-slot{border:1.5px solid var(--sapphire-m);border-radius:var(--r-sm);padding:.55rem;text-align:center;font-size:.8rem;font-weight:600;color:var(--sapphire);background:#fff;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+.bp-slot:hover,.bp-slot:active{background:var(--sapphire-l)}
+.bp-slot.selected{background:var(--sapphire);color:#fff;border-color:var(--sapphire)}
+.bp-slot.taken{border-color:var(--line);color:var(--ghost);cursor:default;text-decoration:line-through}
+.bp-no-slots{background:var(--surface);border-radius:var(--r-sm);padding:.75rem;text-align:center;font-size:.76rem;color:var(--muted);grid-column:1/-1}
+
+/* ── CTA ── */
+.bp-cta-wrap{padding:0 1.1rem 1.25rem}
+.bp-cta{width:100%;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-lg);padding:1rem;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.5rem;box-shadow:0 4px 20px rgba(27,79,216,.35)}
+.bp-cta:hover:not(:disabled){background:var(--sapphire-d);transform:translateY(-1px);box-shadow:0 6px 24px rgba(27,79,216,.4)}
+.bp-cta:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none}
+
+/* ── FORM STEP ── */
+.bp-form-wrap{display:none;padding:1.1rem}
+.bp-form-wrap.on{display:block}
+.bp-back-btn{display:flex;align-items:center;gap:.4rem;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:.4rem .85rem;font-size:.76rem;font-weight:600;color:var(--slate);cursor:pointer;margin-bottom:1rem;transition:all .2s}
+.bp-back-btn:hover{border-color:var(--sapphire-m);color:var(--sapphire)}
+.bp-summary{background:linear-gradient(135deg,var(--sapphire-l),#F0FDF9);border:1.5px solid var(--sapphire-m);border-radius:var(--r-lg);padding:1rem;margin-bottom:1rem;font-size:.8rem;color:var(--slate);line-height:1.85}
+.bp-summary strong{color:var(--sapphire);font-weight:700}
+.bp-field{margin-bottom:.7rem}
+.bp-field label{display:block;font-size:.71rem;font-weight:700;color:var(--slate);margin-bottom:.28rem}
+.bp-field label span{font-weight:400;color:var(--ghost)}
+.bp-input{width:100%;border:1.5px solid var(--line);border-radius:var(--r-md);padding:.6rem .85rem;font-size:.86rem;color:var(--ink);background:#fff;transition:border-color .2s}
+.bp-input:focus{outline:none;border-color:var(--sapphire);box-shadow:0 0 0 3px var(--sapphire-l)}
+.bp-select{width:100%;border:1.5px solid var(--line);border-radius:var(--r-md);padding:.6rem .85rem;font-size:.86rem;color:var(--ink);background:#fff;transition:border-color .2s}
+.bp-select:focus{outline:none;border-color:var(--sapphire)}
+.bp-textarea{width:100%;border:1.5px solid var(--line);border-radius:var(--r-md);padding:.6rem .85rem;font-size:.84rem;color:var(--ink);min-height:72px;resize:none;line-height:1.55;transition:border-color .2s}
+.bp-textarea:focus{outline:none;border-color:var(--sapphire);box-shadow:0 0 0 3px var(--sapphire-l)}
+.bp-rgpd{display:flex;align-items:flex-start;gap:.55rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.65rem;margin-bottom:.85rem;font-size:.72rem;color:var(--muted);line-height:1.55;cursor:pointer}
+.bp-rgpd input{margin-top:.12rem;accent-color:var(--sapphire);flex-shrink:0;width:15px;height:15px}
+.bp-submit{width:100%;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-lg);padding:1rem;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(27,79,216,.3)}
+.bp-submit:hover{background:var(--sapphire-d)}
+
+/* ── SUCCESS ── */
+.bp-success-wrap{display:none;padding:2rem 1.25rem;text-align:center}
+.bp-success-wrap.on{display:block}
+.bp-success-ico{font-size:3.5rem;margin-bottom:.75rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.bp-success-title{font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:800;color:var(--ink);margin-bottom:.5rem}
+.bp-success-sub{font-size:.84rem;color:var(--slate);line-height:1.7;margin-bottom:1.25rem}
+.bp-success-detail{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:1rem;margin-bottom:1rem;text-align:left;font-size:.8rem;line-height:1.85;color:var(--slate)}
+.bp-reminders{background:var(--emerald-l);border:1px solid rgba(13,148,136,.2);border-radius:var(--r-md);padding:.85rem;margin-bottom:1rem;text-align:left}
+.bp-rem-title{font-size:.76rem;font-weight:700;color:var(--emerald-d);margin-bottom:.5rem}
+.bp-rem-item{font-size:.74rem;color:var(--emerald-d);display:flex;align-items:center;gap:.45rem;margin-bottom:.3rem}
+.bp-action-btn{width:100%;border:none;border-radius:var(--r-md);padding:.75rem;font-size:.84rem;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:.5rem;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.bp-action-btn.gcal{background:#1A73E8;color:#fff}
+.bp-action-btn.ical{background:var(--surface);color:var(--ink);border:1.5px solid var(--line)}
+.bp-action-btn.wa{background:#25D366;color:#fff}
+.bp-action-btn.new{background:var(--surface);color:var(--slate);border:1px solid var(--line)}
+
+/* ── SHARE BAR ── */
+.bp-share-bar{display:flex;gap:.5rem;padding:.75rem 1.1rem;border-top:1px solid var(--line);flex-wrap:wrap}
+.bp-share-btn{flex:1;min-width:80px;border:1.5px solid var(--line);border-radius:var(--r-md);padding:.52rem .5rem;font-size:.72rem;font-weight:600;color:var(--slate);background:#fff;cursor:pointer;transition:all .2s;text-align:center}
+.bp-share-btn:hover{border-color:var(--sapphire-m);color:var(--sapphire)}
+.bp-share-btn.wa{border-color:#25D366;color:#25D366}
+.bp-share-btn.wa:hover{background:#F0FFF4}
+
+/* ── POWEREDBY ── */
+.bp-powered{text-align:center;padding:1rem;font-size:.66rem;color:var(--ghost)}
+.bp-powered a{color:var(--sapphire);font-weight:600;text-decoration:none}
+
+/* ── STEP INDICATOR ── */
+.bp-steps{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem;border-bottom:1px solid var(--line)}
+.bp-step-dot{width:8px;height:8px;border-radius:50%;background:var(--line);transition:all .3s}
+.bp-step-dot.act{background:var(--sapphire);width:20px;border-radius:99px}
+.bp-step-dot.done{background:var(--emerald)}
+.bp-step-label{font-size:.72rem;color:var(--muted);font-weight:500}
+.bp-step-label.act{color:var(--sapphire);font-weight:700}
+
+/* Responsive */
+@media(min-width:480px){
+  .bp-card{margin:-2rem 1.5rem 0;border-radius:var(--r-xl)}
+  .bp-slots-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(min-width:640px){
+  body{background:#E8EFF9}
+  .bp-wrap{max-width:560px;margin:0 auto;padding:0 0 2rem}
+  .bp-card{margin:-2rem 0 0;border-radius:var(--r-xl)}
+}
+
 </style>
 </head>
 <body>
@@ -2106,7 +2286,7 @@ function loadProDash(pro){
   document.getElementById('welcome-msg').textContent='Bonjour Dr. '+pro.ln+' 👋';
   document.getElementById('today-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const slug0=(pro.fn+'-'+pro.ln).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
-  document.getElementById('booking-url-display').textContent='medbook.tn/rdv/'+slug0;
+  document.getElementById('booking-url-display').textContent='[votre-domaine]/rdv.html#'+slug0;
   const embedEl=document.getElementById('embed-code');
   if(embedEl) embedEl.textContent=`<iframe src="https://medbook.tn/rdv/${slug0}" width="100%" height="600" frameborder="0"></iframe>`;
   document.getElementById('set-fn').value=pro.fn;
@@ -2372,7 +2552,7 @@ function saveSettings(){
   updateTbAvatar(pro);
   const slug=buildSlug(pro);
   const linkEl=document.getElementById('public-link-display');
-  if(linkEl) linkEl.textContent='medbook.tn/rdv/'+slug;
+  if(linkEl) linkEl.textContent='[votre-domaine]/rdv.html#'+slug;
   toast2('✅ Profil sauvegardé et publié !','green');
   updateOverviewProfileCard(pro);
 }
@@ -3276,40 +3456,14 @@ let bpPro=null, bpService=null, bpDate='', bpSlot='', bpCalDate=new Date();
 const MONTHS_FR2=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 
 function openPublicBookingPage(proId){
-  const db=getDB(); const pro=db.pros?.find(p=>p.id===proId); if(!pro)return;
-  bpPro=pro; bpService=null; bpDate=''; bpSlot=''; bpCalDate=new Date();
-  const cfg=SPECIALTY_CONFIG[pro.spec]||{};
-  const ico=cfg.ico||'🩺';
-  document.getElementById('bp-av').textContent=ico;
-  document.getElementById('bp-name').textContent='Dr. '+pro.fn+' '+pro.ln;
-  document.getElementById('bp-spec').textContent=pro.spec+(pro.ville?' · '+pro.ville:'');
-  document.getElementById('bp-addr').textContent=pro.adresse||'';
-  // Services
-  const services = cfg.services||[{name:pro.consultType||'Consultation',duration:pro.duration||50,price:pro.price||100,desc:''}];
-  const sl=document.getElementById('bp-services-list');
-  sl.innerHTML=services.map((s,i)=>`
-    <div class="bp-service-card" onclick="bpSelectService(${i})" id="bp-svc-${i}">
-      <div style="display:flex;align-items:center;gap:.65rem;flex:1">
-        <div class="bp-service-ico" style="background:${cfg.colorL||'#EEF2FF'}">${ico}</div>
-        <div>
-          <div class="bp-service-name">${escHtml(s.name)}</div>
-          <div class="bp-service-meta">⏱ ${s.duration}min · ${escHtml(s.desc||'')}</div>
-        </div>
-      </div>
-      <div class="bp-service-price">${s.price} DT</div>
-    </div>`).join('');
-  document.getElementById('bp-cal').style.display='none';
-  document.getElementById('bp-cal-label').style.display='none';
-  document.getElementById('bp-slots-section').style.display='none';
-  document.getElementById('bp-continue-btn').disabled=true;
-  document.getElementById('bp-step-service').style.display='';
-  document.getElementById('bp-step-form').style.display='none';
-  document.getElementById('bp-step-success').style.display='none';
-  // Motifs
-  const motifs=cfg.motifs||['Première consultation','Suivi régulier','Autre'];
-  const sel=document.getElementById('bp-motif-sel');
-  sel.innerHTML='<option value="">— Optionnel —</option>'+motifs.map(m=>`<option>${escHtml(m)}</option>`).join('');
+  var s=getSession(),db=getDB();
+  var p=db.pros&&db.pros.find(function(x){return x.id===(proId||s&&s.id);});
+  if(!p){toast2('Profil introuvable','red');return;}
+  window._rdvProOverride=p;
   showView('v-booking-page');
+  var rl=document.getElementById('rdv-loading'),rn=document.getElementById('rdv-not-found'),rw=document.getElementById('rdv-bp-wrap');
+  if(rl)rl.classList.remove('hide');if(rn)rn.classList.remove('on');if(rw)rw.style.display='none';
+  setTimeout(function(){if(window.rdvPageInit)window.rdvPageInit();},30);
 }
 function bpSelectService(i){
   const cfg=SPECIALTY_CONFIG[bpPro?.spec]||{};
@@ -3535,7 +3689,7 @@ function openProfileModal(){
   // Slug/link
   const slug=buildSlugFromPro(pro);
   const linkEl=document.getElementById('pmod-link-url');
-  if(linkEl) linkEl.textContent='medbook.tn/rdv/'+slug;
+  if(linkEl) linkEl.textContent='[votre-domaine]/rdv.html#'+slug;
   // Completeness
   pmodUpdateCompleteness(pro);
   // Open
@@ -3588,9 +3742,9 @@ function saveProfileModal(){
   // Update slug link
   const slug=buildSlugFromPro(pro);
   const linkEl=document.getElementById('pmod-link-url');
-  if(linkEl) linkEl.textContent='medbook.tn/rdv/'+slug;
+  if(linkEl) linkEl.textContent='[votre-domaine]/rdv.html#'+slug;
   const bdUrl=document.getElementById('booking-url-display');
-  if(bdUrl) bdUrl.textContent='medbook.tn/rdv/'+slug;
+  if(bdUrl) bdUrl.textContent='[votre-domaine]/rdv.html#'+slug;
   toast2('✅ Profil sauvegardé et publié !','green');
   closeProfileModal();
 }
@@ -3965,7 +4119,7 @@ function bpCopyLink(){
   const pro=db.pros?.find(p=>p.id===s?.id)||bpPro;
   if(!pro) return;
   const slug=buildSlug(pro);
-  navigator.clipboard?.writeText('https://medbook.tn/rdv/'+slug).catch(()=>{});
+  navigator.clipboard?.writeText(window.location.origin+'/rdv.html#'+slug).catch(()=>{});
   toast2('🔗 Lien copié !','green');
 }
 function bpShareWA(){
@@ -4216,6 +4370,453 @@ function updateAiFab(){
 }
 
 setTimeout(updateAiFab,150);
+
+/* ══ PAGE RÉSERVATION PATIENT (namespace isolé) ══ */
+(function() {
+var pro=null,selService=null,selDate='',selSlot='',calDate=new Date();
+// ══════════════════════════════════
+//  DATA — reads from localStorage (same origin as main app)
+// ══════════════════════════════════
+
+
+
+
+// ══ SPECIALTY CONFIG (copy from main app) ══
+const RDV_SC={
+  'Psychologue clinicien(ne)':{ico:'🧠',color:'#7C3AED',colorL:'#EDE9FE',
+    services:[{name:'Thérapie individuelle',duration:50,price:100,desc:'Séance en cabinet'},{name:'Thérapie de couple',duration:60,price:140,desc:'Thérapie relationnelle'},{name:'Bilan psychologique',duration:90,price:180,desc:'Évaluation complète'}],
+    motifs:['Anxiété / Stress','Dépression','Burn-out','Troubles du sommeil','Gestion émotionnelle','Suivi régulier','Première consultation','Autre']},
+  'Psychiatre':{ico:'💊',color:'#1B4FD8',colorL:'#EEF2FF',
+    services:[{name:'Consultation psychiatrique',duration:45,price:120,desc:'Évaluation et suivi'},{name:'Suivi médication',duration:30,price:80,desc:'Renouvellement ordonnance'}],
+    motifs:['Dépression majeure','Troubles anxieux','Troubles bipolaires','TDAH adulte','Ordonnance / renouvellement','Bilan psychiatrique','Autre']},
+  'Médecin généraliste':{ico:'🩺',color:'#0D9488',colorL:'#CCFBF1',
+    services:[{name:'Consultation générale',duration:20,price:35,desc:'Diagnostic et traitement'},{name:'Certificat médical',duration:15,price:25,desc:'Aptitude / sport / emploi'}],
+    motifs:['Fièvre / Infection','Douleur','Renouvellement ordonnance','Certificat médical','Bilan de santé','Autre']},
+  'Cardiologue':{ico:'❤️',color:'#E11D48',colorL:'#FFE4E6',
+    services:[{name:'Consultation cardiologique',duration:30,price:90,desc:'Bilan cardiaque'},{name:'ECG + consultation',duration:45,price:120,desc:'Électrocardiogramme'}],
+    motifs:['Douleur thoracique','Palpitations','Hypertension','Bilan cardiovasculaire','Autre']},
+  'Kinésithérapeute':{ico:'🦴',color:'#D97706',colorL:'#FEF3C7',
+    services:[{name:'Séance de kiné',duration:45,price:50,desc:'Rééducation standard'},{name:'Massage thérapeutique',duration:60,price:70,desc:'Détente et récupération'}],
+    motifs:['Mal de dos','Douleur épaule','Entorse / Foulure','Rééducation post-op','Autre']},
+  'Ostéopathe':{ico:'🌿',color:'#059669',colorL:'#D1FAE5',
+    services:[{name:'Séance ostéopathie',duration:60,price:70,desc:'Traitement global'}],
+    motifs:['Douleurs dorsales','Maux de tête','Troubles digestifs','Nourrisson','Autre']},
+  'Nutritionniste / Diététicien(ne)':{ico:'🍎',color:'#16A34A',colorL:'#DCFCE7',
+    services:[{name:'Bilan nutritionnel',duration:60,price:80,desc:'Évaluation complète'},{name:'Suivi diététique',duration:30,price:50,desc:'Suivi régulier'}],
+    motifs:['Perte de poids','Diabète / Cholestérol','Alimentation végétale','Femme enceinte','Autre']},
+  'Ophtalmologue':{ico:'👁️',color:'#0EA5E9',colorL:'#E0F2FE',
+    services:[{name:'Examen de la vue',duration:30,price:60,desc:'Bilan visuel complet'}],
+    motifs:['Baisse de vision','Douleur oculaire','Ordonnance lunettes','Contrôle myopie','Autre']},
+  'Chirurgien-dentiste':{ico:'🦷',color:'#64748B',colorL:'#F1F5F9',
+    services:[{name:'Consultation',duration:30,price:30,desc:'Examen buccal'},{name:'Détartrage',duration:45,price:60,desc:'Nettoyage professionnel'},{name:'Urgence dentaire',duration:30,price:50,desc:'Douleur aiguë'}],
+    motifs:['Douleur dentaire','Contrôle régulier','Carie','Urgence','Autre']},
+  'Pédiatre':{ico:'👶',color:'#F59E0B',colorL:'#FEF3C7',
+    services:[{name:'Consultation pédiatrique',duration:25,price:50,desc:'Enfant 0–18 ans'},{name:'Vaccins',duration:20,price:40,desc:'Carnet de vaccination'}],
+    motifs:['Fièvre enfant','Toux / Rhume','Bilan croissance','Vaccins','Autre']},
+  'ORL':{ico:'👂',color:'#8B5CF6',colorL:'#EDE9FE',
+    services:[{name:'Consultation ORL',duration:25,price:55,desc:'Oreille, nez, gorge'}],
+    motifs:['Douleur oreille','Sinusite','Maux de gorge','Perte auditive','Autre']},
+  'Dermatologue':{ico:'🧬',color:'#EC4899',colorL:'#FCE7F3',
+    services:[{name:'Consultation dermatologique',duration:20,price:70,desc:'Diagnostic cutané'},{name:'Dermatoscopie',duration:30,price:90,desc:'Analyse grains de beauté'}],
+    motifs:['Acné','Eczéma','Grain de beauté','Psoriasis','Autre']},
+  'Sophrologue':{ico:'🧘',color:'#6366F1',colorL:'#EEF2FF',
+    services:[{name:'Séance sophrologie',duration:60,price:70,desc:'Relaxation et équilibre'}],
+    motifs:['Gestion du stress','Troubles du sommeil','Confiance en soi','Autre']},
+  'Médecin du sport':{ico:'🏃',color:'#F97316',colorL:'#FFF7ED',
+    services:[{name:'Bilan sportif médical',duration:30,price:60,desc:'Certificat aptitude'},{name:'Consultation blessure',duration:25,price:50,desc:'Diagnostic et traitement'}],
+    motifs:['Certificat médical sport','Blessure sportive','Performance','Autre']},
+};
+
+// STATE: declared in IIFE wrapper above
+const RDV_MO=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const RDV_DK=['sun','mon','tue','wed','thu','fri','sat'];
+
+// ══ SLUG MATCHING ══
+function rdvSlugify(str){return (str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function rdvGetSlug(){
+  // Support multiple URL formats:
+  // 1. rdv.html#aymen-khalsi
+  // 2. rdv.html?slug=aymen-khalsi
+  // 3. index.html#rdv/aymen-khalsi
+  const hash=window.location.hash.replace('#','');
+  if(hash) return hash.replace(/^rdv\/+/,'');
+  const params=new URLSearchParams(window.location.search);
+  return params.get('slug')||params.get('rdv')||'';
+}
+function rdvFindPro(slug){
+  const db=getDB();
+  const pros=db.pros||[];
+  // Try exact slug match first
+  const direct=pros.find(p=>rdvSlugify(p.fn+'-'+p.ln)===slug||rdvSlugify(p.fn+p.ln)===slug||rdvSlugify(p.ln)===slug);
+  if(direct) return direct;
+  // Try partial match (last name)
+  const parts=slug.split('-');
+  return pros.find(p=>parts.some(part=>rdvSlugify(p.ln).includes(part)||rdvSlugify(p.fn).includes(part)))||null;
+}
+
+// ══ INIT ══
+function rdvPageInit(){
+  selService=null;selDate='';selSlot='';calDate=new Date();
+  ['step2','step3'].forEach(function(id){var e=document.getElementById(id);if(e)e.classList.remove('on');});
+  var s1=document.getElementById('step1');if(s1)s1.style.display='';
+  ['bp-bio-wrap','bio-divider','bp-slots-wrap'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+  ['bp-services','bp-grid','bp-badges','bp-info-pills'].forEach(function(id){var e=document.getElementById(id);if(e)e.innerHTML='';});
+  var me=document.getElementById('f-motif');if(me){while(me.options.length>1)me.remove(1);}
+  var st=document.getElementById('bp-steps');if(st)st.style.display='';
+  setStep(1);
+  if(window._rdvProOverride){pro=window._rdvProOverride;window._rdvProOverride=null;}
+  else{
+  const slug=rdvGetSlug();
+  if(!slug){rdvShowNotFound();return;}
+  pro=rdvFindPro(slug);
+  if(!pro){
+    // Try to seed demo data and try again
+    seedDemo();
+    pro=rdvFindPro(slug);
+  }
+  if(!pro){rdvShowNotFound();return;}
+  }
+  if(!pro){rdvShowNotFound();return;}
+  if(typeof getSession==='function'&&getSession()){
+    var bb=document.getElementById('rdv-bb');
+    if(!bb){bb=document.createElement('button');bb.id='rdv-bb';
+      bb.style.cssText='position:fixed;top:.75rem;left:.75rem;z-index:300;background:rgba(255,255,255,.95);border:1px solid #C7D2FE;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:700;color:#1B4FD8;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.1);display:flex;align-items:center;gap:.35rem';
+      bb.innerHTML='&#8592; Tableau de bord';
+      bb.onclick=function(){if(typeof showView==='function')showView('v-pro');};
+      var v=document.getElementById('v-booking-page');if(v)v.appendChild(bb);
+    }
+    bb.style.display='flex';
+  }
+  renderPage();
+  document.getElementById('rdv-loading').classList.add('hide');
+  document.getElementById('rdv-bp-wrap').style.display='';
+}
+
+
+
+function rdvShowNotFound(){
+  document.getElementById('rdv-loading').classList.add('hide');
+  document.getElementById('rdv-not-found').classList.add('on');
+}
+
+// ══ RENDER ══
+function renderPage(){
+  const cfg=RDV_SC[pro.spec]||{ico:'🩺',colorL:'#EEF2FF',color:'#1B4FD8',services:[{name:pro.consultType||'Consultation',duration:pro.duration||50,price:pro.price||100,desc:''}],motifs:['Première consultation','Suivi régulier','Autre']};
+  document.title='Dr. '+pro.fn+' '+pro.ln+' — Réservation MedBook';
+  // Header
+  const avEl=document.getElementById('bp-av');
+  if(pro.photo) avEl.innerHTML='<img src="'+pro.photo+'" alt="Dr. '+pro.fn+' '+pro.ln+'"/>';
+  else avEl.innerHTML=cfg.ico||'🩺';
+  document.getElementById('bp-name').textContent='Dr. '+pro.fn+' '+pro.ln;
+  const titreEl=document.getElementById('bp-titre');
+  if(pro.titre){titreEl.textContent=pro.titre;titreEl.style.display='';}
+  document.getElementById('bp-spec').textContent=(pro.spec||'')+(pro.ville?' · '+pro.ville:'');
+  if(pro.adresse||pro.ville){
+    const locEl=document.getElementById('bp-location');
+    document.getElementById('bp-loc-text').textContent=(pro.adresse?pro.adresse+', ':'')+(pro.ville||'');
+    locEl.style.display='flex';
+  }
+  // Badges
+  const badgesEl=document.getElementById('bp-badges');
+  const modes=(pro.modes||['cabinet']).map(m=>({cabinet:'🏥 Cabinet',video:'📹 Vidéo',domicile:'🏠 Domicile'}[m]||m));
+  const langs=pro.consultLangs||[];
+  [...modes,...langs].forEach(b=>{
+    const s=document.createElement('span');s.className='bp-badge';s.textContent=b;badgesEl.appendChild(s);
+  });
+  // Stats
+  const db=getDB(); const rdvCount=(db.rdvs||[]).filter(r=>r.proId===pro.id&&r.status!=='cancelled').length;
+  if(pro.experience||rdvCount){
+    document.getElementById('bp-stats').style.display='flex';
+    if(pro.experience) document.getElementById('bp-stat-exp').textContent=pro.experience+'+';
+    document.getElementById('bp-stat-rdv').textContent=rdvCount||'—';
+    document.getElementById('bp-stat-langs').textContent=(pro.consultLangs||[]).length||'—';
+  }
+  // Bio
+  if(pro.bio){
+    document.getElementById('bp-bio-wrap').style.display='';
+    document.getElementById('bio-divider').style.display='';
+    document.getElementById('bp-bio').textContent=pro.bio;
+    const pillsEl=document.getElementById('bp-info-pills');
+    const pills=[];
+    if(pro.tel) pills.push({text:'📞 '+pro.tel,href:'tel:'+pro.tel.replace(/\s/g,'')});
+    if(pro.wa) pills.push({text:'📱 WhatsApp',href:'https://wa.me/'+pro.wa.replace(/[^0-9]/g,'')});
+    if(pro.website) pills.push({text:'🌐 Site web',href:pro.website});
+    if(pro.facebook) pills.push({text:'📘 Facebook',href:'https://'+pro.facebook.replace('https://','')});
+    if(pro.instagram) pills.push({text:'📸 Instagram',href:'https://instagram.com/'+pro.instagram.replace('@','').replace(/.*instagram.com\//,'')});
+    pills.forEach(p=>{const a=document.createElement('a');a.className='bp-pill';a.textContent=p.text;a.href=p.href;a.target='_blank';pillsEl.appendChild(a);});
+    if(pro.adresse){
+      const ml=document.getElementById('bp-map-link');
+      ml.href='https://maps.google.com/?q='+encodeURIComponent((pro.adresse||'')+', '+(pro.ville||'')+', Tunisie');
+      ml.style.display='flex';
+      document.getElementById('bp-map-addr').textContent=(pro.bureau?pro.bureau+' — ':'')+(pro.adresse||'')+(pro.ville?', '+pro.ville:'');
+    }
+  }
+  // Services
+  const svcsEl=document.getElementById('bp-services');
+  const services=cfg.services||[{name:pro.consultType||'Consultation',duration:pro.duration||50,price:pro.price||100,desc:''}];
+  services.forEach((svc,i)=>{
+    const d=document.createElement('div');d.className='bp-svc';
+    d.innerHTML='<div class="bp-svc-ico" style="background:'+cfg.colorL+'">'+cfg.ico+'</div><div style="flex:1"><div class="bp-svc-name">'+escHtml(svc.name)+'</div><div class="bp-svc-meta">⏱ '+svc.duration+'min · '+escHtml(svc.desc||'')+'</div></div><div class="bp-svc-price">'+svc.price+' DT</div>';
+    d.onclick=()=>selectService(i,d,services);
+    svcsEl.appendChild(d);
+  });
+  // Motifs
+  const motifEl=document.getElementById('f-motif');
+  const motifs=cfg.motifs||['Première consultation','Autre'];
+  motifs.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;motifEl.appendChild(o);});
+  // Calendar
+  renderCal();
+}
+
+function selectService(i,el,services){
+  selService=services[i]; selDate=''; selSlot='';
+  document.querySelectorAll('.bp-svc').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('bp-slots-wrap').style.display='none';
+  updateCTA();
+  renderCal();
+  document.getElementById('bp-cal-wrap').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ══ CALENDAR ══
+function renderCal(){
+  const y=calDate.getFullYear(),m=calDate.getMonth();
+  document.getElementById('bp-cal-title').textContent=RDV_MO[m]+' '+y;
+  const grid=document.getElementById('bp-grid');grid.innerHTML='';
+  const avail=pro.avail||{days:{mon:true,tue:true,wed:true,thu:true,fri:true},slots:[]};
+  const db=getDB();
+  const booked=(db.rdvs||[]).filter(r=>r.proId===pro.id&&r.status!=='cancelled').map(r=>r.date);
+  const today=new Date();today.setHours(0,0,0,0);
+  const firstDay=new Date(y,m,1).getDay();
+  const offset=firstDay===0?6:firstDay-1;
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  for(let i=0;i<offset;i++){const d=document.createElement('div');d.className='bp-day empty';grid.appendChild(d);}
+  for(let d=1;d<=daysInMonth;d++){
+    const dateObj=new Date(y,m,d);
+    const dateStr=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const dayKey=RDV_DK[dateObj.getDay()];
+    const isPast=dateObj<today;
+    const isUnavail=!avail.days[dayKey];
+    const isToday=dateStr===today.toISOString().split('T')[0];
+    const el=document.createElement('div');
+    el.textContent=d;
+    if(isPast||isUnavail) el.className='bp-day past';
+    else if(isToday) el.className='bp-day today avail';
+    else el.className='bp-day avail';
+    if(dateStr===selDate) el.classList.add('selected');
+    if(!isPast&&!isUnavail) el.onclick=()=>selectDate(dateStr,el);
+    grid.appendChild(el);
+  }
+}
+function rdvCalPrev(){calDate.setMonth(calDate.getMonth()-1);renderCal();}
+function rdvCalNext(){calDate.setMonth(calDate.getMonth()+1);renderCal();}
+
+function selectDate(date,el){
+  selDate=date;selSlot='';
+  document.querySelectorAll('.bp-day').forEach(d=>{d.classList.remove('selected');});
+  el.classList.add('selected');
+  renderSlots(date);
+  updateCTA();
+}
+
+function renderSlots(date){
+  const db=getDB();
+  const avail=pro.avail?.slots||['09:00','10:00','11:00','14:00','15:00','16:00'];
+  const booked=(db.rdvs||[]).filter(r=>r.proId===pro.id&&r.date===date&&r.status!=='cancelled').map(r=>r.slot);
+  const free=avail.filter(s=>!booked.includes(s));
+  const wrap=document.getElementById('bp-slots-wrap');
+  const grid=document.getElementById('bp-slots-grid');
+  const d=new Date(date+'T12:00:00');
+  document.getElementById('bp-slots-day').textContent='⏰ '+d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  grid.innerHTML='';
+  if(free.length===0){
+    const div=document.createElement('div');div.className='bp-no-slots';div.textContent='Aucun créneau disponible ce jour. Choisissez une autre date.';
+    grid.appendChild(div);
+  } else {
+    free.forEach(sl=>{
+      const btn=document.createElement('div');btn.className='bp-slot';btn.textContent=sl;
+      btn.onclick=()=>{
+        document.querySelectorAll('.bp-slot').forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected');selSlot=sl;updateCTA();
+      };
+      grid.appendChild(btn);
+    });
+  }
+  wrap.style.display='';
+  wrap.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function updateCTA(){
+  const btn=document.getElementById('bp-cta');
+  const info=document.getElementById('bp-cta-info');
+  if(selService&&selDate&&selSlot){
+    btn.disabled=false;
+    const d=new Date(selDate+'T12:00:00');
+    info.textContent='— '+d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})+' à '+selSlot;
+  } else {
+    btn.disabled=true;
+    info.textContent='';
+  }
+}
+
+// ══ STEPS ══
+function rdvGoStep2(){
+  if(!selService||!selDate||!selSlot){rdvToast('Sélectionnez un service, une date et un créneau','red');return;}
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').classList.add('on');
+  setStep(2);
+  const d=new Date(selDate+'T12:00:00');
+  const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const dur=selService.duration||pro.duration||50;
+  const end=(()=>{const[h,m]=selSlot.split(':').map(Number);const t=h*60+m+dur;return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');})();
+  const addr=(pro.bureau?pro.bureau+', ':'')+pro.adresse+(pro.ville?', '+pro.ville:'');
+  document.getElementById('bp-summary').innerHTML=
+    '<strong>'+escHtml(selService.name)+'</strong> · '+selService.price+' DT · '+dur+'min<br/>'+
+    '📅 '+label+'<br/>⏰ '+selSlot+' – '+end+' (CET · Tunisie)<br/>'+
+    '🩺 Dr. '+escHtml(pro.fn)+' '+escHtml(pro.ln)+
+    (addr?'<br/>📍 '+escHtml(addr):'');
+  window.scrollTo(0,0);
+}
+function rdvGoStep1(){
+  document.getElementById('step2').classList.remove('on');
+  document.getElementById('step1').style.display='';
+  setStep(1);
+}
+function setStep(n){
+  for(let i=1;i<=3;i++){
+    const dot=document.getElementById('sd'+i);
+    const lbl=document.getElementById('sl'+i);
+    if(!dot||!lbl) continue;
+    dot.className='bp-step-dot'+(i<n?' done':i===n?' act':'');
+    lbl.className='bp-step-label'+(i===n?' act':'');
+  }
+}
+
+// ══ CONFIRM RDV ══
+function rdvConfirmRdv(){
+  const fn=(document.getElementById('f-fn').value||'').trim();
+  const ln=(document.getElementById('f-ln').value||'').trim();
+  const email=(document.getElementById('f-email').value||'').trim();
+  const rgpd=document.getElementById('f-rgpd').checked;
+  if(!fn||!ln){rdvToast('Prénom et nom requis','red');return;}
+  if(!email||!email.includes('@')){rdvToast('Email valide requis','red');return;}
+  if(!rgpd){rdvToast('Veuillez accepter la politique de confidentialité','red');return;}
+  const tel=(document.getElementById('f-tel').value||'').trim();
+  const motif=document.getElementById('f-motif').value;
+  const msg=(document.getElementById('f-msg').value||'').trim();
+  const db=getDB();
+  const dur=selService?.duration||pro.duration||50;
+  const end=(()=>{const[h,m]=selSlot.split(':').map(Number);const t=h*60+m+dur;return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');})();
+  const rdv={
+    id:'rdv-'+Date.now(),proId:pro.id,proFn:pro.fn,proLn:pro.ln,proEmail:pro.email,
+    spec:pro.spec,patFn:fn,patLn:ln,patEmail:email,patTel:tel,
+    date:selDate,slot:selSlot,type:'presentiel',motif,message:msg,
+    serviceName:selService?.name,servicePrice:selService?.price,serviceDuration:dur,
+    status:'confirmed',reminders:{r24:false,r2:false,r15:false},
+    createdAt:new Date().toISOString()
+  };
+  if(!db.rdvs) db.rdvs=[];
+  db.rdvs.push(rdv);saveDB(db);
+  // Show success
+  document.getElementById('step2').classList.remove('on');
+  document.getElementById('step3').classList.add('on');
+  document.getElementById('bp-steps').style.display='none';
+  setStep(3);
+  const d=new Date(selDate+'T12:00:00');
+  const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const addr=(pro.bureau?pro.bureau+', ':'')+pro.adresse+(pro.ville?', '+pro.ville:'');
+  document.getElementById('bp-success-detail').innerHTML=
+    '<div style="display:flex;flex-direction:column;gap:.3rem">'+
+    '<div>👤 <strong>'+escHtml(fn)+' '+escHtml(ln)+'</strong></div>'+
+    '<div>📅 '+label+'</div>'+
+    '<div>⏰ '+selSlot+' – '+end+' (CET · Tunisie)</div>'+
+    '<div>🩺 Dr. '+escHtml(pro.fn)+' '+escHtml(pro.ln)+'</div>'+
+    '<div>🎫 '+escHtml(selService?.name||'Consultation')+' · '+selService?.price+' DT / '+dur+'min</div>'+
+    (motif?'<div>📋 '+escHtml(motif)+'</div>':'')+
+    (addr?'<div>📍 '+escHtml(addr)+'</div>':'')+
+    (pro.tel?'<div>📞 '+escHtml(pro.tel)+'</div>':'')+
+    '</div>';
+  document.getElementById('bp-conf-email').textContent=email;
+  if(pro.wa){
+    document.getElementById('btn-contact-wa').style.display='flex';
+  }
+  window.scrollTo(0,0);
+  rdvToast('✅ Rendez-vous confirmé ! Email envoyé à '+email,'green');
+}
+
+// ══ CALENDAR ACTIONS ══
+function rdvAddGcal(){
+  const d=new Date(selDate+'T'+selSlot+':00');
+  const dur=selService?.duration||50;
+  const end=new Date(d.getTime()+dur*60000);
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  const title=(selService?.name||'Consultation')+' — Dr. '+pro.fn+' '+pro.ln;
+  const addr=(pro.adresse||'')+(pro.ville?', '+pro.ville:'');
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(title)+'&dates='+fmt(d)+'/'+fmt(end)+'&location='+encodeURIComponent(addr),'_blank');
+}
+function rdvAddIcal(){
+  const d=new Date(selDate+'T'+selSlot+':00');
+  const dur=selService?.duration||50;
+  const end=new Date(d.getTime()+dur*60000);
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  const title=(selService?.name||'Consultation')+' — Dr. '+pro.fn+' '+pro.ln;
+  const addr=(pro.adresse||'')+(pro.ville?', '+pro.ville:'');
+  const ics='BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MedBook//TN//FR\nBEGIN:VEVENT\nSUMMARY:'+title+'\nDTSTART:'+fmt(d)+'\nDTEND:'+fmt(end)+'\nLOCATION:'+addr+'\nDESCRIPTION:MedBook — Consultation médicale\nEND:VEVENT\nEND:VCALENDAR';
+  const blob=new Blob([ics],{type:'text/calendar'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rdv-medbook.ics';a.click();
+}
+function rdvContactWA(){
+  if(!pro.wa) return;
+  const num=pro.wa.replace(/[^0-9]/g,'');
+  const d=new Date(selDate+'T12:00:00');
+  const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  const msg='Bonjour Dr. '+pro.fn+' '+pro.ln+', je viens de confirmer mon rendez-vous du '+label+' à '+selSlot+' via MedBook.';
+  window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank');
+}
+function rdvNewRdv(){
+  selService=null;selDate='';selSlot='';
+  document.getElementById('step3').classList.remove('on');
+  document.getElementById('step1').style.display='';
+  document.getElementById('bp-steps').style.display='';
+  document.querySelectorAll('.bp-svc').forEach(s=>s.classList.remove('selected'));
+  document.getElementById('bp-slots-wrap').style.display='none';
+  document.getElementById('f-fn').value='';document.getElementById('f-ln').value='';
+  document.getElementById('f-email').value='';document.getElementById('f-tel').value='';
+  document.getElementById('f-motif').value='';document.getElementById('f-msg').value='';
+  document.getElementById('f-rgpd').checked=false;
+  updateCTA();setStep(1);renderCal();window.scrollTo(0,0);
+}
+
+// ══ SHARE ══
+function rdvCopyLink(){
+  navigator.clipboard?.writeText(window.location.href).catch(()=>{});
+  rdvToast('🔗 Lien copié !','green');
+}
+function rdvShareWA(){
+  const msg='Prenez rendez-vous en ligne avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+window.location.href;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+function rdvShareEmail(){
+  const sub='Rendez-vous en ligne — Dr. '+pro.fn+' '+pro.ln;
+  const body='Bonjour,\n\nPrenez rendez-vous en ligne avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+window.location.href+'\n\nCordialement';
+  window.open('mailto:?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body),'_blank');
+}
+
+// ══ HELPERS ══
+
+function rdvToast(msg,type){toast2(msg,type==='red'?'red':type==='blue'?'blue':'green');}
+
+// ══ START ══
+
+// Expose to global
+window.rdvPageInit=rdvPageInit;
+window.rdvCalPrev=rdvCalPrev;window.rdvCalNext=rdvCalNext;
+window.rdvGoStep2=rdvGoStep2;window.rdvGoStep1=rdvGoStep1;
+window.rdvConfirmRdv=rdvConfirmRdv;window.rdvAddGcal=rdvAddGcal;
+window.rdvAddIcal=rdvAddIcal;window.rdvContactWA=rdvContactWA;
+window.rdvNewRdv=rdvNewRdv;window.rdvCopyLink=rdvCopyLink;
+window.rdvShareWA=rdvShareWA;window.rdvShareEmail=rdvShareEmail;
+})();
 </script>
 
 <!-- ════════════ ADMIN LOGIN ════════════ -->
@@ -4442,108 +5043,128 @@ setTimeout(updateAiFab,150);
 
 <!-- ════════════ PUBLIC BOOKING PAGE ════════════ -->
 <div class="view" id="v-booking-page">
-  <div id="bp-step-service">
-    <div class="bp-header" id="bp-header-wrap">
-      <div class="bp-cover" id="bp-cover" style="display:none"></div>
-      <div class="bp-avatar-ring" id="bp-av-ring">
-        <span id="bp-av-emoji">🩺</span>
+<div id="rdv-loading"><div class="loading-spinner"></div><div class="loading-text">Chargement du cabinet…</div></div>
+<div id="rdv-not-found"><div class="nf-ico">🔍</div><div class="nf-title">Cabinet introuvable</div><div class="nf-sub">Ce lien de réservation n'existe pas ou n'est plus actif.<br/>Vérifiez le lien ou contactez votre professionnel de santé.</div><a class="nf-btn" href="index.html">← Retour à MedBook</a></div>
+
+<div id="rdv-bp-wrap" class="bp-wrap" style="display:none">
+
+  <!-- HEADER -->
+  <div class="bp-header">
+    <div class="bp-av" id="bp-av">🩺</div>
+    <div class="bp-name" id="bp-name">Dr. —</div>
+    <div class="bp-titre" id="bp-titre"></div>
+    <div class="bp-spec" id="bp-spec">—</div>
+    <div class="bp-location" id="bp-location" style="display:none">📍 <span id="bp-loc-text"></span></div>
+    <div class="bp-badges" id="bp-badges"></div>
+    <div class="bp-stats" id="bp-stats" style="display:none">
+      <div class="bp-stat"><div class="bp-stat-val" id="bp-stat-exp">—</div><div class="bp-stat-lbl">ans d'exp.</div></div>
+      <div class="bp-stat"><div class="bp-stat-val" id="bp-stat-rdv">—</div><div class="bp-stat-lbl">patients</div></div>
+      <div class="bp-stat"><div class="bp-stat-val" id="bp-stat-langs">—</div><div class="bp-stat-lbl">langues</div></div>
+    </div>
+    <div class="bp-wave"></div>
+  </div>
+
+  <!-- MAIN CARD -->
+  <div class="bp-card">
+
+    <!-- STEP INDICATOR -->
+    <div class="bp-steps" id="bp-steps">
+      <div class="bp-step-dot act" id="sd1"></div>
+      <div class="bp-step-label act" id="sl1">Choisir</div>
+      <div class="bp-step-dot" id="sd2"></div>
+      <div class="bp-step-label" id="sl2">Informations</div>
+      <div class="bp-step-dot" id="sd3"></div>
+      <div class="bp-step-label" id="sl3">Confirmation</div>
+    </div>
+
+    <!-- STEP 1: SERVICE + CALENDAR + SLOTS -->
+    <div id="step1">
+      <!-- Bio -->
+      <div class="bp-bio-wrap" id="bp-bio-wrap" style="display:none">
+        <div class="bp-bio-text" id="bp-bio"></div>
+        <div class="bp-info-pills" id="bp-info-pills"></div>
+        <a class="bp-map-link" id="bp-map-link" href="#" target="_blank" style="display:none">📍 <span id="bp-map-addr">Voir sur la carte</span></a>
       </div>
-      <div class="bp-header-name" id="bp-name" style="position:relative;z-index:1">Dr. —</div>
-      <div id="bp-titre-display" style="font-size:.72rem;color:rgba(255,255,255,.75);margin-top:.1rem;position:relative;z-index:1"></div>
-      <div class="bp-header-spec" id="bp-spec" style="position:relative;z-index:1">—</div>
-      <div id="bp-badges" class="bp-badges"></div>
-      <div class="bp-stats-row" id="bp-stats-row" style="display:none">
-        <div class="bp-stat"><div class="bp-stat-val" id="bp-stat-exp">—</div><div class="bp-stat-lbl">ans d'expérience</div></div>
-        <div class="bp-stat"><div class="bp-stat-val" id="bp-stat-rdv">—</div><div class="bp-stat-lbl">RDV réalisés</div></div>
-        <div class="bp-stat"><div class="bp-stat-val" id="bp-stat-langs">—</div><div class="bp-stat-lbl">langues</div></div>
+      <div class="bp-divider" id="bio-divider" style="display:none"></div>
+
+      <!-- Services -->
+      <div class="bp-services-wrap">
+        <div class="bp-section-lbl">Type de consultation</div>
+        <div id="bp-services"></div>
       </div>
-    </div>
+      <div class="bp-divider"></div>
 
-    <!-- Share bar -->
-    <div class="bp-share-bar" id="bp-share-bar">
-      <button class="bp-share-btn" onclick="bpCopyLink()">📋 Copier le lien</button>
-      <button class="bp-share-btn wa" onclick="bpShareWA()">📱 WhatsApp</button>
-      <button class="bp-share-btn" onclick="bpShareEmail()">📧 Email</button>
-    </div>
-
-    <!-- Bio -->
-    <div class="bp-bio-section" id="bp-bio-section" style="display:none">
-      <div class="bp-bio-text" id="bp-bio-text"></div>
-      <div class="bp-info-pills" id="bp-info-pills"></div>
-      <a id="bp-map-link" href="#" target="_blank" class="bp-map-link" style="display:none">
-        📍 <span id="bp-map-addr">Voir sur la carte</span>
-      </a>
-    </div>
-
-    <div class="bp-services">
-      <div class="bp-service-title">Choisissez votre type de consultation</div>
-      <div id="bp-services-list"></div>
-    </div>
-    <div class="bp-cal-section">
-      <div class="bp-cal-title" id="bp-cal-label" style="display:none">📅 Choisissez une date</div>
-      <div class="bk-cal" id="bp-cal" style="display:none">
-        <div class="bk-cal-header">
-          <button class="bk-cal-nav" onclick="bpPrev()">‹</button>
-          <div class="bk-cal-title" id="bp-cal-title"></div>
-          <button class="bk-cal-nav" onclick="bpNext()">›</button>
+      <!-- Calendar -->
+      <div class="bp-cal-wrap" id="bp-cal-wrap">
+        <div class="bp-cal-header">
+          <button class="bp-cal-nav" onclick="rdvCalPrev()">‹</button>
+          <div class="bp-cal-title" id="bp-cal-title"></div>
+          <button class="bp-cal-nav" onclick="rdvCalNext()">›</button>
         </div>
-        <div class="bk-dow"><div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div></div>
-        <div class="bk-cal-grid" id="bp-cal-grid"></div>
+        <div class="bp-dow"><div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div></div>
+        <div class="bp-grid" id="bp-grid"></div>
+      </div>
+      <div class="bp-divider"></div>
+
+      <!-- Slots -->
+      <div class="bp-slots-wrap" id="bp-slots-wrap" style="display:none">
+        <div class="bp-slots-day" id="bp-slots-day">Créneaux disponibles</div>
+        <div class="bp-slots-grid" id="bp-slots-grid"></div>
+      </div>
+
+      <!-- CTA -->
+      <div class="bp-cta-wrap">
+        <button class="bp-cta" id="bp-cta" disabled onclick="rdvGoStep2()">Continuer → <span id="bp-cta-info"></span></button>
+      </div>
+
+      <!-- Share bar -->
+      <div class="bp-share-bar">
+        <button class="bp-share-btn" onclick="rdvCopyLink()">📋 Copier le lien</button>
+        <button class="bp-share-btn wa" onclick="rdvShareWA()">📱 WhatsApp</button>
+        <button class="bp-share-btn" onclick="rdvShareEmail()">📧 Email</button>
       </div>
     </div>
-    <div class="bp-slot-section" id="bp-slots-section" style="display:none">
-      <div class="bp-slot-day-title" id="bp-slot-day-title">⏰ Créneaux disponibles</div>
-      <div class="bp-slots-grid" id="bp-slots-grid"></div>
-    </div>
-    <div style="padding:0 1.25rem 2rem;max-width:560px;margin:0 auto">
-      <button class="bp-continue-btn" id="bp-continue-btn" disabled onclick="bpGoForm()">Continuer →</button>
-    </div>
-    <div class="bp-powered">Propulsé par <a href="#">MedBook</a> · 🇹🇳 Tunis, Tunisie</div>
-  </div>
 
-  <div id="bp-step-form" style="display:none">
-    <div style="background:linear-gradient(135deg,var(--sapphire),var(--emerald));padding:1rem 1.25rem;display:flex;align-items:center;gap:.75rem">
-      <button onclick="bpBackToService()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:var(--r-sm);padding:.4rem .75rem;font-size:.74rem;cursor:pointer">← Retour</button>
-      <div style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:#fff">Vos informations</div>
-    </div>
-    <div class="bp-form-section">
-      <div class="bp-summary-card" id="bp-summary"></div>
+    <!-- STEP 2: FORM -->
+    <div class="bp-form-wrap" id="step2">
+      <button class="bp-back-btn" onclick="rdvGoStep1()">← Retour</button>
+      <div class="bp-summary" id="bp-summary"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem">
-        <div class="fgroup"><label>Prénom *</label><input class="finput" id="bp-fn" placeholder="Yassine"/></div>
-        <div class="fgroup"><label>Nom *</label><input class="finput" id="bp-ln" placeholder="Trabelsi"/></div>
+        <div class="bp-field"><label>Prénom *</label><input class="bp-input" id="f-fn" placeholder="Yassine"/></div>
+        <div class="bp-field"><label>Nom *</label><input class="bp-input" id="f-ln" placeholder="Trabelsi"/></div>
       </div>
-      <div class="fgroup"><label>Email * <span style="font-weight:400;color:var(--muted)">(rappels automatiques)</span></label>
-        <input class="finput" id="bp-email" type="email" placeholder="yassine@email.com"/>
-      </div>
-      <div class="fgroup"><label>Téléphone</label>
-        <input class="finput" id="bp-tel" type="tel" placeholder="+216 55 …"/>
-      </div>
-      <div class="fgroup"><label>Motif</label>
-        <select class="fselect" id="bp-motif-sel"></select>
-      </div>
-      <div class="fgroup"><label>Message (optionnel)</label>
-        <textarea class="farea" id="bp-msg" placeholder="Précisez votre situation…" style="min-height:56px"></textarea>
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.65rem;margin-bottom:.85rem;display:flex;align-items:flex-start;gap:.55rem">
-        <input type="checkbox" id="bp-rgpd" style="margin-top:.1rem;accent-color:var(--sapphire);width:14px;height:14px;flex-shrink:0"/>
-        <label for="bp-rgpd" style="font-size:.7rem;color:var(--muted);line-height:1.55;cursor:pointer">J'accepte que mes données soient utilisées pour la gestion de ce RDV et l'envoi de rappels. Traitement conforme à la réglementation tunisienne.</label>
-      </div>
-      <button onclick="bpConfirm()" style="width:100%;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-md);padding:.82rem;font-size:.9rem;font-weight:700;cursor:pointer;transition:all var(--anim)">✅ Confirmer le rendez-vous</button>
+      <div class="bp-field"><label>Email * <span>(confirmation + rappels)</span></label><input class="bp-input" id="f-email" type="email" placeholder="vous@email.com"/></div>
+      <div class="bp-field"><label>Téléphone <span>(optionnel)</span></label><input class="bp-input" id="f-tel" type="tel" placeholder="+216 55 …"/></div>
+      <div class="bp-field"><label>Motif de consultation</label><select class="bp-select" id="f-motif"><option value="">— Optionnel —</option></select></div>
+      <div class="bp-field"><label>Message <span>(optionnel)</span></label><textarea class="bp-textarea" id="f-msg" placeholder="Précisez votre situation si vous le souhaitez…"></textarea></div>
+      <label class="bp-rgpd"><input type="checkbox" id="f-rgpd"/> J'accepte que mes données personnelles soient utilisées pour la gestion de ce rendez-vous et l'envoi de rappels email. Traitement conforme à la réglementation tunisienne.</label>
+      <button class="bp-submit" onclick="rdvConfirmRdv()">✅ Confirmer le rendez-vous</button>
     </div>
+
+    <!-- STEP 3: SUCCESS -->
+    <div class="bp-success-wrap" id="step3">
+      <div class="bp-success-ico">✅</div>
+      <div class="bp-success-title">Rendez-vous confirmé !</div>
+      <div class="bp-success-sub">Un email de confirmation vous a été envoyé. Vous recevrez des rappels automatiques avant votre consultation.</div>
+      <div class="bp-success-detail" id="bp-success-detail"></div>
+      <div class="bp-reminders">
+        <div class="bp-rem-title">📧 Vos rappels automatiques</div>
+        <div class="bp-rem-item">✅ Confirmation envoyée à <strong id="bp-conf-email"></strong></div>
+        <div class="bp-rem-item">⏰ Rappel <strong>24h avant</strong> votre rendez-vous</div>
+        <div class="bp-rem-item">⏰ Rappel <strong>2h avant</strong> votre rendez-vous</div>
+      </div>
+      <button class="bp-action-btn gcal" onclick="rdvAddGcal()">📅 Ajouter à Google Calendar</button>
+      <button class="bp-action-btn ical" onclick="rdvAddIcal()">📆 Télécharger iCal (.ics)</button>
+      <button class="bp-action-btn wa" id="btn-contact-wa" style="display:none" onclick="rdvContactWA()">📱 Contacter via WhatsApp</button>
+      <button class="bp-action-btn new" onclick="rdvNewRdv()">🔄 Prendre un autre rendez-vous</button>
+    </div>
+
   </div>
 
-  <div id="bp-step-success" style="display:none">
-    <div style="padding:3rem 1.25rem;text-align:center;max-width:480px;margin:0 auto">
-      <div style="font-size:3rem;margin-bottom:.75rem">✅</div>
-      <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:800;color:var(--ink);margin-bottom:.5rem">Rendez-vous confirmé !</h2>
-      <p style="font-size:.85rem;color:var(--slate);margin-bottom:1.25rem;line-height:1.7">Un email de confirmation a été envoyé. Des rappels automatiques vous seront adressés avant votre consultation.</p>
-      <div id="bp-success-detail" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:1rem;margin-bottom:1rem;text-align:left;font-size:.8rem;line-height:1.85;color:var(--slate)"></div>
-      <button onclick="addBpToGcal()" style="width:100%;background:#1A73E8;color:#fff;border:none;border-radius:var(--r-md);padding:.7rem;font-size:.82rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📅 Ajouter à Google Calendar</button>
-      <button onclick="addBpToIcal()" style="width:100%;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:var(--r-md);padding:.68rem;font-size:.82rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📆 Télécharger iCal (.ics)</button>
-      <button onclick="showView('v-landing')" style="width:100%;background:var(--surface);color:var(--slate);border:1px solid var(--line);border-radius:var(--r-md);padding:.65rem;font-size:.8rem;font-weight:500;cursor:pointer">Retour à l'accueil</button>
-    </div>
-    <div class="bp-powered">Propulsé par <a href="#">MedBook</a> · 🇹🇳</div>
-  </div>
+  <div class="bp-powered">Propulsé par <a href="index.html">MedBook</a> · 🇹🇳 Tunisie · Données hébergées localement</div>
+</div>
+
+
 </div><!-- /v-booking-page -->
 
 
