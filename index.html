@@ -749,6 +749,105 @@ a{text-decoration:none;color:inherit}
 .map-preview{width:100%;height:160px;border-radius:var(--r-md);border:1px solid var(--line);margin-top:.5rem;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.76rem;color:var(--muted);overflow:hidden}
 .map-preview iframe{width:100%;height:100%;border:none}
 
+
+/* ══ PROFILE MODAL ══ */
+#modal-profile{display:none;position:fixed;inset:0;z-index:700;background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#modal-profile.open{display:block}
+.pmod-header{background:linear-gradient(135deg,var(--sapphire),var(--emerald));padding:1rem 1.25rem;display:flex;align-items:center;gap:.75rem;position:sticky;top:0;z-index:10}
+.pmod-close{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pmod-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;flex:1}
+.pmod-save{background:rgba(255,255,255,.95);color:var(--sapphire);border:none;border-radius:99px;padding:.45rem 1.1rem;font-size:.82rem;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .2s}
+.pmod-save:hover{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.pmod-body{padding:1.25rem;max-width:640px;margin:0 auto;padding-bottom:4rem}
+
+/* Avatar section */
+.pmod-avatar-section{display:flex;flex-direction:column;align-items:center;padding:1.5rem 1rem;background:linear-gradient(135deg,#F0F4FF,#F0FDF9);border-radius:var(--r-xl);margin-bottom:1.25rem;border:1px solid var(--sapphire-m)}
+.pmod-avatar-circle{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--sapphire),var(--emerald));border:4px solid #fff;box-shadow:0 4px 16px rgba(27,79,216,.25);display:flex;align-items:center;justify-content:center;font-size:2.5rem;overflow:hidden;cursor:pointer;position:relative;margin-bottom:.85rem}
+.pmod-avatar-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.pmod-avatar-overlay{position:absolute;inset:0;background:rgba(0,0,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.pmod-avatar-circle:hover .pmod-avatar-overlay{opacity:1}
+.pmod-avatar-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;color:var(--ink)}
+.pmod-avatar-spec{font-size:.78rem;color:var(--muted);margin-top:.2rem}
+.pmod-avatar-btns{display:flex;gap:.5rem;margin-top:.75rem}
+.pmod-photo-btn{background:var(--sapphire);color:#fff;border:none;border-radius:99px;padding:.42rem 1rem;font-size:.76rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.35rem}
+.pmod-photo-del{background:var(--surface);color:var(--rose);border:1px solid rgba(225,29,72,.25);border-radius:99px;padding:.4rem .85rem;font-size:.76rem;font-weight:500;cursor:pointer}
+
+/* Completeness */
+.pmod-complete{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:1rem;margin-bottom:1.25rem}
+.pmod-complete-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.pmod-complete-label{font-size:.78rem;font-weight:700;color:var(--ink)}
+.pmod-complete-pct{font-size:.78rem;font-weight:800;color:var(--sapphire)}
+.pmod-bar-bg{height:8px;background:#E2E8F0;border-radius:99px;overflow:hidden;margin-bottom:.65rem}
+.pmod-bar-fill{height:100%;background:linear-gradient(90deg,var(--sapphire),var(--emerald));border-radius:99px;transition:width .7s ease}
+.pmod-checklist{display:flex;flex-direction:column;gap:.3rem}
+.pmod-check-item{display:flex;align-items:center;gap:.5rem;font-size:.72rem}
+.pmod-check-item.done{color:var(--emerald-d)}
+.pmod-check-item.todo{color:var(--muted)}
+.pmod-check-ico{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}
+.pmod-check-ico.done{background:var(--emerald-l);color:var(--emerald-d)}
+.pmod-check-ico.todo{background:var(--surface);border:1.5px solid var(--line);color:transparent}
+
+/* Section cards */
+.pmod-section{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:1.1rem;margin-bottom:.85rem;box-shadow:var(--shadow-sm)}
+.pmod-section-hdr{display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem;padding-bottom:.6rem;border-bottom:1px solid var(--line)}
+.pmod-section-ico{width:32px;height:32px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.pmod-section-title{font-size:.82rem;font-weight:700;color:var(--ink)}
+.pmod-section-sub{font-size:.68rem;color:var(--muted);margin-top:.05rem}
+
+/* Inline field row */
+.pmod-row2{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.pmod-field{margin-bottom:.65rem}
+.pmod-field label{display:block;font-size:.7rem;font-weight:700;color:var(--slate);margin-bottom:.28rem;letter-spacing:.01em}
+.pmod-field label span{font-weight:400;color:var(--ghost)}
+.pmod-input{width:100%;border:1.5px solid var(--line);border-radius:var(--r-md);padding:.58rem .8rem;font-size:.84rem;font-family:'DM Sans',sans-serif;color:var(--ink);transition:border-color .2s;background:#fff}
+.pmod-input:focus{outline:none;border-color:var(--sapphire);box-shadow:0 0 0 3px var(--sapphire-l)}
+.pmod-textarea{width:100%;border:1.5px solid var(--line);border-radius:var(--r-md);padding:.58rem .8rem;font-size:.84rem;font-family:'DM Sans',sans-serif;color:var(--ink);min-height:90px;resize:vertical;line-height:1.6;transition:border-color .2s}
+.pmod-textarea:focus{outline:none;border-color:var(--sapphire);box-shadow:0 0 0 3px var(--sapphire-l)}
+.pmod-select{width:100%;border:1.5px solid var(--line);border-radius:var(--r-md);padding:.58rem .8rem;font-size:.84rem;font-family:'DM Sans',sans-serif;color:var(--ink);background:#fff;transition:border-color .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234A5568'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .75rem center}
+.pmod-select:focus{outline:none;border-color:var(--sapphire)}
+
+/* Checkbox group */
+.pmod-checks{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem}
+.pmod-check-label{display:flex;align-items:center;gap:.35rem;background:var(--surface);border:1.5px solid var(--line);border-radius:99px;padding:.35rem .75rem;font-size:.76rem;font-weight:500;color:var(--slate);cursor:pointer;transition:all .18s;user-select:none}
+.pmod-check-label:has(input:checked){background:var(--sapphire-l);border-color:var(--sapphire-m);color:var(--sapphire);font-weight:600}
+.pmod-check-label input{display:none}
+
+/* Map preview */
+.pmod-map{width:100%;height:150px;border-radius:var(--r-md);border:1px solid var(--line);overflow:hidden;margin-top:.5rem;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.76rem;color:var(--muted)}
+.pmod-map iframe{width:100%;height:100%;border:none}
+
+/* Social links */
+.pmod-social-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.pmod-social-ico{width:32px;height:32px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;background:var(--surface);border:1px solid var(--line)}
+.pmod-social-input{flex:1;border:1.5px solid var(--line);border-radius:var(--r-md);padding:.52rem .75rem;font-size:.8rem;font-family:'DM Sans',sans-serif;color:var(--ink);background:#fff;transition:border-color .2s}
+.pmod-social-input:focus{outline:none;border-color:var(--sapphire)}
+
+/* Public link card */
+.pmod-link-card{background:linear-gradient(135deg,var(--sapphire-l),#F0FDF9);border:1.5px solid var(--sapphire-m);border-radius:var(--r-lg);padding:1rem}
+.pmod-link-url{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--sapphire);word-break:break-all;margin-bottom:.75rem;padding:.5rem .75rem;background:#fff;border-radius:var(--r-sm);border:1px solid var(--sapphire-m)}
+.pmod-link-btns{display:flex;gap:.4rem;flex-wrap:wrap}
+.pmod-link-btn{border:none;border-radius:var(--r-sm);padding:.42rem .85rem;font-size:.74rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.pmod-link-btn.primary{background:var(--sapphire);color:#fff}
+.pmod-link-btn.primary:hover{background:var(--sapphire-d)}
+.pmod-link-btn.wa{background:#25D366;color:#fff}
+.pmod-link-btn.secondary{background:#fff;color:var(--slate);border:1px solid var(--line)}
+.pmod-link-btn.secondary:hover{border-color:var(--sapphire-m);color:var(--sapphire)}
+
+/* Incomplete banner */
+.profile-incomplete-banner{background:linear-gradient(90deg,#FEF3C7,#FFFBEB);border:1px solid #FCD34D;border-radius:var(--r-md);padding:.75rem 1rem;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;cursor:pointer;transition:all .2s}
+.profile-incomplete-banner:hover{box-shadow:var(--shadow-sm)}
+.pib-ico{font-size:1.2rem;flex-shrink:0}
+.pib-text{flex:1}
+.pib-title{font-size:.8rem;font-weight:700;color:#B45309}
+.pib-sub{font-size:.7rem;color:#92400E;margin-top:.08rem}
+.pib-btn{background:#D97706;color:#fff;border:none;border-radius:99px;padding:.35rem .85rem;font-size:.72rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0}
+
+/* Profile card on topbar */
+.tb-profile-btn{display:flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:.35rem .75rem .35rem .35rem;cursor:pointer;transition:all .2s;font-size:.76rem;font-weight:600;color:var(--slate)}
+.tb-profile-btn:hover{border-color:var(--sapphire-m);color:var(--sapphire);background:var(--sapphire-l)}
+.tb-profile-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--sapphire),var(--emerald));display:flex;align-items:center;justify-content:center;font-size:.7rem;overflow:hidden;flex-shrink:0}
+.tb-profile-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
 </style>
 </head>
 <body>
@@ -1010,8 +1109,12 @@ a{text-decoration:none;color:inherit}
       <div class="tb-right">
         <div id="tb-notif-dot" class="tb-notif-dot" style="display:none"></div>
         <span id="tb-trial-badge" class="tb-trial-badge" style="display:none">Essai</span>
-        <button class="tb-btn" onclick="openPatientBooking()">🔗 Ma page patient</button>
-        <button class="tb-btn" onclick="doLogout()">Déconnexion</button>
+        <button class="tb-profile-btn" id="tb-profile-btn" onclick="openProfileModal()">
+          <div class="tb-profile-av" id="tb-profile-av-el">🩺</div>
+          <span id="tb-profile-label">Mon Profil</span>
+        </button>
+        <button class="tb-btn" onclick="openPatientBooking()">🔗 Ma page</button>
+        <button class="tb-btn" onclick="doLogout()">Déco.</button>
       </div>
     </div>
 
@@ -1026,7 +1129,7 @@ a{text-decoration:none;color:inherit}
       <button class="tnav-btn" onclick="showPanel('integrations',this)">🔌 Intégrations</button>
       <button class="tnav-btn" onclick="showPanel('subscription',this)">💳 Abonnement</button>
       <button class="tnav-btn" onclick="showPanel('notifications',this)">🔔 Notifications</button>
-      <button class="tnav-btn" onclick="showPanel('settings',this)">⚙️ Paramètres</button>
+      <button class="tnav-btn" id="tnav-profil" onclick="showPanel('settings',this)">👤 Mon Profil</button>
     </div>
 
     <div class="pro-content">
@@ -1036,6 +1139,15 @@ a{text-decoration:none;color:inherit}
         <div style="margin-bottom:1rem">
           <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--ink)" id="welcome-msg">Bonjour 👋</div>
           <div style="font-size:.76rem;color:var(--muted)" id="today-date"></div>
+        </div>
+        <!-- Incomplete profile banner -->
+        <div class="profile-incomplete-banner" id="profile-incomplete-banner-el" style="display:none" onclick="openProfileModal()">
+          <div class="pib-ico">✏️</div>
+          <div class="pib-text">
+            <div class="pib-title">Complétez votre profil professionnel</div>
+            <div class="pib-sub">Ajoutez votre photo, biographie et adresse pour une page complète</div>
+          </div>
+          <button class="pib-btn">Modifier →</button>
         </div>
         <div class="stats-row">
           <div class="stat-box"><div class="stat-val" id="st-total">0</div><div class="stat-lbl">RDV ce mois</div><div class="stat-delta up" id="st-delta">—</div></div>
@@ -1061,6 +1173,19 @@ a{text-decoration:none;color:inherit}
             <button class="blc-btn secondary" onclick="exportICS()">⬇️ Export .ICS</button>
           </div>
         </div>
+        <!-- PROFILE QUICK CARD -->
+        <div id="overview-profile-card" style="background:linear-gradient(135deg,#EEF2FF,#F0FDF9);border:1.5px solid var(--sapphire-m);border-radius:var(--r-lg);padding:1rem;margin-bottom:.85rem">
+          <div style="display:flex;align-items:center;gap:.85rem">
+            <div id="ov-avatar" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--sapphire),var(--emerald));display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;overflow:hidden"></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:.88rem;font-weight:700;color:var(--ink)" id="ov-pro-name">Dr. —</div>
+              <div style="font-size:.72rem;color:var(--muted);margin-top:.1rem" id="ov-pro-spec">—</div>
+              <div id="ov-completeness-chip" style="margin-top:.35rem;font-size:.65rem;font-weight:700;display:inline-flex;align-items:center;gap:.3rem"></div>
+            </div>
+            <button onclick="showPanel('settings',null);document.querySelectorAll('.tnav-btn').forEach(b=>b.classList.remove('on'));const pt=document.getElementById('tnav-profil');if(pt)pt.classList.add('on')" style="background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-sm);padding:.45rem .85rem;font-size:.74rem;font-weight:600;cursor:pointer;flex-shrink:0;white-space:nowrap">✏️ Modifier</button>
+          </div>
+        </div>
+
         <div class="gcal-bar">
           <div class="gcal-ico">📅</div>
           <div class="gcal-info">
@@ -2014,6 +2139,8 @@ function loadProDash(pro){
   if(linkEl) linkEl.textContent='medbook.tn/rdv/'+buildSlug(pro);
   updateStats(pro.id);
   renderNextRdvs(pro.id);
+  if(typeof initProfileModal==='function') initProfileModal(pro);
+  updateOverviewProfileCard(pro);
   renderRdvList('all');
   renderPatients(pro.id);
   renderAvailGrid(pro);
@@ -2247,6 +2374,7 @@ function saveSettings(){
   const linkEl=document.getElementById('public-link-display');
   if(linkEl) linkEl.textContent='medbook.tn/rdv/'+slug;
   toast2('✅ Profil sauvegardé et publié !','green');
+  updateOverviewProfileCard(pro);
 }
 
 // ══ GOOGLE CALENDAR ══
@@ -3363,8 +3491,273 @@ function init(){
 init();
 
 // ══════════════════════════════════
+//  PROFILE MODAL SYSTEM
+// ══════════════════════════════════
+
+function buildSlugFromPro(pro){
+  return ((pro.fn||'')+(pro.ln?'-'+pro.ln:'')).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
+
+function openProfileModal(){
+  const s=getSession(); if(!s) return;
+  const db=getDB(); const pro=db.pros?.find(p=>p.id===s.id); if(!pro) return;
+  // Load all values into modal fields
+  const sv=(id,v)=>{ const el=document.getElementById(id); if(el) el.value=v||''; };
+  sv('pmod-fn', pro.fn); sv('pmod-ln', pro.ln);
+  sv('pmod-email', pro.email); sv('pmod-tel', pro.tel);
+  sv('pmod-wa', pro.wa); sv('pmod-adresse', pro.adresse);
+  sv('pmod-postal', pro.postal); sv('pmod-bureau', pro.bureau);
+  sv('pmod-titre', pro.titre); sv('pmod-bio', pro.bio);
+  sv('pmod-exp', pro.experience||''); sv('pmod-ordre', pro.ordre||'');
+  sv('pmod-website', pro.website); sv('pmod-facebook', pro.facebook);
+  sv('pmod-instagram', pro.instagram); sv('pmod-linkedin', pro.linkedin);
+  sv('pmod-price', pro.price||''); sv('pmod-consult-type', pro.consultType||'');
+  // Selects
+  const ss=(id,v)=>{ const el=document.getElementById(id); if(el&&v) el.value=v; };
+  ss('pmod-spec', pro.spec); ss('pmod-ville', pro.ville);
+  ss('pmod-duration', String(pro.duration||50)); ss('pmod-lang', pro.lang||'fr');
+  // Checkboxes languages
+  const langs=pro.consultLangs||['Français'];
+  [['pmd-lfr','Français'],['pmd-lar','Arabe'],['pmd-len','English'],['pmd-lde','Deutsch']].forEach(([id,val])=>{
+    const el=document.getElementById(id); if(el) el.checked=langs.includes(val);
+  });
+  // Checkboxes modes
+  const modes=pro.modes||['cabinet'];
+  [['pmd-mcab','cabinet'],['pmd-mvid','video'],['pmd-mdom','domicile']].forEach(([id,val])=>{
+    const el=document.getElementById(id); if(el) el.checked=modes.includes(val);
+  });
+  // Avatar
+  pmodRefreshAvatar(pro);
+  // Map
+  pmodUpdateMap();
+  // Slug/link
+  const slug=buildSlugFromPro(pro);
+  const linkEl=document.getElementById('pmod-link-url');
+  if(linkEl) linkEl.textContent='medbook.tn/rdv/'+slug;
+  // Completeness
+  pmodUpdateCompleteness(pro);
+  // Open
+  document.getElementById('modal-profile').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeProfileModal(){
+  document.getElementById('modal-profile').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function saveProfileModal(){
+  const s=getSession(); if(!s) return;
+  const db=getDB(); const pro=db.pros.find(p=>p.id===s.id); if(!pro) return;
+  const gv=(id)=>(document.getElementById(id)||{value:''}).value.trim();
+  pro.fn=gv('pmod-fn')||pro.fn;
+  pro.ln=gv('pmod-ln')||pro.ln;
+  pro.email=gv('pmod-email')||pro.email;
+  pro.tel=gv('pmod-tel'); pro.wa=gv('pmod-wa');
+  pro.adresse=gv('pmod-adresse'); pro.postal=gv('pmod-postal');
+  pro.bureau=gv('pmod-bureau'); pro.titre=gv('pmod-titre');
+  pro.bio=gv('pmod-bio'); pro.experience=parseInt(gv('pmod-exp'))||0;
+  pro.ordre=gv('pmod-ordre'); pro.website=gv('pmod-website');
+  pro.facebook=gv('pmod-facebook'); pro.instagram=gv('pmod-instagram');
+  pro.linkedin=gv('pmod-linkedin'); pro.price=parseFloat(gv('pmod-price'))||0;
+  pro.consultType=gv('pmod-consult-type')||'Consultation';
+  const ss=(id)=>{ const el=document.getElementById(id); return el?el.value:''; };
+  pro.spec=ss('pmod-spec'); pro.ville=ss('pmod-ville');
+  pro.duration=parseInt(ss('pmod-duration'))||50; pro.lang=ss('pmod-lang')||'fr';
+  // Languages
+  const langs=[];
+  [['pmd-lfr','Français'],['pmd-lar','Arabe'],['pmd-len','English'],['pmd-lde','Deutsch']].forEach(([id,val])=>{
+    const el=document.getElementById(id); if(el&&el.checked) langs.push(val);
+  });
+  pro.consultLangs=langs;
+  // Modes
+  const modes=[];
+  [['pmd-mcab','cabinet'],['pmd-mvid','video'],['pmd-mdom','domicile']].forEach(([id,val])=>{
+    const el=document.getElementById(id); if(el&&el.checked) modes.push(val);
+  });
+  pro.modes=modes;
+  saveDB(db);
+  // Update UI everywhere
+  document.getElementById('tb-pro-name').textContent='Dr. '+pro.fn+' '+pro.ln;
+  document.getElementById('tb-pro-spec').textContent=pro.spec+(pro.ville?' · '+pro.ville:'');
+  document.getElementById('welcome-msg').textContent='Bonjour Dr. '+pro.ln+' 👋';
+  pmodRefreshAvatar(pro); pmodUpdateTopbarBtn(pro); pmodUpdateCompleteness(pro);
+  pmodUpdateTopbarIncomplete(pro);
+  // Update slug link
+  const slug=buildSlugFromPro(pro);
+  const linkEl=document.getElementById('pmod-link-url');
+  if(linkEl) linkEl.textContent='medbook.tn/rdv/'+slug;
+  const bdUrl=document.getElementById('booking-url-display');
+  if(bdUrl) bdUrl.textContent='medbook.tn/rdv/'+slug;
+  toast2('✅ Profil sauvegardé et publié !','green');
+  closeProfileModal();
+}
+
+function pmodHandlePhoto(input){
+  const file=input.files[0]; if(!file) return;
+  if(file.size>2*1024*1024){ toast2('Photo trop lourde (max 2 Mo)','red'); return; }
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const s=getSession(); const db=getDB();
+    const pro=db.pros.find(p=>p.id===s?.id); if(!pro) return;
+    pro.photo=e.target.result; saveDB(db);
+    pmodRefreshAvatar(pro); pmodUpdateTopbarBtn(pro);
+    pmodUpdateCompleteness(pro);
+    toast2('Photo mise à jour !','green');
+  };
+  reader.readAsDataURL(file);
+}
+
+function pmodDeletePhoto(){
+  const s=getSession(); const db=getDB();
+  const pro=db.pros.find(p=>p.id===s?.id); if(!pro) return;
+  delete pro.photo; saveDB(db);
+  pmodRefreshAvatar(pro); pmodUpdateTopbarBtn(pro);
+  toast2('Photo supprimée','green');
+}
+
+function pmodRefreshAvatar(pro){
+  const el=document.getElementById('pmod-avatar-display');
+  if(!el) return;
+  if(pro.photo){
+    el.innerHTML='<img src="'+pro.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';
+  } else {
+    const cfg=(typeof SPECIALTY_CONFIG!=='undefined'&&SPECIALTY_CONFIG[pro.spec])||{ico:'🩺'};
+    el.innerHTML=cfg.ico||'🩺';
+    el.style.fontSize='2.5rem';
+  }
+  const nameEl=document.getElementById('pmod-avatar-name');
+  if(nameEl) nameEl.textContent='Dr. '+(pro.fn||'')+(pro.ln?' '+pro.ln:'');
+  const specEl=document.getElementById('pmod-avatar-spec');
+  if(specEl) specEl.textContent=(pro.spec||'')+(pro.ville?' · '+pro.ville:'');
+}
+
+function pmodUpdateTopbarBtn(pro){
+  const av=document.getElementById('tb-profile-av-el');
+  if(av){
+    if(pro.photo) av.innerHTML='<img src="'+pro.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';
+    else{ const cfg=(typeof SPECIALTY_CONFIG!=='undefined'&&SPECIALTY_CONFIG[pro.spec])||{ico:'🩺'}; av.innerHTML=cfg.ico||'🩺'; av.style.fontSize='.7rem'; }
+  }
+}
+
+function pmodUpdateMap(){
+  const addr=(document.getElementById('pmod-adresse')||{value:''}).value.trim();
+  const ville=(document.getElementById('pmod-ville')||{value:'Tunis'}).value;
+  const el=document.getElementById('pmod-map'); if(!el) return;
+  if(addr.length>4){
+    const q=encodeURIComponent(addr+', '+ville+', Tunisie');
+    el.innerHTML='<iframe src="https://maps.google.com/maps?q='+q+'&output=embed&z=15" loading="lazy" style="width:100%;height:100%;border:none"></iframe>';
+  } else {
+    el.innerHTML='📍 Saisissez votre adresse pour afficher la carte';
+    el.style.display='flex';
+  }
+}
+
+function pmodUpdateCompleteness(pro){
+  const items=[
+    {label:'Photo de profil', done:!!pro.photo},
+    {label:'Biographie', done:!!(pro.bio&&pro.bio.length>20)},
+    {label:'Titre / Diplôme', done:!!(pro.titre&&pro.titre.length>3)},
+    {label:'Adresse du cabinet', done:!!(pro.adresse&&pro.adresse.length>5)},
+    {label:'Téléphone', done:!!(pro.tel&&pro.tel.length>6)},
+    {label:"Années d'expérience", done:!!(pro.experience&&pro.experience>0)},
+    {label:'Langues de consultation', done:!!(pro.consultLangs&&pro.consultLangs.length>0)},
+    {label:'Site web ou réseau social', done:!!(pro.website||pro.facebook||pro.instagram)},
+  ];
+  const done=items.filter(i=>i.done).length;
+  const pct=Math.round((done/items.length)*100);
+  const barEl=document.getElementById('pmod-bar'); if(barEl) barEl.style.width=pct+'%';
+  const pctEl=document.getElementById('pmod-pct'); if(pctEl) pctEl.textContent=pct+'%';
+  const listEl=document.getElementById('pmod-checklist');
+  if(listEl) listEl.innerHTML=items.map(i=>
+    '<div class="pmod-check-item '+(i.done?'done':'todo')+'">'+
+    '<div class="pmod-check-ico '+(i.done?'done':'todo')+'">'+(i.done?'✓':'')+'</div>'+
+    i.label+'</div>'
+  ).join('');
+}
+
+function pmodUpdateTopbarIncomplete(pro){
+  // Show/hide incomplete banner in overview
+  const banner=document.getElementById('profile-incomplete-banner-el');
+  if(!banner) return;
+  const items=[pro.photo,pro.bio,pro.titre,pro.adresse,pro.tel,pro.experience];
+  const done=items.filter(Boolean).length;
+  const pct=Math.round((done/items.length)*100);
+  if(pct<100){
+    banner.style.display='flex';
+    const sub=banner.querySelector('.pib-sub');
+    if(sub) sub.textContent='Profil complété à '+pct+'% — ajoutez photo, bio, adresse…';
+  } else {
+    banner.style.display='none';
+  }
+}
+
+function pmodCopyLink(){
+  const url=(document.getElementById('pmod-link-url')||{textContent:''}).textContent;
+  navigator.clipboard?.writeText('https://'+url).catch(()=>{});
+  toast2('🔗 Lien copié !','green');
+}
+function pmodShareWA(){
+  const s=getSession(); const db=getDB();
+  const pro=db.pros?.find(p=>p.id===s?.id); if(!pro) return;
+  const slug=buildSlugFromPro(pro);
+  const msg=encodeURIComponent('Prenez rendez-vous en ligne avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\nhttps://medbook.tn/rdv/'+slug);
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
+function pmodShareEmail(){
+  const s=getSession(); const db=getDB();
+  const pro=db.pros?.find(p=>p.id===s?.id); if(!pro) return;
+  const slug=buildSlugFromPro(pro);
+  const sub=encodeURIComponent('Rendez-vous en ligne — Dr. '+pro.fn+' '+pro.ln);
+  const body=encodeURIComponent('Bonjour,\n\nPrenez rendez-vous en ligne :\nhttps://medbook.tn/rdv/'+slug+'\n\nCordialement');
+  window.open('mailto:?subject='+sub+'&body='+body,'_blank');
+}
+function pmodPreviewPage(){
+  const s=getSession(); if(!s) return;
+  closeProfileModal();
+  openPublicBookingPage(s.id);
+}
+function pmodChangePwd(){
+  const p1=(document.getElementById('pmod-pwd1')||{value:''}).value;
+  const p2=(document.getElementById('pmod-pwd2')||{value:''}).value;
+  if(!p1||p1.length<8){ toast2('Mot de passe trop court (min 8 caractères)','red'); return; }
+  if(p1!==p2){ toast2('Les mots de passe ne correspondent pas','red'); return; }
+  toast2('🔒 Mot de passe mis à jour','green');
+}
+
+// Call on loadProDash
+function initProfileModal(pro){
+  pmodUpdateTopbarBtn(pro);
+  pmodUpdateTopbarIncomplete(pro);
+}
+
+
+// ══════════════════════════════════
 //  PROFILE SYSTEM
 // ══════════════════════════════════
+
+function updateOverviewProfileCard(pro){
+  const ov=document.getElementById('ov-avatar');
+  if(ov){
+    if(pro.photo) ov.innerHTML='<img src="'+pro.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';
+    else{const cfg=(typeof SPECIALTY_CONFIG!=='undefined'&&SPECIALTY_CONFIG[pro.spec])||{ico:'🩺'};ov.innerHTML=cfg.ico||'🩺';}
+  }
+  const nameEl=document.getElementById('ov-pro-name');
+  if(nameEl) nameEl.textContent='Dr. '+pro.fn+' '+pro.ln;
+  const specEl=document.getElementById('ov-pro-spec');
+  if(specEl) specEl.textContent=(pro.spec||'')+(pro.ville?' · '+pro.ville:'')+(pro.titre?' — '+pro.titre:'');
+  const chip=document.getElementById('ov-completeness-chip');
+  if(chip){
+    const fields=[pro.photo,pro.bio,pro.titre,pro.adresse,pro.tel,pro.experience,pro.website||pro.facebook||pro.instagram];
+    const done=fields.filter(Boolean).length;
+    const pct=Math.round((done/fields.length)*100);
+    const color=pct>=80?'var(--emerald-d)':pct>=50?'var(--amber)':'var(--rose)';
+    chip.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:'+color+';display:inline-block"></span> Profil complété à '+pct+'%';
+    chip.style.color=color;
+  }
+}
 
 function buildSlug(pro){
   return (pro.fn+'-'+pro.ln).toLowerCase()
@@ -4189,6 +4582,262 @@ setTimeout(updateAiFab,150);
       <button class="ai-send-btn" id="ai-send-btn" onclick="aiSend()">➤</button>
     </div>
     <div style="text-align:center;font-size:.6rem;color:#A0AEC0;margin-top:.4rem">MedBook AI · Propulsé par Claude · Support 🇹🇳 FR & عربي</div>
+  </div>
+</div>
+
+
+<!-- ════════════ PROFILE MODAL ════════════ -->
+<div id="modal-profile">
+  <div class="pmod-header">
+    <button class="pmod-close" onclick="closeProfileModal()">✕</button>
+    <div class="pmod-title">✏️ Mon Profil Professionnel</div>
+    <button class="pmod-save" onclick="saveProfileModal()">💾 Sauvegarder</button>
+  </div>
+  <div class="pmod-body">
+
+    <!-- AVATAR + NOM -->
+    <div class="pmod-avatar-section">
+      <div class="pmod-avatar-circle" onclick="document.getElementById('pmod-photo-input').click()">
+        <div id="pmod-avatar-display" style="font-size:2.5rem;width:100%;height:100%;display:flex;align-items:center;justify-content:center">🩺</div>
+        <div class="pmod-avatar-overlay">📷</div>
+      </div>
+      <input type="file" id="pmod-photo-input" accept="image/*" style="display:none" onchange="pmodHandlePhoto(this)"/>
+      <div class="pmod-avatar-name" id="pmod-avatar-name">Dr. —</div>
+      <div class="pmod-avatar-spec" id="pmod-avatar-spec">—</div>
+      <div class="pmod-avatar-btns">
+        <label class="pmod-photo-btn">📷 Changer la photo<input type="file" accept="image/*" style="display:none" onchange="pmodHandlePhoto(this)"/></label>
+        <button class="pmod-photo-del" onclick="pmodDeletePhoto()">🗑️ Supprimer</button>
+      </div>
+    </div>
+
+    <!-- COMPLETENESS -->
+    <div class="pmod-complete">
+      <div class="pmod-complete-top">
+        <div class="pmod-complete-label">📊 Complétude du profil</div>
+        <div class="pmod-complete-pct" id="pmod-pct">0%</div>
+      </div>
+      <div class="pmod-bar-bg"><div class="pmod-bar-fill" id="pmod-bar" style="width:0%"></div></div>
+      <div class="pmod-checklist" id="pmod-checklist"></div>
+    </div>
+
+    <!-- IDENTITÉ -->
+    <div class="pmod-section">
+      <div class="pmod-section-hdr">
+        <div class="pmod-section-ico" style="background:var(--sapphire-l)">👤</div>
+        <div>
+          <div class="pmod-section-title">Identité professionnelle</div>
+          <div class="pmod-section-sub">Informations affichées sur votre page publique</div>
+        </div>
+      </div>
+      <div class="pmod-row2">
+        <div class="pmod-field"><label>Prénom *</label><input class="pmod-input" id="pmod-fn" placeholder="Amira"/></div>
+        <div class="pmod-field"><label>Nom *</label><input class="pmod-input" id="pmod-ln" placeholder="Ben Salah"/></div>
+      </div>
+      <div class="pmod-field">
+        <label>Spécialité *</label>
+        <select class="pmod-select" id="pmod-spec">
+          <option>Psychologue clinicien(ne)</option><option>Psychiatre</option>
+          <option>Médecin généraliste</option><option>Pédiatre</option>
+          <option>Cardiologue</option><option>Dermatologue</option>
+          <option>Kinésithérapeute</option><option>Ostéopathe</option>
+          <option>Nutritionniste / Diététicien(ne)</option>
+          <option>Ophtalmologue</option><option>ORL</option>
+          <option>Chirurgien-dentiste</option><option>Sophrologue</option>
+          <option>Médecin du sport</option><option>Autre</option>
+        </select>
+      </div>
+      <div class="pmod-field">
+        <label>Titre / Diplôme <span>(affiché sur votre page)</span></label>
+        <input class="pmod-input" id="pmod-titre" placeholder="Docteur en Psychologie Clinique · Université de Tunis"/>
+      </div>
+      <div class="pmod-field">
+        <label>Biographie <span>(présentez-vous à vos patients)</span></label>
+        <textarea class="pmod-textarea" id="pmod-bio" placeholder="Décrivez votre approche thérapeutique, votre formation, vos spécialités cliniques…"></textarea>
+      </div>
+      <div class="pmod-row2">
+        <div class="pmod-field">
+          <label>Années d'expérience</label>
+          <input class="pmod-input" id="pmod-exp" type="number" min="0" max="60" placeholder="10"/>
+        </div>
+        <div class="pmod-field">
+          <label>N° d'ordre professionnel <span>(optionnel)</span></label>
+          <input class="pmod-input" id="pmod-ordre" placeholder="OPT-12345"/>
+        </div>
+      </div>
+      <div class="pmod-field">
+        <label>Langues de consultation</label>
+        <div class="pmod-checks">
+          <label class="pmod-check-label"><input type="checkbox" id="pmd-lfr" value="Français"/> 🇫🇷 Français</label>
+          <label class="pmod-check-label"><input type="checkbox" id="pmd-lar" value="Arabe"/> 🇹🇳 العربية</label>
+          <label class="pmod-check-label"><input type="checkbox" id="pmd-len" value="English"/> 🇬🇧 English</label>
+          <label class="pmod-check-label"><input type="checkbox" id="pmd-lde" value="Deutsch"/> 🇩🇪 Deutsch</label>
+        </div>
+      </div>
+      <div class="pmod-field">
+        <label>Modes de consultation</label>
+        <div class="pmod-checks">
+          <label class="pmod-check-label"><input type="checkbox" id="pmd-mcab" value="cabinet"/> 🏥 Cabinet</label>
+          <label class="pmod-check-label"><input type="checkbox" id="pmd-mvid" value="video"/> 📹 Vidéo</label>
+          <label class="pmod-check-label"><input type="checkbox" id="pmd-mdom" value="domicile"/> 🏠 Domicile</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="pmod-section">
+      <div class="pmod-section-hdr">
+        <div class="pmod-section-ico" style="background:#FEF3C7">📞</div>
+        <div>
+          <div class="pmod-section-title">Contact</div>
+          <div class="pmod-section-sub">Coordonnées de votre cabinet</div>
+        </div>
+      </div>
+      <div class="pmod-field"><label>Email professionnel *</label><input class="pmod-input" id="pmod-email" type="email" placeholder="dr.bensalah@cabinet.tn"/></div>
+      <div class="pmod-row2">
+        <div class="pmod-field"><label>Téléphone cabinet</label><input class="pmod-input" id="pmod-tel" type="tel" placeholder="+216 71 …"/></div>
+        <div class="pmod-field"><label>WhatsApp</label><input class="pmod-input" id="pmod-wa" type="tel" placeholder="+216 55 …"/></div>
+      </div>
+    </div>
+
+    <!-- LOCALISATION -->
+    <div class="pmod-section">
+      <div class="pmod-section-hdr">
+        <div class="pmod-section-ico" style="background:var(--emerald-l)">📍</div>
+        <div>
+          <div class="pmod-section-title">Localisation</div>
+          <div class="pmod-section-sub">Adresse de votre cabinet</div>
+        </div>
+      </div>
+      <div class="pmod-field">
+        <label>Adresse complète</label>
+        <input class="pmod-input" id="pmod-adresse" placeholder="12 Avenue de la Liberté, Tunis" oninput="pmodUpdateMap()"/>
+      </div>
+      <div class="pmod-row2">
+        <div class="pmod-field">
+          <label>Ville</label>
+          <select class="pmod-select" id="pmod-ville" onchange="pmodUpdateMap()">
+            <option>Tunis</option><option>Sfax</option><option>Sousse</option>
+            <option>Monastir</option><option>Bizerte</option><option>Kairouan</option>
+            <option>Nabeul</option><option>Hammamet</option><option>Ariana</option>
+            <option>La Marsa</option><option>Carthage</option><option>Ben Arous</option>
+            <option>Bardo</option><option>Gafsa</option><option>Gabès</option>
+            <option>Médenine</option><option>Kasserine</option><option>Autre</option>
+          </select>
+        </div>
+        <div class="pmod-field">
+          <label>Code postal</label>
+          <input class="pmod-input" id="pmod-postal" placeholder="1053"/>
+        </div>
+      </div>
+      <div class="pmod-field">
+        <label>Étage / Bureau <span>(optionnel)</span></label>
+        <input class="pmod-input" id="pmod-bureau" placeholder="Bureau N102, BLOC B, Résidence ERRIHAB"/>
+      </div>
+      <div class="pmod-map" id="pmod-map">📍 Saisissez votre adresse pour afficher la carte</div>
+    </div>
+
+    <!-- CONSULTATION -->
+    <div class="pmod-section">
+      <div class="pmod-section-hdr">
+        <div class="pmod-section-ico" style="background:var(--violet-l)">🩺</div>
+        <div>
+          <div class="pmod-section-title">Paramètres de consultation</div>
+          <div class="pmod-section-sub">Durée, prix et type</div>
+        </div>
+      </div>
+      <div class="pmod-row2">
+        <div class="pmod-field">
+          <label>Durée standard (min)</label>
+          <select class="pmod-select" id="pmod-duration">
+            <option value="15">15 min</option><option value="20">20 min</option>
+            <option value="25">25 min</option><option value="30">30 min</option>
+            <option value="45">45 min</option><option value="50" selected>50 min</option>
+            <option value="60">60 min</option><option value="90">90 min</option>
+          </select>
+        </div>
+        <div class="pmod-field">
+          <label>Prix de consultation (DT)</label>
+          <input class="pmod-input" id="pmod-price" type="number" min="0" placeholder="100"/>
+        </div>
+      </div>
+      <div class="pmod-field">
+        <label>Type de consultation <span>(ex: Th. individuelle)</span></label>
+        <input class="pmod-input" id="pmod-consult-type" placeholder="Consultation / Thérapie individuelle"/>
+      </div>
+      <div class="pmod-field">
+        <label>Langue des emails patients</label>
+        <select class="pmod-select" id="pmod-lang">
+          <option value="fr">Français</option>
+          <option value="ar">Arabe (عربي)</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- RÉSEAUX SOCIAUX -->
+    <div class="pmod-section">
+      <div class="pmod-section-hdr">
+        <div class="pmod-section-ico" style="background:#F0FDF9">🌐</div>
+        <div>
+          <div class="pmod-section-title">Présence en ligne</div>
+          <div class="pmod-section-sub">Liens visibles sur votre page publique</div>
+        </div>
+      </div>
+      <div class="pmod-social-row">
+        <div class="pmod-social-ico">🌐</div>
+        <input class="pmod-social-input" id="pmod-website" type="url" placeholder="https://votre-site.tn"/>
+      </div>
+      <div class="pmod-social-row">
+        <div class="pmod-social-ico">📘</div>
+        <input class="pmod-social-input" id="pmod-facebook" placeholder="facebook.com/DrVotrenom"/>
+      </div>
+      <div class="pmod-social-row">
+        <div class="pmod-social-ico">📸</div>
+        <input class="pmod-social-input" id="pmod-instagram" placeholder="@dr.votrenom"/>
+      </div>
+      <div class="pmod-social-row">
+        <div class="pmod-social-ico">💼</div>
+        <input class="pmod-social-input" id="pmod-linkedin" placeholder="linkedin.com/in/votrenom"/>
+      </div>
+    </div>
+
+    <!-- LIEN PUBLIC -->
+    <div class="pmod-section">
+      <div class="pmod-section-hdr">
+        <div class="pmod-section-ico" style="background:#EDE9FE">🔗</div>
+        <div>
+          <div class="pmod-section-title">Votre lien de réservation</div>
+          <div class="pmod-section-sub">Partagez ce lien sur toutes vos plateformes</div>
+        </div>
+      </div>
+      <div class="pmod-link-card">
+        <div class="pmod-link-url" id="pmod-link-url">medbook.tn/rdv/…</div>
+        <div class="pmod-link-btns">
+          <button class="pmod-link-btn primary" onclick="pmodCopyLink()">📋 Copier</button>
+          <button class="pmod-link-btn wa" onclick="pmodShareWA()">📱 WhatsApp</button>
+          <button class="pmod-link-btn secondary" onclick="pmodShareEmail()">📧 Email</button>
+          <button class="pmod-link-btn secondary" onclick="pmodPreviewPage()">👁️ Prévisualiser</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SÉCURITÉ -->
+    <div class="pmod-section">
+      <div class="pmod-section-hdr">
+        <div class="pmod-section-ico" style="background:var(--rose-l)">🔒</div>
+        <div>
+          <div class="pmod-section-title">Sécurité</div>
+          <div class="pmod-section-sub">Changer votre mot de passe</div>
+        </div>
+      </div>
+      <div class="pmod-field"><label>Nouveau mot de passe</label><input class="pmod-input" type="password" id="pmod-pwd1" placeholder="••••••••"/></div>
+      <div class="pmod-field"><label>Confirmer le mot de passe</label><input class="pmod-input" type="password" id="pmod-pwd2" placeholder="••••••••"/></div>
+      <button onclick="pmodChangePwd()" style="background:var(--ink);color:#fff;border:none;border-radius:var(--r-md);padding:.6rem 1.1rem;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s">🔒 Mettre à jour le mot de passe</button>
+    </div>
+
+    <button onclick="saveProfileModal()" class="submit-btn" style="width:100%;margin-top:.5rem;font-size:.95rem;padding:1rem">💾 Sauvegarder le profil</button>
+    <div style="text-align:center;font-size:.68rem;color:var(--muted);margin-top:.5rem;padding-bottom:1rem">Votre page publique est mise à jour immédiatement après sauvegarde</div>
+
   </div>
 </div>
 
