@@ -632,6 +632,66 @@ a{text-decoration:none;color:inherit}
 .bp-powered{text-align:center;padding:1rem;font-size:.65rem;color:var(--ghost)}
 .bp-powered a{color:var(--sapphire);font-weight:600}
 
+
+/* ══ AI HELP ASSISTANT ══ */
+.ai-help-fab{position:fixed;bottom:1.5rem;right:1.25rem;z-index:800;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1B4FD8,#0D9488);box-shadow:0 4px 24px rgba(27,79,216,.4);display:none;align-items:center;justify-content:center;cursor:pointer;border:none;transition:all .22s ease;animation:fabPulse 3s infinite}
+@keyframes fabPulse{0%,100%{box-shadow:0 4px 24px rgba(27,79,216,.4),0 0 0 0 rgba(27,79,216,.3)}60%{box-shadow:0 4px 24px rgba(27,79,216,.4),0 0 0 10px rgba(27,79,216,0)}}
+.ai-help-fab:hover{transform:scale(1.1)}
+.ai-help-fab-ico{font-size:1.45rem}
+.ai-fab-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;background:#E11D48;border-radius:50%;border:2px solid #fff;font-size:.55rem;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center}
+.ai-panel{position:fixed;bottom:0;right:0;z-index:799;width:100%;max-width:400px;height:100dvh;background:#fff;box-shadow:-4px 0 40px rgba(0,0,0,.12);display:flex;flex-direction:column;transform:translateX(110%);transition:transform .3s cubic-bezier(.4,0,.2,1);border-left:1px solid #E2E8F0}
+.ai-panel.open{transform:translateX(0)}
+@media(min-width:480px){.ai-panel{bottom:1.5rem;right:1.25rem;height:600px;max-height:calc(100dvh - 3rem);border-radius:20px;border:1px solid #E2E8F0;box-shadow:0 20px 60px rgba(0,0,0,.15)}}
+.ai-panel-hdr{background:linear-gradient(135deg,#1B4FD8,#0D9488);padding:.9rem 1.1rem;display:flex;align-items:center;gap:.75rem;flex-shrink:0;border-radius:20px 20px 0 0}
+@media(max-width:479px){.ai-panel-hdr{border-radius:0}}
+.ai-hdr-av{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;border:2px solid rgba(255,255,255,.35)}
+.ai-hdr-name{font-weight:700;font-size:.88rem;color:#fff}
+.ai-hdr-status{font-size:.65rem;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:.3rem;margin-top:.05rem}
+.ai-status-dot{width:6px;height:6px;border-radius:50%;background:#34D399;animation:pulse 2s infinite}
+.ai-close-btn{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;margin-left:auto}
+.ai-close-btn:hover{background:rgba(255,255,255,.3)}
+.ai-quick-bar{padding:.6rem .9rem;border-bottom:1px solid #E2E8F0;display:flex;gap:.4rem;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch}
+.ai-quick-bar::-webkit-scrollbar{height:0}
+.ai-qchip{background:#EEF2FF;border:1px solid #C7D2FE;border-radius:99px;padding:.26rem .7rem;font-size:.68rem;font-weight:600;color:#1B4FD8;white-space:nowrap;cursor:pointer;transition:all .18s;flex-shrink:0}
+.ai-qchip:hover{background:#C7D2FE}
+.ai-qchip.sup{background:#FEF3C7;border-color:#FCD34D;color:#B45309}
+.ai-qchip.sup:hover{background:#FCD34D}
+.ai-messages{flex:1;overflow-y:auto;padding:.9rem;display:flex;flex-direction:column;gap:.65rem;scroll-behavior:smooth}
+.ai-messages::-webkit-scrollbar{width:3px}
+.ai-messages::-webkit-scrollbar-thumb{background:#C7D2FE;border-radius:99px}
+.ai-msg{display:flex;gap:.55rem;align-items:flex-end;animation:msgIn .2s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ai-msg.user{flex-direction:row-reverse}
+.ai-msg-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#1B4FD8,#0D9488);display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0}
+.ai-msg-av.user{background:#E2E8F0}
+.ai-bubble{max-width:82%;padding:.6rem .85rem;border-radius:14px;font-size:.8rem;line-height:1.6;color:#0D1117}
+.ai-msg.bot .ai-bubble{background:#F7F8FC;border:1px solid #E2E8F0;border-bottom-left-radius:4px}
+.ai-msg.user .ai-bubble{background:#1B4FD8;color:#fff;border-bottom-right-radius:4px}
+.ai-bubble strong{font-weight:700}
+.ai-msg-time{font-size:.58rem;color:#A0AEC0;margin-top:.2rem;text-align:right}
+.ai-typing{display:flex;gap:4px;padding:.55rem .75rem;background:#F7F8FC;border:1px solid #E2E8F0;border-radius:14px;border-bottom-left-radius:4px;width:fit-content}
+.ai-typing span{width:7px;height:7px;border-radius:50%;background:#A0AEC0;animation:typingDot 1.2s infinite}
+.ai-typing span:nth-child(2){animation-delay:.2s}
+.ai-typing span:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.ai-input-wrap{padding:.75rem .9rem;border-top:1px solid #E2E8F0;flex-shrink:0;background:#fff;border-radius:0 0 20px 20px}
+.ai-input-row{display:flex;gap:.5rem;align-items:flex-end}
+.ai-textarea{flex:1;border:1.5px solid #E2E8F0;border-radius:12px;padding:.55rem .8rem;font-size:.82rem;font-family:"DM Sans",sans-serif;color:#0D1117;resize:none;min-height:38px;max-height:100px;line-height:1.5;transition:border-color .2s}
+.ai-textarea:focus{outline:none;border-color:#1B4FD8}
+.ai-send-btn{width:38px;height:38px;border-radius:50%;background:#1B4FD8;border:none;color:#fff;font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0}
+.ai-send-btn:hover{background:#1238A8}
+.ai-send-btn:disabled{opacity:.4;cursor:default}
+.ai-ticket-form{background:#FEF3C7;border:1px solid #FCD34D;border-radius:12px;padding:.85rem;margin-top:.5rem}
+.ai-ticket-title{font-size:.76rem;font-weight:700;color:#B45309;margin-bottom:.6rem}
+.ai-ticket-inp{width:100%;border:1px solid #FCD34D;border-radius:8px;padding:.5rem .7rem;font-size:.76rem;font-family:"DM Sans",sans-serif;background:#fff;margin-bottom:.4rem}
+.ai-ticket-sel{width:100%;border:1px solid #FCD34D;border-radius:8px;padding:.5rem .7rem;font-size:.76rem;font-family:"DM Sans",sans-serif;background:#fff;margin-bottom:.4rem}
+.ai-ticket-ta{width:100%;border:1px solid #FCD34D;border-radius:8px;padding:.5rem .7rem;font-size:.76rem;font-family:"DM Sans",sans-serif;background:#fff;min-height:70px;resize:none;margin-bottom:.4rem}
+.ai-ticket-btn{width:100%;background:#D97706;color:#fff;border:none;border-radius:8px;padding:.55rem;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s}
+.ai-ticket-btn:hover{background:#B45309}
+.ai-rating{display:flex;gap:.4rem;margin-top:.5rem}
+.ai-rate-btn{background:#F7F8FC;border:1px solid #E2E8F0;border-radius:8px;padding:.3rem .6rem;font-size:.7rem;cursor:pointer;transition:all .2s;color:#718096}
+.ai-rate-btn:hover{border-color:#C7D2FE;color:#1B4FD8}
+
 </style>
 </head>
 <body>
@@ -1603,6 +1663,7 @@ function toast2(msg,type='green'){
 function showView(id){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   document.getElementById(id).classList.add('on');
+  if(typeof updateAiFab==='function') setTimeout(updateAiFab,30);
 }
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function openModal(id){document.getElementById('modal-'+id).classList.add('open')}
@@ -1899,7 +1960,7 @@ function confirmRdv(id){
   toast2('✅ RDV confirmé · Email de confirmation envoyé','green');
 }
 function cancelRdv(id){
-  if(!confirm('Annuler ce rendez-vous ?')) return;
+  if(!confirm("Annuler ce rendez-vous ?")) return;
   const db=getDB();const r=(db.rdvs||[]).find(x=>x.id===id);if(!r)return;
   r.status='cancelled';saveDB(db);
   renderRdvList(currentFilter);updateStats(r.proId);renderNextRdvs(r.proId);renderProCal();
@@ -2340,7 +2401,7 @@ function previewEmail(type){
     <div style="color:#22C55E;font-weight:600">${sampleDate}<br/>${sampleSlot} – ${sampleEnd()} (CET)</div>
     <div style="color:#94A3B8;font-size:.72rem;margin-top:8px;margin-bottom:2px">Invité</div>
     <div>[Prénom Nom patient]<br/><span style="color:#94A3B8">[patient@email.com]</span></div>
-    <div style="color:#94A3B8;font-size:.72rem;margin-top:8px;margin-bottom:2px">Fuseau horaire de l'invité</div>
+    <div style="color:#94A3B8;font-size:.72rem;margin-top:8px;margin-bottom:2px">Fuseau horaire de l'invité</div>'
     <div>CET (Africa/Tunis)</div>
     <div style="color:#94A3B8;font-size:.72rem;margin-top:8px;margin-bottom:2px">Lieu du rendez-vous</div>
     <div><a href="${mapUrl}" style="color:#4F46E5">${escHtml(pro.adresse||'Cabinet médical')} →</a></div>
@@ -2506,10 +2567,10 @@ const SPECIALTY_CONFIG = {
     services:[
       {name:'Examen de la vue', duration:30, price:60, desc:'Bilan visuel complet'},
       {name:'Prescription lunettes', duration:20, price:40, desc:'Renouvellement'},
-      {name:'Fond d'œil', duration:30, price:80, desc:'Diagnostic rétine'},
+      {name:"Fond d'œil", duration:30, price:80, desc:"Diagnostic rétine"},
     ],
     motifs:['Baisse de vision','Douleur oculaire','Ordonnance lunettes','Contrôle myopie','Glaucome','Corps flottants','Autre'],
-    features:['Ordonnances optiques','Historique vision','Acuité visuelle','Résultats fond d'œil'],
+    features:['Ordonnances optiques','Historique vision','Acuité visuelle',"Résultats fond d'œil"],
   },
   'Chirurgien-dentiste': {
     ico:'🦷', color:'#64748B', colorL:'#F1F5F9',
@@ -2571,8 +2632,8 @@ const SPECIALTY_CONFIG = {
       {name:'Bilan sportif médical', duration:30, price:60, desc:'Certificat aptitude'},
       {name:'Consultation blessure', duration:25, price:50, desc:'Diagnostic et traitement'},
     ],
-    motifs:['Certificat médical sport','Blessure sportive','Retour à l'entraînement','Performance','Nutrition sportive','Autre'],
-    features:['Certificats d'aptitude','Suivi blessures','Programme récupération','Tests fonctionnels'],
+    motifs:['Certificat médical sport','Blessure sportive',"Retour à l'entraînement",'Performance','Nutrition sportive','Autre'],
+    features:["Certificats d'aptitude",'Suivi blessures','Programme récupération','Tests fonctionnels'],
   },
 };
 
@@ -2728,7 +2789,7 @@ function upgradePro(id, plan){
   toast2('✅ Plan '+plan+' activé pour Dr. '+p.ln,'green');
 }
 function revokePro(id){
-  if(!confirm('Révoquer l'accès de ce professionnel ?')) return;
+  if(!confirm("Révoquer l'accès de ce professionnel ?")) return;
   const db=getDB(); const p=db.pros.find(x=>x.id===id); if(!p)return;
   p.subscription={...p.subscription,status:'expired'};
   saveDB(db); loadAdminDash(); renderAdminPros(null,null);
@@ -2736,7 +2797,7 @@ function revokePro(id){
   toast2('🔒 Accès révoqué','green');
 }
 function deletePro(id){
-  if(!confirm('Supprimer définitivement ce compte professionnel ? Cette action est irréversible.')) return;
+  if(!confirm("Supprimer définitivement ce compte professionnel ? Cette action est irréversible.")) return;
   const db=getDB();
   db.pros=(db.pros||[]).filter(x=>x.id!==id);
   db.rdvs=(db.rdvs||[]).filter(x=>x.proId!==id);
@@ -3113,6 +3174,240 @@ function init(){
   rescheduleAll();
 }
 init();
+
+// ══════════════════════════════════
+//  MEDBOOK AI ASSISTANT
+// ══════════════════════════════════
+
+const AI_KB = {
+  agenda: {
+    q: `Comment fonctionne mon agenda en ligne ?`,
+    a: `Votre agenda MedBook est automatiquement en ligne dès votre inscription.\n\n📅 Comment ça marche :\n• Un lien unique est généré pour vous (ex: medbook.tn/rdv/dr-nom)\n• Vos patients cliquent sur ce lien pour réserver\n• Vous voyez tous les RDV dans l'onglet Rendez-vous ou Calendrier\n\n💡 Partagez votre lien via WhatsApp, SMS ou sur votre site web.`
+  },
+  lien: {
+    q: `Comment partager mon lien de réservation ?`,
+    a: `Votre lien patient est visible dans l'onglet Vue d'ensemble de votre tableau de bord.\n\n🔗 Pour le partager :\n• Cliquez "Copier le lien" — collez sur WhatsApp, SMS, ou email\n• Cliquez "Partager WhatsApp" — message pré-rédigé prêt à envoyer\n• Intégrez-le sur votre site avec le bouton "Code iframe"\n\nVos patients n'ont besoin d'aucun compte pour réserver !`
+  },
+  rappels: {
+    q: `Comment fonctionnent les rappels automatiques ?`,
+    a: `MedBook envoie des rappels automatiques par email à chaque patient :\n\n✅ Confirmation immédiate dès la réservation\n⏰ Rappel 24h avant le rendez-vous\n⏰ Rappel 2h avant le rendez-vous\n⏰ Rappel 15 min avant (Plan Cabinet)\n\n📉 Résultat : -70% d'absences constatées.\n\nVous n'avez rien à faire — tout est automatique !`
+  },
+  patients: {
+    q: `Comment accéder aux dossiers de mes patients ?`,
+    a: `Tous vos patients sont dans l'onglet Patients de votre tableau de bord.\n\n📋 Ce que vous trouvez :\n• Fiche de chaque patient (nom, email, téléphone)\n• Historique complet de tous leurs RDV\n• Motifs de consultation\n• Statistiques de suivi\n\n🔒 Ces données sont strictement confidentielles et accessibles uniquement par vous.`
+  },
+  abonnement: {
+    q: `Comment gérer mon abonnement MedBook ?`,
+    a: `Votre abonnement se gère dans l'onglet Abonnement.\n\n📦 Nos plans :\n• Essentiel : 290 TND/an — 1 praticien — 200 RDV/mois\n• Cabinet : 590 TND/an — jusqu'à 5 praticiens — illimité\n\n💳 Paiement accepté : Carte bancaire tunisienne, virement, chèque\n\n🎁 Vous bénéficiez de 30 jours d'essai gratuit sans engagement.`
+  },
+  gcal: {
+    q: `Comment synchroniser avec Google Agenda ?`,
+    a: `La synchronisation Google Agenda est disponible dans Disponibilités ou Intégrations.\n\n🔄 Comment faire :\n1. Cliquez sur "Connecter Google Agenda"\n2. Autorisez l'accès à votre compte Google\n3. Vos RDV MedBook apparaissent dans votre calendrier\n\n✅ La synchronisation est bidirectionnelle — un RDV Google bloqué désactive le créneau sur MedBook.`
+  },
+  disponibilites: {
+    q: `Comment configurer mes disponibilités ?`,
+    a: `Allez dans l'onglet Disponibilités de votre tableau de bord.\n\n🗓️ Étapes :\n1. Cochez les jours où vous consultez (Lun à Sam)\n2. Sélectionnez vos créneaux horaires disponibles\n3. Cliquez "Sauvegarder"\n\n⚡ Les changements sont instantanés — vos patients voient les nouveaux créneaux immédiatement.`
+  },
+  bug: {
+    q: `Signaler un bug`,
+    a: `Désolé pour ce désagrément ! Décrivez le problème ci-dessous et notre équipe technique interviendra rapidement.\n\n🐛 Pour un traitement rapide, précisez :\n• Quel écran ou bouton pose problème ?\n• Quel message d'erreur apparaît ?\n• Sur quel appareil (téléphone, ordinateur) ?`,
+    ticket: true
+  },
+  ticket: {
+    q: `Envoyer un ticket au support`,
+    a: `Notre équipe support vous répond sous 24h ouvrables (arabe et français).\n\n📩 Remplissez le formulaire ci-dessous ou contactez-nous :\n• Email : contact@medbook.tn\n• WhatsApp : +216 XX XXX XXX`,
+    ticket: true
+  },
+};
+
+const AI_PATTERNS = [
+  {re:/rdv|rendez.vous|r[eé]servation/i, key:'agenda'},
+  {re:/lien|partag|url|whatsapp|sms/i, key:'lien'},
+  {re:/rappel|reminder|email|confirmation/i, key:'rappels'},
+  {re:/patient|dossier|fiche|historique/i, key:'patients'},
+  {re:/abonnement|prix|tarif|paiement|tnd|plan/i, key:'abonnement'},
+  {re:/google|gcal|calendrier|synchroni/i, key:'gcal'},
+  {re:/disponibil|horaire|cr[eé]neau/i, key:'disponibilites'},
+  {re:/bug|erreur|probl[eè]me|marche pas|fonctionne pas/i, key:'bug'},
+  {re:/ticket|support|aide|contac/i, key:'ticket'},
+];
+
+let aiOpen = false;
+let aiHistory = [];
+let aiTyping = false;
+
+function toggleAiPanel(){
+  aiOpen = !aiOpen;
+  const panel = document.getElementById('ai-panel');
+  const badge = document.getElementById('ai-fab-badge');
+  if(aiOpen){
+    panel.classList.add('open');
+    if(badge) badge.style.display = 'none';
+    if(!document.getElementById('ai-messages').children.length) aiWelcome();
+  } else {
+    panel.classList.remove('open');
+  }
+}
+
+function aiWelcome(){
+  const s = getSession();
+  const db = getDB();
+  const pro = s ? db.pros?.find(p=>p.id===s.id) : null;
+  const name = pro ? `Dr. ${pro.ln}` : 'Docteur';
+  aiAddMsg('bot', `Bonjour ${name} 👋\n\nJe suis votre assistant MedBook alimenté par l'IA. Je peux vous aider à :\n\n📅 Comprendre les fonctionnalités\n⚙️ Configurer votre cabinet\n🐛 Signaler un problème technique\n💬 Répondre à toutes vos questions\n\nQue puis-je faire pour vous ?`);
+}
+
+function aiQuick(key){
+  const kb = AI_KB[key];
+  if(!kb) return;
+  aiAddMsg('user', kb.q);
+  aiRespond(kb.q, key);
+}
+
+function aiSend(){
+  const input = document.getElementById('ai-input');
+  const text = (input.value||'').trim();
+  if(!text || aiTyping) return;
+  input.value = '';
+  input.style.height = 'auto';
+  aiAddMsg('user', text);
+  const matched = AI_PATTERNS.find(p => p.re.test(text));
+  if(matched && AI_KB[matched.key]){
+    aiRespond(text, matched.key);
+  } else {
+    aiCallClaude(text);
+  }
+}
+
+function aiRespond(userText, key){
+  aiTyping = true;
+  const btn = document.getElementById('ai-send-btn');
+  if(btn) btn.disabled = true;
+  const typingEl = aiAddTyping();
+  setTimeout(() => {
+    if(typingEl.parentNode) typingEl.remove();
+    aiTyping = false;
+    if(btn) btn.disabled = false;
+    const kb = AI_KB[key];
+    aiAddMsg('bot', kb.a, kb.ticket||false);
+    aiHistory.push({role:'user',content:userText});
+    aiHistory.push({role:'assistant',content:kb.a});
+  }, 800 + Math.random()*500);
+}
+
+async function aiCallClaude(userText){
+  aiTyping = true;
+  const btn = document.getElementById('ai-send-btn');
+  if(btn) btn.disabled = true;
+  const typingEl = aiAddTyping();
+
+  const s = getSession();
+  const db = getDB();
+  const pro = s ? db.pros?.find(p=>p.id===s.id) : null;
+  const rdvCount = pro ? (db.rdvs||[]).filter(r=>r.proId===pro.id&&r.status!=='cancelled').length : 0;
+
+  const systemPrompt = `Tu es l'assistant IA de MedBook, une plateforme tunisienne de gestion de rendez-vous médicaux.
+${pro ? `L'utilisateur est Dr. ${pro.fn} ${pro.ln}, ${pro.spec} à ${pro.ville||'Tunisie'}. Il a ${rdvCount} RDV enregistrés.` : ''}
+Fonctionnalités MedBook : agenda en ligne, lien unique patient, rappels automatiques (confirmation, 24h, 2h, 15min), dossiers patients, Google Agenda, export ICS, plans Essentiel 290 TND/an ou Cabinet 590 TND/an, paiement tunisien. Support email : contact@medbook.tn.
+Réponds en français, de manière concise et bienveillante. Maximum 120 mots. Pour les problèmes techniques, propose un ticket support.`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [...aiHistory.slice(-6), {role:'user',content:userText}]
+      })
+    });
+    const data = await resp.json();
+    if(typingEl.parentNode) typingEl.remove();
+    aiTyping = false;
+    if(btn) btn.disabled = false;
+    if(data.content && data.content[0]){
+      const reply = data.content[0].text;
+      aiHistory.push({role:'user',content:userText});
+      aiHistory.push({role:'assistant',content:reply});
+      const needsTicket = /ticket|bug|erreur technique|support/i.test(reply);
+      aiAddMsg('bot', reply, needsTicket);
+    } else {
+      aiAddMsg('bot', `Je n'ai pas pu traiter votre demande. Contactez-nous : contact@medbook.tn`);
+    }
+  } catch(e){
+    if(typingEl.parentNode) typingEl.remove();
+    aiTyping = false;
+    if(btn) btn.disabled = false;
+    const fb = AI_PATTERNS.find(p=>p.re.test(userText));
+    if(fb && AI_KB[fb.key]){
+      const kb = AI_KB[fb.key];
+      aiAddMsg('bot', kb.a, kb.ticket||false);
+    } else {
+      aiAddMsg('bot', `Assistant temporairement hors ligne.\n\n📧 contact@medbook.tn\n📱 WhatsApp : +216 XX XXX XXX`);
+    }
+  }
+}
+
+function aiAddMsg(role, text, showTicket){
+  const el = document.getElementById('ai-messages');
+  const time = new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  const isBot = role==='bot';
+  const formatted = text.replace(/\n/g,'<br/>');
+  const div = document.createElement('div');
+  div.className = 'ai-msg '+role;
+  div.innerHTML = `<div class="ai-msg-av ${role}">${isBot?'🤖':'👤'}</div><div><div class="ai-bubble">${formatted}</div>${showTicket?aiTicketHtml():''}${isBot&&!showTicket?`<div class="ai-rating"><div class="ai-rate-btn" onclick="aiRate(this)">👍 Utile</div><div class="ai-rate-btn" onclick="aiRate(this)">👎</div></div>`:''}` +
+    `<div class="ai-msg-time">${time}</div></div>`;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+  return div;
+}
+
+function aiTicketHtml(){
+  return `<div class="ai-ticket-form"><div class="ai-ticket-title">📩 Formulaire de support</div><select class="ai-ticket-sel" id="tk-type"><option value="">— Type de problème —</option><option>Bug / Erreur technique</option><option>Problème de connexion</option><option>RDV non enregistré</option><option>Email non reçu</option><option>Problème de paiement</option><option>Autre</option></select><input class="ai-ticket-inp" id="tk-subject" placeholder="Sujet du problème…"/><textarea class="ai-ticket-ta" id="tk-desc" placeholder="Décrivez le problème…"></textarea><input class="ai-ticket-inp" id="tk-email" placeholder="Votre email" type="email"/><button class="ai-ticket-btn" onclick="aiSubmitTicket()">📤 Envoyer au support</button></div>`;
+}
+
+function aiAddTyping(){
+  const el = document.getElementById('ai-messages');
+  const div = document.createElement('div');
+  div.className = 'ai-msg bot';
+  div.innerHTML = `<div class="ai-msg-av">🤖</div><div class="ai-typing"><span></span><span></span><span></span></div>`;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+  return div;
+}
+
+function aiRate(btn){
+  if(btn.parentElement) btn.parentElement.innerHTML = `<div style="font-size:.68rem;color:#0D9488;margin-top:.25rem">Merci pour votre retour !</div>`;
+}
+
+function aiSubmitTicket(){
+  const type = (document.getElementById('tk-type')||{}).value;
+  const subject = ((document.getElementById('tk-subject')||{}).value||'').trim();
+  const desc = ((document.getElementById('tk-desc')||{}).value||'').trim();
+  const email = ((document.getElementById('tk-email')||{}).value||'').trim();
+  if(!type||!subject||!desc){ toast2('Remplissez tous les champs du ticket','red'); return; }
+  const ticketId = 'TK-'+Date.now().toString().slice(-6);
+  const db = getDB();
+  if(!db.tickets) db.tickets=[];
+  const s = getSession();
+  const pro = s ? (db.pros||[]).find(p=>p.id===s.id) : null;
+  db.tickets.push({id:ticketId,type,subject,desc,email:email||pro?.email||'',proId:s?.id||'',proName:pro?`Dr. ${pro.fn} ${pro.ln}`:'Inconnu',status:'open',createdAt:new Date().toISOString()});
+  saveDB(db);
+  const forms = document.querySelectorAll('.ai-ticket-form');
+  if(forms.length) forms[forms.length-1].innerHTML = `<div style="text-align:center;padding:.5rem"><div style="font-size:1.5rem">✅</div><div style="font-size:.8rem;font-weight:700;color:#B45309;margin:.3rem 0">Ticket envoyé !</div><div style="font-size:.7rem;color:#92400E">Réf : <strong>${ticketId}</strong> · Réponse sous 24h</div></div>`;
+  toast2('Ticket '+ticketId+' envoyé au support','green');
+}
+
+function updateAiFab(){
+  const fab = document.getElementById('ai-fab');
+  if(!fab) return;
+  const isLanding = document.getElementById('v-landing')?.classList.contains('on');
+  const isAdminLogin = document.getElementById('v-admin-login')?.classList.contains('on');
+  fab.style.display = (isLanding||isAdminLogin) ? 'none' : 'flex';
+}
+
+setTimeout(updateAiFab,150);
 </script>
 
 <!-- ════════════ ADMIN LOGIN ════════════ -->
@@ -3416,6 +3711,45 @@ init();
     <div class="bp-powered">Propulsé par <a href="#">MedBook</a> · 🇹🇳</div>
   </div>
 </div><!-- /v-booking-page -->
+
+
+<!-- ════ AI FAB ════ -->
+<button class="ai-help-fab" id="ai-fab" onclick="toggleAiPanel()">
+  <span class="ai-help-fab-ico">🤖</span>
+  <span class="ai-fab-badge" id="ai-fab-badge">1</span>
+</button>
+
+<!-- ════ AI PANEL ════ -->
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-panel-hdr">
+    <div class="ai-hdr-av">🤖</div>
+    <div style="flex:1">
+      <div class="ai-hdr-name">MedBook Assistant IA</div>
+      <div class="ai-hdr-status"><span class="ai-status-dot"></span> En ligne · Répond instantanément</div>
+    </div>
+    <button class="ai-close-btn" onclick="toggleAiPanel()">✕</button>
+  </div>
+  <div class="ai-quick-bar">
+    <div class="ai-qchip" onclick="aiQuick('agenda')">📅 Mon agenda</div>
+    <div class="ai-qchip" onclick="aiQuick('lien')">🔗 Lien RDV</div>
+    <div class="ai-qchip" onclick="aiQuick('rappels')">⏰ Rappels</div>
+    <div class="ai-qchip" onclick="aiQuick('patients')">🗂️ Patients</div>
+    <div class="ai-qchip" onclick="aiQuick('abonnement')">💳 Abonnement</div>
+    <div class="ai-qchip" onclick="aiQuick('gcal')">📅 Google Agenda</div>
+    <div class="ai-qchip sup" onclick="aiQuick('bug')">🐛 Signaler un bug</div>
+    <div class="ai-qchip sup" onclick="aiQuick('ticket')">📩 Support</div>
+  </div>
+  <div class="ai-messages" id="ai-messages"></div>
+  <div class="ai-input-wrap">
+    <div class="ai-input-row">
+      <textarea class="ai-textarea" id="ai-input" placeholder="Posez votre question…" rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSend()}"
+        oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"></textarea>
+      <button class="ai-send-btn" id="ai-send-btn" onclick="aiSend()">➤</button>
+    </div>
+    <div style="text-align:center;font-size:.6rem;color:#A0AEC0;margin-top:.4rem">MedBook AI · Propulsé par Claude · Support 🇹🇳 FR & عربي</div>
+  </div>
+</div>
 
 </body>
 </html>
