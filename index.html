@@ -692,6 +692,63 @@ a{text-decoration:none;color:inherit}
 .ai-rate-btn{background:#F7F8FC;border:1px solid #E2E8F0;border-radius:8px;padding:.3rem .6rem;font-size:.7rem;cursor:pointer;transition:all .2s;color:#718096}
 .ai-rate-btn:hover{border-color:#C7D2FE;color:#1B4FD8}
 
+
+/* ══ PROFILE PICTURE ══ */
+.pro-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-bottom:1.1rem}
+.pro-avatar-ring{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--sapphire),var(--emerald));padding:3px;position:relative;cursor:pointer;flex-shrink:0}
+.pro-avatar-img{width:100%;height:100%;border-radius:50%;object-fit:cover;background:#EEF2FF;display:flex;align-items:center;justify-content:center;font-size:2.2rem;overflow:hidden}
+.pro-avatar-edit{position:absolute;bottom:2px;right:2px;width:24px;height:24px;border-radius:50%;background:var(--sapphire);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;cursor:pointer}
+.pro-avatar-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink)}
+.pro-avatar-spec{font-size:.78rem;color:var(--muted);margin-top:.08rem}
+.avatar-upload-hint{font-size:.68rem;color:var(--muted);text-align:center}
+
+/* ══ PUBLIC PROFILE CARD (topbar) ══ */
+.tb-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--sapphire),var(--emerald));display:flex;align-items:center;justify-content:center;font-size:.85rem;overflow:hidden;flex-shrink:0}
+
+/* ══ PROFILE COMPLETENESS BAR ══ */
+.profile-completeness{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.85rem 1rem;margin-bottom:1rem}
+.pc-label{font-size:.74rem;font-weight:700;color:var(--ink);margin-bottom:.35rem;display:flex;justify-content:space-between}
+.pc-bar-bg{height:6px;background:#E2E8F0;border-radius:99px;overflow:hidden}
+.pc-bar-fill{height:100%;background:linear-gradient(90deg,var(--sapphire),var(--emerald));border-radius:99px;transition:width .6s ease}
+.pc-tips{margin-top:.55rem;display:flex;flex-direction:column;gap:.2rem}
+.pc-tip{font-size:.68rem;color:var(--muted);display:flex;align-items:center;gap:.35rem}
+.pc-tip.done{color:var(--emerald-d)}
+
+/* ══ PUBLIC BOOKING PAGE — enhanced ══ */
+.bp-header{position:relative;overflow:hidden}
+.bp-cover{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18;pointer-events:none}
+.bp-avatar-ring{width:80px;height:80px;border-radius:50%;border:3px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto .85rem;position:relative;z-index:1;overflow:hidden;backdrop-filter:blur(4px)}
+.bp-avatar-ring img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.bp-stats-row{display:flex;justify-content:center;gap:1.5rem;margin-top:.85rem;position:relative;z-index:1}
+.bp-stat{text-align:center}
+.bp-stat-val{font-size:1rem;font-weight:800;color:#fff}
+.bp-stat-lbl{font-size:.62rem;color:rgba(255,255,255,.7);margin-top:.05rem}
+.bp-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:.35rem;margin-top:.75rem;position:relative;z-index:1}
+.bp-badge-chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:.22rem .65rem;font-size:.65rem;font-weight:600;color:#fff;backdrop-filter:blur(4px)}
+.bp-bio-section{padding:.85rem 1.25rem 0;max-width:560px;margin:0 auto}
+.bp-bio-text{font-size:.82rem;color:var(--slate);line-height:1.72;white-space:pre-wrap}
+.bp-info-pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.65rem}
+.bp-info-pill{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:.28rem .7rem;font-size:.7rem;color:var(--slate);display:flex;align-items:center;gap:.3rem}
+.bp-map-link{display:flex;align-items:center;gap:.5rem;background:var(--sapphire-l);border:1px solid var(--sapphire-m);border-radius:var(--r-sm);padding:.6rem .85rem;font-size:.76rem;color:var(--sapphire);font-weight:600;margin-top:.65rem;text-decoration:none}
+.bp-share-bar{display:flex;gap:.5rem;padding:.85rem 1.25rem;max-width:560px;margin:0 auto;flex-wrap:wrap}
+.bp-share-btn{flex:1;min-width:120px;border:1.5px solid var(--line);border-radius:var(--r-md);padding:.55rem;font-size:.74rem;font-weight:600;color:var(--slate);background:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.bp-share-btn:hover{border-color:var(--sapphire-m);color:var(--sapphire)}
+.bp-share-btn.wa{border-color:#25D366;color:#25D366}
+.bp-share-btn.wa:hover{background:#F0FFF4}
+
+/* ══ SETTINGS — new fields ══ */
+.set-photo-row{display:flex;align-items:center;gap:1rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.85rem;margin-bottom:.85rem}
+.set-photo-preview{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--sapphire),var(--emerald));display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;flex-shrink:0}
+.set-photo-preview img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.set-photo-btns{display:flex;flex-direction:column;gap:.35rem;flex:1}
+.set-photo-upload-btn{background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-sm);padding:.42rem .85rem;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:center}
+.set-photo-upload-btn:hover{background:var(--sapphire-d)}
+.set-photo-remove-btn{background:var(--surface);color:var(--rose);border:1px solid rgba(225,29,72,.2);border-radius:var(--r-sm);padding:.38rem .85rem;font-size:.72rem;font-weight:500;cursor:pointer;transition:all .2s}
+
+/* Map embed */
+.map-preview{width:100%;height:160px;border-radius:var(--r-md);border:1px solid var(--line);margin-top:.5rem;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.76rem;color:var(--muted);overflow:hidden}
+.map-preview iframe{width:100%;height:100%;border:none}
+
 </style>
 </head>
 <body>
@@ -1283,15 +1340,38 @@ a{text-decoration:none;color:inherit}
 
       <!-- ── SETTINGS ── -->
       <div class="dash-panel" id="panel-settings">
-        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.9rem">⚙️ Paramètres du cabinet</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.75rem">⚙️ Mon profil & Paramètres</div>
+
+        <!-- COMPLETENESS BAR -->
+        <div class="profile-completeness" id="profile-completeness-bar">
+          <div class="pc-label"><span>Complétude du profil</span><span id="pc-pct">0%</span></div>
+          <div class="pc-bar-bg"><div class="pc-bar-fill" id="pc-fill" style="width:0%"></div></div>
+          <div class="pc-tips" id="pc-tips"></div>
+        </div>
+
+        <!-- PHOTO + IDENTITÉ -->
         <div class="profile-section">
-          <div class="profile-section-title">Informations professionnelles</div>
+          <div class="profile-section-title">Photo de profil</div>
+          <div class="set-photo-row">
+            <div class="set-photo-preview" id="set-photo-preview"><span id="set-photo-emoji">🩺</span></div>
+            <div class="set-photo-btns">
+              <label class="set-photo-upload-btn">📷 Choisir une photo
+                <input type="file" id="set-photo-file" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)"/>
+              </label>
+              <button class="set-photo-remove-btn" onclick="removePhoto()">🗑️ Supprimer la photo</button>
+              <div style="font-size:.65rem;color:var(--muted)">JPG, PNG — max 2 Mo · Recommandé : 400×400px</div>
+            </div>
+          </div>
+          <div class="profile-section-title" style="margin-top:.5rem">Identité professionnelle</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
             <div class="fgroup"><label>Prénom</label><input class="finput" id="set-fn" placeholder="Amira"/></div>
             <div class="fgroup"><label>Nom</label><input class="finput" id="set-ln" placeholder="Ben Salah"/></div>
           </div>
+          <div class="fgroup"><label>Titre / Diplôme <span style="font-weight:400;color:var(--muted)">(affiché sur votre page)</span></label>
+            <input class="finput" id="set-titre" placeholder="Docteur en Psychologie Clinique · Université de Tunis"/>
+          </div>
           <div class="fgroup"><label>Spécialité</label>
-            <select class="fselect" id="set-spec">
+            <select class="fselect" id="set-spec" onchange="onSpecChange()">
               <option>Psychologue clinicien(ne)</option><option>Psychiatre</option>
               <option>Médecin généraliste</option><option>Pédiatre</option>
               <option>Cardiologue</option><option>Dermatologue</option>
@@ -1303,9 +1383,33 @@ a{text-decoration:none;color:inherit}
               <option>Médecin du sport</option><option>Autre</option>
             </select>
           </div>
+          <div class="fgroup"><label>Biographie / Présentation <span style="font-weight:400;color:var(--muted)">(visible par vos patients)</span></label>
+            <textarea class="farea" id="set-bio" placeholder="Présentez-vous en quelques lignes : formation, approche thérapeutique, spécificités de votre pratique…" style="min-height:80px"></textarea>
+          </div>
+          <div class="fgroup"><label>Années d'expérience</label>
+            <input class="finput" id="set-experience" type="number" placeholder="10" min="0" max="60"/>
+          </div>
+          <div class="fgroup"><label>Langues de consultation</label>
+            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.25rem" id="set-langs-check">
+              <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;cursor:pointer"><input type="checkbox" id="lang-fr" value="Français" style="accent-color:var(--sapphire)"/> Français</label>
+              <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;cursor:pointer"><input type="checkbox" id="lang-ar" value="Arabe" style="accent-color:var(--sapphire)"/> العربية</label>
+              <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;cursor:pointer"><input type="checkbox" id="lang-en" value="English" style="accent-color:var(--sapphire)"/> English</label>
+              <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;cursor:pointer"><input type="checkbox" id="lang-de" value="Deutsch" style="accent-color:var(--sapphire)"/> Deutsch</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTACT & LOCALISATION -->
+        <div class="profile-section">
+          <div class="profile-section-title">Contact & Localisation</div>
           <div class="fgroup"><label>Email professionnel</label><input class="finput" id="set-email" type="email" placeholder="dr.bensalah@cabinet.tn"/></div>
           <div class="fgroup"><label>Téléphone cabinet</label><input class="finput" id="set-tel" type="tel" placeholder="+216 71 …"/></div>
-          <div class="fgroup"><label>Adresse du cabinet</label><input class="finput" id="set-adresse" placeholder="12 Avenue de la Liberté, Tunis"/></div>
+          <div class="fgroup"><label>WhatsApp <span style="font-weight:400;color:var(--muted)">(optionnel)</span></label>
+            <input class="finput" id="set-wa" type="tel" placeholder="+216 55 …"/>
+          </div>
+          <div class="fgroup"><label>Adresse du cabinet</label>
+            <input class="finput" id="set-adresse" placeholder="12 Avenue de la Liberté, Tunis" oninput="updateMapPreview()"/>
+          </div>
           <div class="fgroup"><label>Ville</label>
             <select class="fselect" id="set-ville">
               <option>Tunis</option><option>Sfax</option><option>Sousse</option>
@@ -1314,15 +1418,34 @@ a{text-decoration:none;color:inherit}
               <option>La Marsa</option><option>Carthage</option><option>Bardo</option><option>Autre</option>
             </select>
           </div>
-          <div class="fgroup"><label>Durée standard d'une consultation (min)</label>
+          <div class="fgroup"><label>Aperçu localisation</label>
+            <div class="map-preview" id="map-preview">
+              <span>📍 Saisissez votre adresse pour afficher la carte</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONSULTATION -->
+        <div class="profile-section">
+          <div class="profile-section-title">Paramètres de consultation</div>
+          <div class="fgroup"><label>Durée standard (min)</label>
             <select class="fselect" id="set-duration">
-              <option value="30">30 min</option><option value="45">45 min</option>
-              <option value="50" selected>50 min</option><option value="60">60 min</option><option value="90">90 min</option>
+              <option value="15">15 min</option><option value="20">20 min</option>
+              <option value="25">25 min</option><option value="30">30 min</option>
+              <option value="45">45 min</option><option value="50" selected>50 min</option>
+              <option value="60">60 min</option><option value="90">90 min</option><option value="120">120 min</option>
             </select>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
-            <div class="fgroup"><label>Prix de la consultation (DT)</label><input class="finput" id="set-price" type="number" placeholder="100" min="0"/></div>
-            <div class="fgroup"><label>Type affiché dans l'email</label><input class="finput" id="set-consult-type" placeholder="Th. individuelle"/></div>
+            <div class="fgroup"><label>Prix (DT)</label><input class="finput" id="set-price" type="number" placeholder="100" min="0"/></div>
+            <div class="fgroup"><label>Type de consultation</label><input class="finput" id="set-consult-type" placeholder="Th. individuelle"/></div>
+          </div>
+          <div class="fgroup"><label>Modes de consultation</label>
+            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.25rem">
+              <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;cursor:pointer"><input type="checkbox" id="mode-cabinet" checked style="accent-color:var(--sapphire)"/> 🏥 Cabinet</label>
+              <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;cursor:pointer"><input type="checkbox" id="mode-video" style="accent-color:var(--sapphire)"/> 📹 Vidéo</label>
+              <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;cursor:pointer"><input type="checkbox" id="mode-domicile" style="accent-color:var(--sapphire)"/> 🏠 Domicile</label>
+            </div>
           </div>
           <div class="fgroup"><label>Langue des emails patients</label>
             <select class="fselect" id="set-lang">
@@ -1331,8 +1454,34 @@ a{text-decoration:none;color:inherit}
               <option value="en">English</option>
             </select>
           </div>
-          <button onclick="saveSettings()" class="submit-btn">💾 Sauvegarder</button>
         </div>
+
+        <!-- RÉSEAUX SOCIAUX -->
+        <div class="profile-section">
+          <div class="profile-section-title">Réseaux & Liens professionnels</div>
+          <div class="fgroup"><label>Site web</label><input class="finput" id="set-website" type="url" placeholder="https://dr-bensalah.tn"/></div>
+          <div class="fgroup"><label>Facebook</label><input class="finput" id="set-facebook" placeholder="facebook.com/drBenSalah"/></div>
+          <div class="fgroup"><label>Instagram</label><input class="finput" id="set-instagram" placeholder="@dr.bensalah"/></div>
+          <div class="fgroup"><label>LinkedIn</label><input class="finput" id="set-linkedin" placeholder="linkedin.com/in/…"/></div>
+        </div>
+
+        <!-- LIEN PUBLIC -->
+        <div class="profile-section">
+          <div class="profile-section-title">Votre lien de réservation public</div>
+          <div style="background:linear-gradient(135deg,var(--sapphire-l),#F0FDF9);border:1.5px solid var(--sapphire-m);border-radius:var(--r-md);padding:.9rem">
+            <div style="font-family:'DM Mono',monospace;font-size:.76rem;color:var(--sapphire);margin-bottom:.65rem;word-break:break-all" id="public-link-display">medbook.tn/rdv/…</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+              <button onclick="copyPublicLink()" class="blc-btn primary">📋 Copier</button>
+              <button onclick="sharePublicLinkWA()" class="blc-btn secondary">📱 WhatsApp</button>
+              <button onclick="openPublicBookingPage(getSession()?.id)" class="blc-btn secondary">👁️ Prévisualiser</button>
+              <button onclick="copyEmbedCode()" class="blc-btn secondary">🔗 Code iframe</button>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="saveSettings()" class="submit-btn" style="margin-bottom:.5rem">💾 Sauvegarder le profil</button>
+        <div style="font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:1rem">Votre page publique est mise à jour instantanément</div>
+        
         <div class="profile-section">
           <div class="profile-section-title">Sécurité</div>
           <div class="fgroup"><label>Nouveau mot de passe</label><input class="finput" type="password" placeholder="••••••••"/></div>
@@ -1831,10 +1980,10 @@ function loadProDash(pro){
   document.getElementById('tb-pro-spec').textContent=pro.spec+(pro.ville?' · '+pro.ville:'');
   document.getElementById('welcome-msg').textContent='Bonjour Dr. '+pro.ln+' 👋';
   document.getElementById('today-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const slug=(pro.fn+'-'+pro.ln).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
-  document.getElementById('booking-url-display').textContent='medbook.tn/rdv/'+slug;
+  const slug0=(pro.fn+'-'+pro.ln).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
+  document.getElementById('booking-url-display').textContent='medbook.tn/rdv/'+slug0;
   const embedEl=document.getElementById('embed-code');
-  if(embedEl) embedEl.textContent=`<iframe src="https://medbook.tn/rdv/${slug}" width="100%" height="600" frameborder="0"></iframe>`;
+  if(embedEl) embedEl.textContent=`<iframe src="https://medbook.tn/rdv/${slug0}" width="100%" height="600" frameborder="0"></iframe>`;
   document.getElementById('set-fn').value=pro.fn;
   document.getElementById('set-ln').value=pro.ln;
   document.getElementById('set-email').value=pro.email;
@@ -1846,6 +1995,23 @@ function loadProDash(pro){
   if(pro.duration&&document.getElementById('set-duration')) document.getElementById('set-duration').value=String(pro.duration);
   if(document.getElementById('set-price')) document.getElementById('set-price').value=pro.price||'';
   if(document.getElementById('set-consult-type')) document.getElementById('set-consult-type').value=pro.consultType||'';
+  // New profile fields
+  const setV=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
+  setV('set-titre',pro.titre);setV('set-bio',pro.bio);setV('set-experience',pro.experience||'');
+  setV('set-wa',pro.wa);setV('set-website',pro.website);setV('set-facebook',pro.facebook);
+  setV('set-instagram',pro.instagram);setV('set-linkedin',pro.linkedin);
+  // Langs checkboxes
+  const langs=pro.consultLangs||['Français'];
+  ['fr','ar','en','de'].forEach(l=>{const el=document.getElementById('lang-'+l);if(el){const lbl={fr:'Français',ar:'Arabe',en:'English',de:'Deutsch'}[l];el.checked=langs.includes(lbl);}});
+  // Modes
+  const modes=pro.modes||['cabinet'];
+  ['cabinet','video','domicile'].forEach(m=>{const el=document.getElementById('mode-'+m);if(el)el.checked=modes.includes(m);});
+  // Photo
+  updatePhotoPreview(pro);
+  updateTbAvatar(pro);
+  updateProfileCompleteness(pro);
+  const linkEl=document.getElementById('public-link-display');
+  if(linkEl) linkEl.textContent='medbook.tn/rdv/'+buildSlug(pro);
   updateStats(pro.id);
   renderNextRdvs(pro.id);
   renderRdvList('all');
@@ -2049,17 +2215,38 @@ function saveSettings(){
   pro.email=document.getElementById('set-email').value.trim();
   pro.spec=document.getElementById('set-spec').value;
   pro.tel=document.getElementById('set-tel').value.trim();
+  pro.wa=(document.getElementById('set-wa')||{value:''}).value.trim();
   pro.adresse=document.getElementById('set-adresse').value.trim();
   pro.ville=document.getElementById('set-ville').value;
   pro.lang=document.getElementById('set-lang').value;
   pro.duration=parseInt(document.getElementById('set-duration').value)||50;
   pro.price=parseFloat(document.getElementById('set-price').value)||0;
   pro.consultType=document.getElementById('set-consult-type').value.trim()||'Consultation';
+  pro.titre=(document.getElementById('set-titre')||{value:''}).value.trim();
+  pro.bio=(document.getElementById('set-bio')||{value:''}).value.trim();
+  pro.experience=parseInt((document.getElementById('set-experience')||{value:0}).value)||0;
+  pro.website=(document.getElementById('set-website')||{value:''}).value.trim();
+  pro.facebook=(document.getElementById('set-facebook')||{value:''}).value.trim();
+  pro.instagram=(document.getElementById('set-instagram')||{value:''}).value.trim();
+  pro.linkedin=(document.getElementById('set-linkedin')||{value:''}).value.trim();
+  // Consultation languages
+  const langs=[];
+  ['fr','ar','en','de'].forEach(l=>{const el=document.getElementById('lang-'+l);if(el&&el.checked)langs.push(el.value);});
+  pro.consultLangs=langs;
+  // Consultation modes
+  const modes=[];
+  ['cabinet','video','domicile'].forEach(m=>{const el=document.getElementById('mode-'+m);if(el&&el.checked)modes.push(m);});
+  pro.modes=modes;
   saveDB(db);
   document.getElementById('tb-pro-name').textContent='Dr. '+pro.fn+' '+pro.ln;
   document.getElementById('tb-pro-spec').textContent=pro.spec+(pro.ville?' · '+pro.ville:'');
   document.getElementById('welcome-msg').textContent='Bonjour Dr. '+pro.ln+' 👋';
-  toast2('✅ Paramètres sauvegardés','green');
+  updateProfileCompleteness(pro);
+  updateTbAvatar(pro);
+  const slug=buildSlug(pro);
+  const linkEl=document.getElementById('public-link-display');
+  if(linkEl) linkEl.textContent='medbook.tn/rdv/'+slug;
+  toast2('✅ Profil sauvegardé et publié !','green');
 }
 
 // ══ GOOGLE CALENDAR ══
@@ -3176,6 +3363,234 @@ function init(){
 init();
 
 // ══════════════════════════════════
+//  PROFILE SYSTEM
+// ══════════════════════════════════
+
+function buildSlug(pro){
+  return (pro.fn+'-'+pro.ln).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+}
+
+// ── Photo upload ──
+function handlePhotoUpload(input){
+  const file = input.files[0];
+  if(!file) return;
+  if(file.size > 2*1024*1024){ toast2('Photo trop lourde (max 2 Mo)','red'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    const s=getSession(); const db=getDB();
+    const pro=db.pros.find(p=>p.id===s.id); if(!pro)return;
+    pro.photo = dataUrl;
+    saveDB(db);
+    updatePhotoPreview(pro);
+    updateTbAvatar(pro);
+    updateProfileCompleteness(pro);
+    toast2('Photo de profil mise à jour !','green');
+  };
+  reader.readAsDataURL(file);
+}
+function removePhoto(){
+  const s=getSession(); const db=getDB();
+  const pro=db.pros.find(p=>p.id===s?.id); if(!pro)return;
+  delete pro.photo; saveDB(db);
+  updatePhotoPreview(pro); updateTbAvatar(pro);
+  updateProfileCompleteness(pro);
+  toast2('Photo supprimée','green');
+}
+function updatePhotoPreview(pro){
+  const wrap = document.getElementById('set-photo-preview');
+  const emoji = document.getElementById('set-photo-emoji');
+  if(!wrap) return;
+  if(pro.photo){
+    wrap.innerHTML = `<img src="${pro.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`;
+  } else {
+    const cfg = (typeof SPECIALTY_CONFIG!=='undefined' && SPECIALTY_CONFIG[pro.spec])||{};
+    wrap.innerHTML = `<span id="set-photo-emoji">${cfg.ico||'🩺'}</span>`;
+  }
+}
+function updateTbAvatar(pro){
+  let avEl = document.getElementById('tb-avatar-el');
+  if(!avEl){
+    const tbLeft = document.querySelector('.topbar-left');
+    if(tbLeft){
+      avEl = document.createElement('div');
+      avEl.id='tb-avatar-el'; avEl.className='tb-avatar';
+      tbLeft.insertBefore(avEl, tbLeft.firstChild);
+    }
+  }
+  if(!avEl) return;
+  if(pro.photo){
+    avEl.innerHTML = `<img src="${pro.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`;
+  } else {
+    const cfg=(typeof SPECIALTY_CONFIG!=='undefined'&&SPECIALTY_CONFIG[pro.spec])||{};
+    avEl.innerHTML = cfg.ico||'🩺';
+    avEl.style.fontSize='.85rem';
+  }
+}
+
+// ── Profile completeness ──
+function updateProfileCompleteness(pro){
+  const checks = [
+    {key:'photo', label:'Photo de profil', done:!!pro.photo},
+    {key:'titre', label:'Titre / Diplôme', done:!!(pro.titre&&pro.titre.length>3)},
+    {key:'bio', label:'Biographie', done:!!(pro.bio&&pro.bio.length>20)},
+    {key:'adresse', label:'Adresse du cabinet', done:!!(pro.adresse&&pro.adresse.length>5)},
+    {key:'tel', label:'Téléphone', done:!!(pro.tel&&pro.tel.length>6)},
+    {key:'experience', label:'Années d\'expérience', done:!!(pro.experience>0)},
+    {key:'langs', label:'Langues de consultation', done:!!(pro.consultLangs&&pro.consultLangs.length)},
+    {key:'social', label:'Réseau social ou site web', done:!!(pro.website||pro.facebook||pro.instagram)},
+  ];
+  const done = checks.filter(c=>c.done).length;
+  const pct = Math.round((done/checks.length)*100);
+  const fillEl=document.getElementById('pc-fill');
+  const pctEl=document.getElementById('pc-pct');
+  const tipsEl=document.getElementById('pc-tips');
+  if(fillEl) fillEl.style.width=pct+'%';
+  if(pctEl) pctEl.textContent=pct+'%';
+  if(tipsEl){
+    const missing = checks.filter(c=>!c.done).slice(0,3);
+    tipsEl.innerHTML = missing.map(c=>`<div class="pc-tip">○ Ajouter : ${c.label}</div>`).join('')
+      + checks.filter(c=>c.done).map(c=>`<div class="pc-tip done">✓ ${c.label}</div>`).join('');
+  }
+}
+
+// ── Map preview ──
+function updateMapPreview(){
+  const addr = (document.getElementById('set-adresse')||{}).value||'';
+  const city = (document.getElementById('set-ville')||{}).value||'Tunis';
+  const preview = document.getElementById('map-preview');
+  if(!preview) return;
+  if(addr.length > 5){
+    const q = encodeURIComponent(addr+', '+city+', Tunisie');
+    preview.innerHTML = `<iframe src="https://maps.google.com/maps?q=${q}&output=embed&z=15" loading="lazy" style="width:100%;height:100%;border:none"></iframe>`;
+  } else {
+    preview.innerHTML = '<span>📍 Saisissez votre adresse pour afficher la carte</span>';
+  }
+}
+function onSpecChange(){
+  updateProfileCompleteness({spec:document.getElementById('set-spec')?.value});
+}
+
+// ── Public link helpers ──
+function copyPublicLink(){
+  const url = (document.getElementById('public-link-display')||{}).textContent||'medbook.tn/rdv/…';
+  navigator.clipboard?.writeText('https://'+url).catch(()=>{});
+  toast2('🔗 Lien copié !','green');
+}
+function sharePublicLinkWA(){
+  const s=getSession(); const db=getDB();
+  const pro=db.pros?.find(p=>p.id===s?.id); if(!pro) return;
+  const slug=buildSlug(pro);
+  const msg=encodeURIComponent(`Prenez rendez-vous en ligne avec Dr. ${pro.fn} ${pro.ln} (${pro.spec}) :\nhttps://medbook.tn/rdv/${slug}`);
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
+function copyEmbedCode(){
+  const url = (document.getElementById('public-link-display')||{}).textContent||'medbook.tn/rdv/pro';
+  const code = `<iframe src="https://${url}" width="100%" height="700" frameborder="0" style="border-radius:16px"></iframe>`;
+  navigator.clipboard?.writeText(code).catch(()=>{});
+  toast2('📋 Code iframe copié !','green');
+}
+
+// ── Enhanced openPublicBookingPage ──
+const _origOpenBP = openPublicBookingPage;
+function openPublicBookingPage(proId){
+  _origOpenBP(proId);
+  // Enrich the booking page with profile data
+  setTimeout(()=>enrichBookingPage(proId), 50);
+}
+function enrichBookingPage(proId){
+  const db=getDB();
+  const pro=db.pros?.find(p=>p.id===proId); if(!pro) return;
+  const cfg=(typeof SPECIALTY_CONFIG!=='undefined'&&SPECIALTY_CONFIG[pro.spec])||{ico:'🩺',colorL:'#EEF2FF'};
+  const slug=buildSlug(pro);
+
+  // Avatar
+  const avRing=document.getElementById('bp-av-ring');
+  if(avRing){
+    if(pro.photo){
+      avRing.innerHTML=`<img src="${pro.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`;
+    } else {
+      avRing.innerHTML=`<span id="bp-av-emoji" style="font-size:2rem">${cfg.ico||'🩺'}</span>`;
+    }
+  }
+  // Titre
+  const titreEl=document.getElementById('bp-titre-display');
+  if(titreEl) titreEl.textContent=pro.titre||'';
+  // Badges
+  const badgesEl=document.getElementById('bp-badges');
+  if(badgesEl){
+    const modes=(pro.modes||['cabinet']).map(m=>({cabinet:'🏥 Cabinet',video:'📹 Vidéo',domicile:'🏠 Domicile'}[m]||m));
+    const langs=(pro.consultLangs||[]);
+    const chips=[...modes,...langs].map(x=>`<span class="bp-badge-chip">${x}</span>`).join('');
+    badgesEl.innerHTML=chips;
+  }
+  // Stats row
+  const statsRow=document.getElementById('bp-stats-row');
+  const rdvCount=(db.rdvs||[]).filter(r=>r.proId===proId&&r.status!=='cancelled').length;
+  if(statsRow && (pro.experience||rdvCount||(pro.consultLangs||[]).length)){
+    statsRow.style.display='flex';
+    if(pro.experience){ document.getElementById('bp-stat-exp').textContent=pro.experience+'+'; }
+    document.getElementById('bp-stat-rdv').textContent=rdvCount||'—';
+    document.getElementById('bp-stat-langs').textContent=(pro.consultLangs||[]).length||'—';
+  }
+  // Bio section
+  const bioSection=document.getElementById('bp-bio-section');
+  if(bioSection && pro.bio){
+    bioSection.style.display='';
+    const bioEl=document.getElementById('bp-bio-text');
+    if(bioEl) bioEl.textContent=pro.bio;
+    // Info pills
+    const pillsEl=document.getElementById('bp-info-pills');
+    if(pillsEl){
+      const pills=[];
+      if(pro.tel) pills.push(`📞 ${pro.tel}`);
+      if(pro.wa) pills.push(`📱 WhatsApp`);
+      if(pro.website) pills.push(`🌐 Site web`);
+      pillsEl.innerHTML=pills.map(p=>`<span class="bp-info-pill">${p}</span>`).join('');
+    }
+    // Map link
+    if(pro.adresse){
+      const mapLink=document.getElementById('bp-map-link');
+      if(mapLink){
+        mapLink.href=`https://maps.google.com/?q=${encodeURIComponent(pro.adresse+', '+pro.ville+', Tunisie')}`;
+        mapLink.style.display='flex';
+        const mapAddr=document.getElementById('bp-map-addr');
+        if(mapAddr) mapAddr.textContent=pro.adresse;
+      }
+    }
+  }
+  // Share bar — update with real slug
+  const shareBarEl=document.getElementById('bp-share-bar');
+  if(shareBarEl) shareBarEl.dataset.slug=slug;
+}
+
+// Share from booking page
+function bpCopyLink(){
+  const s=getSession(); const db=getDB();
+  const pro=db.pros?.find(p=>p.id===s?.id)||bpPro;
+  if(!pro) return;
+  const slug=buildSlug(pro);
+  navigator.clipboard?.writeText('https://medbook.tn/rdv/'+slug).catch(()=>{});
+  toast2('🔗 Lien copié !','green');
+}
+function bpShareWA(){
+  const pro=bpPro; if(!pro) return;
+  const slug=buildSlug(pro);
+  const msg=encodeURIComponent(`Prenez rendez-vous avec Dr. ${pro.fn} ${pro.ln} (${pro.spec||''}) :\nhttps://medbook.tn/rdv/${slug}`);
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
+function bpShareEmail(){
+  const pro=bpPro; if(!pro) return;
+  const slug=buildSlug(pro);
+  const sub=encodeURIComponent(`Rendez-vous en ligne — Dr. ${pro.fn} ${pro.ln}`);
+  const body=encodeURIComponent(`Bonjour,\n\nJe vous invite à prendre rendez-vous en ligne avec Dr. ${pro.fn} ${pro.ln} (${pro.spec||''}) :\nhttps://medbook.tn/rdv/${slug}\n\nCordialement`);
+  window.open(`mailto:?subject=${sub}&body=${body}`,'_blank');
+}
+
+
+// ══════════════════════════════════
 //  MEDBOOK AI ASSISTANT
 // ══════════════════════════════════
 
@@ -3635,12 +4050,38 @@ setTimeout(updateAiFab,150);
 <!-- ════════════ PUBLIC BOOKING PAGE ════════════ -->
 <div class="view" id="v-booking-page">
   <div id="bp-step-service">
-    <div class="bp-header">
-      <div class="bp-header-av" id="bp-av">🩺</div>
-      <div class="bp-header-name" id="bp-name">Dr. —</div>
-      <div class="bp-header-spec" id="bp-spec">—</div>
-      <div class="bp-header-addr" id="bp-addr"></div>
+    <div class="bp-header" id="bp-header-wrap">
+      <div class="bp-cover" id="bp-cover" style="display:none"></div>
+      <div class="bp-avatar-ring" id="bp-av-ring">
+        <span id="bp-av-emoji">🩺</span>
+      </div>
+      <div class="bp-header-name" id="bp-name" style="position:relative;z-index:1">Dr. —</div>
+      <div id="bp-titre-display" style="font-size:.72rem;color:rgba(255,255,255,.75);margin-top:.1rem;position:relative;z-index:1"></div>
+      <div class="bp-header-spec" id="bp-spec" style="position:relative;z-index:1">—</div>
+      <div id="bp-badges" class="bp-badges"></div>
+      <div class="bp-stats-row" id="bp-stats-row" style="display:none">
+        <div class="bp-stat"><div class="bp-stat-val" id="bp-stat-exp">—</div><div class="bp-stat-lbl">ans d'expérience</div></div>
+        <div class="bp-stat"><div class="bp-stat-val" id="bp-stat-rdv">—</div><div class="bp-stat-lbl">RDV réalisés</div></div>
+        <div class="bp-stat"><div class="bp-stat-val" id="bp-stat-langs">—</div><div class="bp-stat-lbl">langues</div></div>
+      </div>
     </div>
+
+    <!-- Share bar -->
+    <div class="bp-share-bar" id="bp-share-bar">
+      <button class="bp-share-btn" onclick="bpCopyLink()">📋 Copier le lien</button>
+      <button class="bp-share-btn wa" onclick="bpShareWA()">📱 WhatsApp</button>
+      <button class="bp-share-btn" onclick="bpShareEmail()">📧 Email</button>
+    </div>
+
+    <!-- Bio -->
+    <div class="bp-bio-section" id="bp-bio-section" style="display:none">
+      <div class="bp-bio-text" id="bp-bio-text"></div>
+      <div class="bp-info-pills" id="bp-info-pills"></div>
+      <a id="bp-map-link" href="#" target="_blank" class="bp-map-link" style="display:none">
+        📍 <span id="bp-map-addr">Voir sur la carte</span>
+      </a>
+    </div>
+
     <div class="bp-services">
       <div class="bp-service-title">Choisissez votre type de consultation</div>
       <div id="bp-services-list"></div>
