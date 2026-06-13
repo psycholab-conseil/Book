@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PsychoBook — Gestion de RDV pour Professionnels de Santé en Tunisie</title>
-<meta name="description" content="PsychoBook : La solution SaaS de gestion de rendez-vous pour les professionnels de santé en Tunisie. Agenda en ligne, rappels automatiques, dossiers patients, paiement abonnement."/>
+<title>MedBook — Gestion de RDV pour Professionnels de Santé en Tunisie</title>
+<meta name="description" content="MedBook : La solution SaaS de gestion de rendez-vous pour les professionnels de santé en Tunisie. Agenda en ligne, rappels automatiques, dossiers patients, paiement abonnement."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -212,20 +212,18 @@ a{text-decoration:none;color:inherit}
 /* ══ DASHBOARD PRO ══ */
 #v-pro{background:var(--surface);min-height:100vh}
 .pro-layout{display:flex;flex-direction:column;min-height:100vh}
-.topbar{background:#fff;border-bottom:1px solid var(--line);padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);gap:.5rem;min-height:52px}
-.topbar-left{display:flex;align-items:center;gap:.5rem;min-width:0;flex:1}
-.tb-logo{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--ink);flex-shrink:0}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm)}
+.topbar-left{display:flex;align-items:center;gap:.75rem}
+.tb-logo{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--ink)}
 .tb-logo span{color:var(--sapphire)}
-.tb-sep{width:1px;height:16px;background:var(--line);flex-shrink:0}
-.tb-pro-name{font-size:.72rem;font-weight:600;color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
-.tb-spec{font-size:.62rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
-.tb-right{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
-.tb-notif-dot{width:7px;height:7px;background:var(--rose);border-radius:50%;flex-shrink:0}
-.tb-btn{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.38rem .6rem;font-size:.7rem;font-weight:500;color:var(--slate);transition:all var(--anim);white-space:nowrap}
+.tb-sep{width:1px;height:18px;background:var(--line)}
+.tb-pro-name{font-size:.78rem;font-weight:600;color:var(--slate)}
+.tb-spec{font-size:.68rem;color:var(--muted)}
+.tb-right{display:flex;align-items:center;gap:.6rem}
+.tb-notif-dot{width:8px;height:8px;background:var(--rose);border-radius:50%;flex-shrink:0}
+.tb-btn{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.42rem .75rem;font-size:.75rem;font-weight:500;color:var(--slate);transition:all var(--anim)}
 .tb-btn:hover{border-color:var(--sapphire);color:var(--sapphire)}
-.tb-btn.primary-btn{background:var(--sapphire);color:#fff;border-color:var(--sapphire);font-weight:700}
-.tb-btn.primary-btn:hover{background:var(--sapphire-d)}
-.tb-trial-badge{background:linear-gradient(90deg,var(--sapphire),var(--emerald));color:#fff;border:none;border-radius:99px;padding:.25rem .65rem;font-size:.62rem;font-weight:700;white-space:nowrap}
+.tb-trial-badge{background:linear-gradient(90deg,var(--sapphire),var(--emerald));color:#fff;border:none;border-radius:99px;padding:.3rem .8rem;font-size:.68rem;font-weight:700}
 
 /* Tab nav */
 .tab-nav{background:#fff;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;gap:0;padding:0 1rem;-webkit-overflow-scrolling:touch}
@@ -491,6 +489,149 @@ a{text-decoration:none;color:inherit}
 .notif-dot-badge.read{background:var(--ghost)}
 .notif-text{font-size:.8rem;color:var(--ink);line-height:1.5}
 .notif-time-label{font-size:.68rem;color:var(--muted);margin-top:.2rem}
+
+/* ══ ADMIN PORTAL ══ */
+#v-admin{background:#0A0E1A;min-height:100vh}
+.admin-layout{display:flex;flex-direction:column;min-height:100vh}
+.admin-topbar{background:linear-gradient(135deg,#1B4FD8,#0D9488);padding:.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.admin-logo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:.5rem}
+.admin-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:.18rem .65rem;font-size:.6rem;font-weight:700;color:#fff;letter-spacing:.08em}
+.admin-nav{background:#111827;border-bottom:1px solid rgba(255,255,255,.08);display:flex;overflow-x:auto;gap:0;padding:0 1rem;-webkit-overflow-scrolling:touch}
+.admin-nav::-webkit-scrollbar{height:0}
+.admin-nav-btn{padding:.75rem .9rem;font-size:.74rem;font-weight:500;color:rgba(255,255,255,.5);border:none;background:transparent;border-bottom:2.5px solid transparent;white-space:nowrap;transition:all var(--anim);display:flex;align-items:center;gap:.35rem}
+.admin-nav-btn.on{color:#fff;border-bottom-color:#6B9EFF;font-weight:600}
+.admin-content{flex:1;padding:1.25rem;max-width:960px;margin:0 auto;width:100%}
+.admin-panel{display:none}
+.admin-panel.on{display:block}
+.admin-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.25rem}
+.astat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:1rem 1.1rem}
+.astat-val{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff;line-height:1}
+.astat-lbl{font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.2rem}
+.astat-delta{font-size:.66rem;font-weight:600;margin-top:.2rem;color:#34D399}
+.admin-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:1.1rem;margin-bottom:.85rem}
+.admin-card-title{font-size:.82rem;font-weight:700;color:#fff;margin-bottom:.85rem;display:flex;align-items:center;justify-content:space-between}
+.admin-card-title span{font-size:.68rem;font-weight:400;color:rgba(255,255,255,.35)}
+
+/* Pro row in admin */
+.pro-row{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:.9rem 1rem;margin-bottom:.55rem;display:flex;align-items:center;gap:.75rem;transition:all var(--anim)}
+.pro-row:hover{background:rgba(255,255,255,.08)}
+.pro-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sapphire),var(--emerald));display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:700;color:#fff;flex-shrink:0}
+.pro-name{font-size:.84rem;font-weight:700;color:#fff}
+.pro-meta{font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.08rem}
+.pro-status-badge{font-size:.6rem;font-weight:700;padding:.18rem .55rem;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.pro-status-badge.trial{background:rgba(217,119,6,.25);color:#FBBF24;border:1px solid rgba(217,119,6,.35)}
+.pro-status-badge.active{background:rgba(13,148,136,.25);color:#34D399;border:1px solid rgba(13,148,136,.35)}
+.pro-status-badge.expired{background:rgba(225,29,72,.2);color:#F87171;border:1px solid rgba(225,29,72,.3)}
+.pro-status-badge.pending{background:rgba(27,79,216,.25);color:#93C5FD;border:1px solid rgba(27,79,216,.35)}
+.pro-actions{display:flex;gap:.35rem;margin-top:.5rem;flex-wrap:wrap}
+.admin-btn{font-size:.66rem;font-weight:600;padding:.28rem .65rem;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all var(--anim);cursor:pointer}
+.admin-btn:hover{background:rgba(255,255,255,.15);color:#fff}
+.admin-btn.approve{border-color:rgba(13,148,136,.5);color:#34D399;background:rgba(13,148,136,.1)}
+.admin-btn.approve:hover{background:rgba(13,148,136,.25)}
+.admin-btn.revoke{border-color:rgba(225,29,72,.4);color:#F87171;background:rgba(225,29,72,.08)}
+.admin-btn.revoke:hover{background:rgba(225,29,72,.2)}
+.admin-btn.danger{border-color:rgba(225,29,72,.4);color:#F87171;background:rgba(225,29,72,.08)}
+
+/* Admin search */
+.admin-search{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-md);padding:.6rem .85rem;font-size:.82rem;color:#fff;margin-bottom:.85rem;font-family:'DM Sans',sans-serif}
+.admin-search::placeholder{color:rgba(255,255,255,.3)}
+.admin-search:focus{outline:none;border-color:#6B9EFF}
+
+/* Filter chips dark */
+.admin-filter-tabs{display:flex;gap:.4rem;margin-bottom:.85rem;flex-wrap:wrap}
+.aft{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-sm);padding:.35rem .75rem;font-size:.72rem;font-weight:500;color:rgba(255,255,255,.5);transition:all var(--anim);cursor:pointer}
+.aft.on{background:var(--sapphire);color:#fff;border-color:transparent;font-weight:600}
+
+/* Specialty config panel */
+.spec-config-grid{display:flex;flex-direction:column;gap:.65rem}
+.spec-config-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:1rem;cursor:pointer;transition:all var(--anim)}
+.spec-config-card:hover{background:rgba(255,255,255,.08);border-color:rgba(107,158,255,.4)}
+.spec-config-card.selected{background:rgba(27,79,216,.2);border-color:#6B9EFF}
+.spec-header{display:flex;align-items:center;gap:.75rem}
+.spec-ico-big{width:44px;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.spec-title{font-size:.86rem;font-weight:700;color:#fff}
+.spec-desc-admin{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:.15rem}
+.spec-features-list{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.65rem}
+.spec-feat-chip{background:rgba(107,158,255,.12);border:1px solid rgba(107,158,255,.25);border-radius:99px;padding:.2rem .6rem;font-size:.62rem;color:#93C5FD;font-weight:600}
+
+/* Access modal */
+.access-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:600;align-items:center;justify-content:center;padding:1rem}
+.access-modal.open{display:flex}
+.access-box{background:#1C2333;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:1.75rem;width:100%;max-width:440px;box-shadow:0 24px 64px rgba(0,0,0,.6);animation:modalIn .22s ease}
+.access-box-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:1.1rem}
+.admin-finput{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:var(--r-md);padding:.6rem .85rem;font-size:.84rem;color:#fff;font-family:'DM Sans',sans-serif;margin-bottom:.6rem}
+.admin-finput::placeholder{color:rgba(255,255,255,.3)}
+.admin-finput:focus{outline:none;border-color:#6B9EFF}
+.admin-fselect{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:var(--r-md);padding:.6rem .85rem;font-size:.84rem;color:#fff;font-family:'DM Sans',sans-serif;margin-bottom:.6rem;appearance:none}
+.admin-submit{width:100%;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-md);padding:.75rem;font-size:.88rem;font-weight:700;margin-top:.4rem;transition:all var(--anim);cursor:pointer}
+.admin-submit:hover{background:var(--sapphire-d)}
+.admin-cancel-btn{width:100%;background:transparent;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:.65rem;font-size:.82rem;font-weight:500;margin-top:.4rem;transition:all var(--anim);cursor:pointer}
+.admin-cancel-btn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+
+/* Access code badge */
+.access-code-display{background:rgba(107,158,255,.1);border:1.5px dashed rgba(107,158,255,.4);border-radius:var(--r-md);padding:1rem;text-align:center;margin:.75rem 0}
+.access-code-val{font-family:'DM Mono',monospace;font-size:1.5rem;font-weight:700;color:#6B9EFF;letter-spacing:.12em}
+.access-code-note{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:.35rem}
+
+/* Dark fgroup */
+.admin-fgroup{margin-bottom:.6rem}
+.admin-fgroup label{display:block;font-size:.72rem;font-weight:600;color:rgba(255,255,255,.55);margin-bottom:.3rem;letter-spacing:.01em}
+
+/* Specialty tag on pro card */
+.spec-tag-badge{font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:99px;margin-left:.35rem}
+
+/* Timeline / activity */
+.activity-item{display:flex;gap:.75rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.activity-item:last-child{border-bottom:none}
+.act-dot{width:8px;height:8px;border-radius:50%;background:#6B9EFF;flex-shrink:0;margin-top:.35rem}
+.act-text{font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.5}
+.act-time{font-size:.66rem;color:rgba(255,255,255,.3);margin-top:.1rem}
+
+/* Admin login */
+.admin-login-wrap{min-height:100vh;background:linear-gradient(145deg,#0A0E1A,#111827);display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.admin-login-box{background:#1C2333;border:1px solid rgba(255,255,255,.1);border-radius:var(--r-xl);padding:2rem 1.75rem;width:100%;max-width:380px;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.admin-login-logo{text-align:center;margin-bottom:1.5rem}
+.admin-login-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#fff}
+.admin-login-sub{font-size:.74rem;color:rgba(255,255,255,.4);margin-top:.25rem}
+.admin-shield{font-size:2rem;margin-bottom:.6rem}
+
+/* ══ SPECIALTY BOOKING PAGE (standalone) ══ */
+#v-booking-page{background:#f8faff;min-height:100vh}
+.bp-header{background:linear-gradient(135deg,var(--sapphire),var(--emerald));padding:1.75rem 1.25rem 4rem;text-align:center;position:relative;overflow:hidden}
+.bp-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:40px;background:#f8faff;border-radius:50% 50% 0 0 / 100% 100% 0 0}
+.bp-header-av{width:72px;height:72px;border-radius:50%;border:3px solid rgba(255,255,255,.4);background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto .85rem;position:relative;z-index:1}
+.bp-header-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:800;color:#fff;position:relative;z-index:1}
+.bp-header-spec{font-size:.82rem;color:rgba(255,255,255,.8);margin-top:.2rem;position:relative;z-index:1}
+.bp-header-addr{font-size:.72rem;color:rgba(255,255,255,.6);margin-top:.25rem;position:relative;z-index:1}
+.bp-services{padding:1rem 1.25rem 0;max-width:560px;margin:0 auto}
+.bp-service-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.65rem}
+.bp-service-card{background:#fff;border:1.5px solid var(--line);border-radius:var(--r-lg);padding:1rem 1.1rem;margin-bottom:.55rem;cursor:pointer;transition:all var(--anim);display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+.bp-service-card:hover{border-color:var(--sapphire-m);box-shadow:var(--shadow-sm)}
+.bp-service-card.selected{border-color:var(--sapphire);background:var(--sapphire-l);box-shadow:0 0 0 2px var(--sapphire-m)}
+.bp-service-ico{width:38px;height:38px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.bp-service-name{font-size:.86rem;font-weight:700;color:var(--ink)}
+.bp-service-meta{font-size:.72rem;color:var(--muted);margin-top:.08rem}
+.bp-service-price{font-size:.84rem;font-weight:800;color:var(--sapphire);white-space:nowrap}
+.bp-cal-section{padding:0 1.25rem;max-width:560px;margin:1rem auto 0}
+.bp-cal-title{font-size:.82rem;font-weight:700;color:var(--ink);margin-bottom:.65rem}
+.bp-slot-section{padding:0 1.25rem;max-width:560px;margin:.85rem auto 0}
+.bp-slot-day-title{font-size:.78rem;font-weight:700;color:var(--ink);margin-bottom:.55rem}
+.bp-slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem;margin-bottom:.85rem}
+.bp-slot-btn{border:1.5px solid var(--sapphire-m);border-radius:var(--r-sm);padding:.55rem;text-align:center;font-size:.8rem;font-weight:600;color:var(--sapphire);background:#fff;cursor:pointer;transition:all var(--anim)}
+.bp-slot-btn:hover{background:var(--sapphire-l)}
+.bp-slot-btn.selected{background:var(--sapphire);color:#fff;border-color:transparent}
+.bp-slot-btn.taken{border-color:var(--line);color:var(--ghost);cursor:default;text-decoration:line-through}
+.bp-continue-btn{width:100%;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-md);padding:.85rem;font-size:.92rem;font-weight:700;margin-top:.85rem;transition:all var(--anim);cursor:pointer}
+.bp-continue-btn:disabled{opacity:.4;cursor:default}
+.bp-continue-btn:not(:disabled):hover{background:var(--sapphire-d)}
+.bp-back-btn{background:var(--surface);color:var(--slate);border:1px solid var(--line);border-radius:var(--r-sm);padding:.45rem .85rem;font-size:.76rem;font-weight:500;cursor:pointer;margin-bottom:.9rem;transition:all var(--anim)}
+.bp-back-btn:hover{border-color:var(--sapphire-m);color:var(--sapphire)}
+.bp-form-section{padding:0 1.25rem 2rem;max-width:560px;margin:0 auto}
+.bp-summary-card{background:linear-gradient(135deg,var(--sapphire-l),#F0FDF9);border:1.5px solid var(--sapphire-m);border-radius:var(--r-lg);padding:1rem;margin-bottom:1rem;font-size:.8rem;color:var(--slate);line-height:1.8}
+.bp-summary-card strong{color:var(--sapphire)}
+.bp-powered{text-align:center;padding:1rem;font-size:.65rem;color:var(--ghost)}
+.bp-powered a{color:var(--sapphire);font-weight:600}
+
 </style>
 </head>
 <body>
@@ -504,8 +645,8 @@ a{text-decoration:none;color:inherit}
   <!-- NAV — logo + CTA only, no nav links on mobile -->
   <nav class="nav">
     <div class="nav-logo">
-      <div class="nav-logo-mark">P</div>
-      <div class="nav-logo-text">Psycho<span>Book</span></div>
+      <div class="nav-logo-mark">M</div>
+      <div class="nav-logo-text">Med<span>Book</span></div>
     </div>
     <button class="nav-cta" onclick="openAuth()">Accès Pro →</button>
   </nav>
@@ -571,7 +712,7 @@ a{text-decoration:none;color:inherit}
   <section class="section" id="features">
     <div class="sec-eyebrow">Fonctionnalités</div>
     <h2 class="sec-title">Tout ce dont votre cabinet a besoin</h2>
-    <p class="sec-sub">De la réservation en ligne jusqu'aux rappels automatiques, PsychoBook digitalise votre agenda de A à Z.</p>
+    <p class="sec-sub">De la réservation en ligne jusqu'aux rappels automatiques, MedBook digitalise votre agenda de A à Z.</p>
     <div class="features-grid">
       <div class="feat-card">
         <div class="feat-ico" style="background:var(--sapphire-l)">📅</div>
@@ -706,9 +847,9 @@ a{text-decoration:none;color:inherit}
         <ul class="price-features">
           <li>Praticiens illimités</li>
           <li>Intégration API complète</li>
-          <li>Onboarding dédié Psycholab</li>
+          <li>Onboarding dédié Medlab</li>
         </ul>
-        <button class="price-btn outline" onclick="toast2('📩 reservation.psycholab@gmail.com','blue')">Nous contacter →</button>
+        <button class="price-btn outline" onclick="toast2('📩 reservation.medlab@gmail.com','blue')">Nous contacter →</button>
       </div>
     </div>
     <p class="trial-note"><strong>30 jours d'essai gratuit</strong> sur tous les plans · Aucune carte requise · Annulation à tout moment</p>
@@ -716,15 +857,16 @@ a{text-decoration:none;color:inherit}
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-logo">Psycho<span style="color:#6B9EFF">Book</span></div>
-    <div class="footer-sub">Prise de rendez-vous médicaux en ligne · 🇹🇳 Tunisie<br/>Édité par <strong style="color:rgba(255,255,255,.7)">Psycholab</strong></div>
+    <div class="footer-logo">Med<span style="color:#6B9EFF">Book</span></div>
+    <div class="footer-sub">Prise de rendez-vous médicaux en ligne · 🇹🇳 Tunisie<br/>Édité par <strong style="color:rgba(255,255,255,.7)">Medlab</strong></div>
     <div class="footer-links">
       <a onclick="openAuth()">Accès professionnel</a>
-      <a href="mailto:reservation.psycholab@gmail.com">Contact</a>
-      <a onclick="toast2('Mentions légales — Psycholab, Tunisie','blue')">Mentions légales</a>
+      <a onclick="openAdminPortal()" style="color:rgba(255,255,255,.25)">Admin</a>
+      <a href="mailto:reservation.medlab@gmail.com">Contact</a>
+      <a onclick="toast2('Mentions légales — Medlab, Tunisie','blue')">Mentions légales</a>
       <a href="https://wa.me/21600000000" target="_blank">WhatsApp</a>
     </div>
-    <div class="footer-powered">© 2025 Psycholab · Tous droits réservés · Données hébergées en Tunisie</div>
+    <div class="footer-powered">© 2025 Medlab · Tous droits réservés · Données hébergées en Tunisie</div>
   </footer>
 </div><!-- /v-landing -->
 
@@ -741,7 +883,7 @@ a{text-decoration:none;color:inherit}
     <!-- Topbar -->
     <div class="topbar">
       <div class="topbar-left">
-        <div class="tb-logo">Psycho<span>Book</span></div>
+        <div class="tb-logo">Med<span>Book</span></div>
         <div class="tb-sep"></div>
         <div>
           <div class="tb-pro-name" id="tb-pro-name">Dr. —</div>
@@ -751,8 +893,8 @@ a{text-decoration:none;color:inherit}
       <div class="tb-right">
         <div id="tb-notif-dot" class="tb-notif-dot" style="display:none"></div>
         <span id="tb-trial-badge" class="tb-trial-badge" style="display:none">Essai</span>
-        <button class="tb-btn primary-btn" onclick="openShareSheet()">🔗 Partager</button>
-        <button class="tb-btn" onclick="doLogout()">Quitter</button>
+        <button class="tb-btn" onclick="openPatientBooking()">🔗 Ma page patient</button>
+        <button class="tb-btn" onclick="doLogout()">Déconnexion</button>
       </div>
     </div>
 
@@ -792,13 +934,13 @@ a{text-decoration:none;color:inherit}
           <div class="blc-title">🔗 Votre page de réservation patient</div>
           <div class="blc-sub">Partagez ce lien — vos patients réservent en autonomie, 24h/24</div>
           <div class="blc-url">
-            <span id="booking-url-display">psychobook.tn/rdv/…</span>
+            <span id="booking-url-display">medbook.tn/rdv/…</span>
             <button onclick="copyLink()" style="background:none;border:none;color:var(--sapphire);font-size:.72rem;font-weight:700;cursor:pointer;flex-shrink:0">Copier</button>
           </div>
           <div class="blc-actions">
-            <button class="blc-btn primary" onclick="openShareSheet()">🔗 Partager ma page</button>
-            <button class="blc-btn secondary" onclick="openPatientBooking()">👁️ Prévisualiser</button>
-            <button class="blc-btn secondary" onclick="copyLink()">📋 Copier</button>
+            <button class="blc-btn primary" onclick="openPatientBooking()">👁️ Prévisualiser</button>
+            <button class="blc-btn secondary" onclick="copyLink()">📋 Copier le lien</button>
+            <button class="blc-btn secondary" onclick="shareWhatsApp()">📱 Partager WhatsApp</button>
             <button class="blc-btn secondary" onclick="exportICS()">⬇️ Export .ICS</button>
           </div>
         </div>
@@ -952,7 +1094,7 @@ a{text-decoration:none;color:inherit}
             <div class="integ-ico" style="background:#FFE4E6">⚡</div>
             <div class="integ-info">
               <div class="integ-name">Webhook / API</div>
-              <div class="integ-desc">Connectez PsychoBook à vos outils via webhooks Zapier</div>
+              <div class="integ-desc">Connectez MedBook à vos outils via webhooks Zapier</div>
             </div>
             <button class="integ-btn-small" onclick="openModal('webhook')">Configurer</button>
           </div>
@@ -969,7 +1111,7 @@ a{text-decoration:none;color:inherit}
 
       <!-- ── SUBSCRIPTION / ABONNEMENT ── -->
       <div class="dash-panel" id="panel-subscription">
-        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.9rem">💳 Abonnement PsychoBook</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.9rem">💳 Abonnement MedBook</div>
 
         <!-- Current status -->
         <div class="sub-status-card" id="sub-status-card">
@@ -1021,7 +1163,7 @@ a{text-decoration:none;color:inherit}
               <li>Marque blanche</li>
               <li>Onboarding dédié</li>
             </ul>
-            <button class="pay-cta outline" onclick="toast2('📩 Contactez reservation.psycholab@gmail.com','blue')">Nous contacter</button>
+            <button class="pay-cta outline" onclick="toast2('📩 Contactez reservation.medlab@gmail.com','blue')">Nous contacter</button>
           </div>
         </div>
 
@@ -1138,7 +1280,7 @@ a{text-decoration:none;color:inherit}
           <button onclick="toast2('Mot de passe mis à jour','green')" class="submit-btn" style="background:var(--ink)">🔒 Mettre à jour le mot de passe</button>
         </div>
         <div class="profile-section">
-          <div class="profile-section-title">Licence PsychoBook</div>
+          <div class="profile-section-title">Licence MedBook</div>
           <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.7rem">
             <div style="width:40px;height:40px;background:linear-gradient(135deg,var(--sapphire),var(--emerald));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff">✓</div>
             <div>
@@ -1146,7 +1288,7 @@ a{text-decoration:none;color:inherit}
               <div style="font-size:.72rem;color:var(--muted)" id="lic-plan-sub">Souscrivez pour continuer après l'essai</div>
             </div>
           </div>
-          <div style="font-size:.74rem;color:var(--muted);line-height:1.6">Distribué par <strong style="color:var(--ink)">Psycholab</strong> · 🇹🇳 Tunis, Tunisie<br/>Support : reservation.psycholab@gmail.com · WhatsApp : +216 XX XXX XXX</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.6">Distribué par <strong style="color:var(--ink)">Medlab</strong> · 🇹🇳 Tunis, Tunisie<br/>Support : reservation.medlab@gmail.com · WhatsApp : +216 XX XXX XXX</div>
           <button onclick="showPanel('subscription',null)" style="margin-top:.75rem;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-sm);padding:.5rem 1rem;font-size:.78rem;font-weight:600">💳 Gérer l'abonnement →</button>
         </div>
       </div>
@@ -1255,7 +1397,7 @@ a{text-decoration:none;color:inherit}
 <!-- ════ AUTH MODAL ════ -->
 <div id="modal-auth" class="open" style="display:none">
   <div class="auth-box">
-    <div class="auth-logo">Psycho<span>Book</span><div style="font-size:.65rem;font-weight:400;color:var(--muted);margin-top:.2rem">🇹🇳 Pour les professionnels de santé en Tunisie</div></div>
+    <div class="auth-logo">Med<span>Book</span><div style="font-size:.65rem;font-weight:400;color:var(--muted);margin-top:.2rem">🇹🇳 Pour les professionnels de santé en Tunisie</div></div>
     <div class="auth-tabs">
       <button class="auth-tab on" onclick="switchAuthTab('login',this)">Connexion</button>
       <button class="auth-tab" onclick="switchAuthTab('register',this)">Inscription</button>
@@ -1329,9 +1471,9 @@ a{text-decoration:none;color:inherit}
       </div>
       <div id="pay-virement-form" style="display:none">
         <div style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:1rem;font-size:.8rem;line-height:1.8;color:var(--slate)">
-          <div style="font-weight:700;color:var(--ink);margin-bottom:.5rem">Coordonnées bancaires Psycholab</div>
+          <div style="font-weight:700;color:var(--ink);margin-bottom:.5rem">Coordonnées bancaires Medlab</div>
           <div>🏦 Banque : <strong>STB / Attijari / …</strong></div>
-          <div>💼 Bénéficiaire : <strong>Psycholab</strong></div>
+          <div>💼 Bénéficiaire : <strong>Medlab</strong></div>
           <div>📋 RIB : <strong>XX XXX XXXXXXXX XXXXXXXXXX XX</strong></div>
           <div>🗒️ Référence : <strong id="virement-ref">PB-XXXXXX</strong></div>
         </div>
@@ -1340,9 +1482,9 @@ a{text-decoration:none;color:inherit}
       <div id="pay-cheque-form" style="display:none">
         <div style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:1rem;font-size:.8rem;line-height:1.8;color:var(--slate)">
           <div style="font-weight:700;color:var(--ink);margin-bottom:.5rem">Instructions chèque</div>
-          <div>📝 Libellé : <strong>Psycholab</strong></div>
-          <div>📮 Envoi à : <strong>Psycholab, Tunis, Tunisie</strong></div>
-          <div>📧 Confirmer par email : reservation.psycholab@gmail.com</div>
+          <div>📝 Libellé : <strong>Medlab</strong></div>
+          <div>📮 Envoi à : <strong>Medlab, Tunis, Tunisie</strong></div>
+          <div>📧 Confirmer par email : reservation.medlab@gmail.com</div>
         </div>
         <button onclick="confirmCheque()" class="submit-btn" style="margin-top:.75rem">Confirmer l'envoi du chèque →</button>
       </div>
@@ -1371,7 +1513,7 @@ a{text-decoration:none;color:inherit}
       <button class="modal-close" onclick="closeModal('embed')">✕</button>
     </div>
     <p style="font-size:.83rem;color:var(--slate);margin-bottom:.75rem">Copiez ce code dans votre site WordPress, Wix ou HTML.</p>
-    <div class="embed-box" id="embed-code">&lt;iframe src="https://psychobook.tn/rdv/dr-…" width="100%" height="600" frameborder="0"&gt;&lt;/iframe&gt;</div>
+    <div class="embed-box" id="embed-code">&lt;iframe src="https://medbook.tn/rdv/dr-…" width="100%" height="600" frameborder="0"&gt;&lt;/iframe&gt;</div>
     <button onclick="copyEmbed()" class="submit-btn">📋 Copier le code</button>
   </div>
 </div>
@@ -1410,48 +1552,16 @@ a{text-decoration:none;color:inherit}
   </div>
 </div>
 
-<!-- ════ SHARE SHEET MODAL ════ -->
-<div class="modal-overlay" id="modal-sharesheet">
-  <div class="modal-box" style="max-width:380px">
-    <div class="modal-hdr">
-      <div class="modal-hdr-title">🔗 Partager ma page patient</div>
-      <button class="modal-close" onclick="closeModal('sharesheet')">✕</button>
-    </div>
-    <p style="font-size:.8rem;color:var(--slate);margin-bottom:1rem">Partagez ce lien — vos patients réservent en autonomie, sans compte requis.</p>
-    <div class="blc-url" style="margin-bottom:.85rem">
-      <span id="share-url-display" style="font-family:'DM Mono',monospace;font-size:.74rem;color:var(--sapphire);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
-      <button onclick="copyLink()" style="background:none;border:none;color:var(--sapphire);font-size:.72rem;font-weight:700;cursor:pointer;flex-shrink:0">Copier</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:.5rem">
-      <button onclick="copyLink();closeModal('sharesheet')" style="display:flex;align-items:center;gap:.75rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.75rem 1rem;font-size:.84rem;font-weight:600;color:var(--ink);text-align:left;transition:all var(--anim)">
-        <span style="font-size:1.2rem">📋</span><div><div>Copier le lien</div><div style="font-size:.68rem;font-weight:400;color:var(--muted)">Coller dans SMS ou email</div></div>
-      </button>
-      <button onclick="shareWhatsApp();closeModal('sharesheet')" style="display:flex;align-items:center;gap:.75rem;background:#E7F7E9;border:1px solid #B2DFBB;border-radius:var(--r-md);padding:.75rem 1rem;font-size:.84rem;font-weight:600;color:#1B5E20;text-align:left;transition:all var(--anim)">
-        <span style="font-size:1.2rem">📱</span><div><div>Partager via WhatsApp</div><div style="font-size:.68rem;font-weight:400;color:#388E3C">Envoyer à vos patients</div></div>
-      </button>
-      <button onclick="openPatientBooking();closeModal('sharesheet')" style="display:flex;align-items:center;gap:.75rem;background:var(--sapphire-l);border:1px solid var(--sapphire-m);border-radius:var(--r-md);padding:.75rem 1rem;font-size:.84rem;font-weight:600;color:var(--sapphire);text-align:left;transition:all var(--anim)">
-        <span style="font-size:1.2rem">👁️</span><div><div>Prévisualiser ma page</div><div style="font-size:.68rem;font-weight:400;color:var(--sapphire)">Vue patient de votre agenda</div></div>
-      </button>
-      <button onclick="exportICS();closeModal('sharesheet')" style="display:flex;align-items:center;gap:.75rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.75rem 1rem;font-size:.84rem;font-weight:600;color:var(--slate);text-align:left;transition:all var(--anim)">
-        <span style="font-size:1.2rem">⬇️</span><div><div>Exporter mes RDV (.ics)</div><div style="font-size:.68rem;font-weight:400;color:var(--muted)">Compatible Google Agenda & Outlook</div></div>
-      </button>
-    </div>
-    <div style="margin-top:1rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.75rem;font-size:.72rem;color:var(--muted)">
-      💡 <strong style="color:var(--ink)">Conseil :</strong> Ajoutez le lien dans votre bio Instagram, votre site web ou votre signature email pour recevoir des RDV automatiquement.
-    </div>
-  </div>
-</div>
-
 <script>
 // ══════════════════════════════════
 //  DATA LAYER
 // ══════════════════════════════════
-const DB_KEY='psychobook_tn_db';
+const DB_KEY='medbook_tn_db';
 function getDB(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch{return{}}}
 function saveDB(d){localStorage.setItem(DB_KEY,JSON.stringify(d))}
-function getSession(){try{return JSON.parse(sessionStorage.getItem('pb_session')||'null')}catch{return null}}
-function setSession(s){sessionStorage.setItem('pb_session',JSON.stringify(s))}
-function clearSession(){sessionStorage.removeItem('pb_session')}
+function getSession(){try{return JSON.parse(sessionStorage.getItem('mb_session')||'null')}catch{return null}}
+function setSession(s){sessionStorage.setItem('mb_session',JSON.stringify(s))}
+function clearSession(){sessionStorage.removeItem('mb_session')}
 
 function seedDemo(){
   const db=getDB();
@@ -1462,8 +1572,7 @@ function seedDemo(){
   const trialStart=new Date(today);trialStart.setDate(trialStart.getDate()-2);
   db.pros=[{
     id:'pro-demo',fn:'Amira',ln:'Ben Salah',email:'dr.bensalah@cabinet.tn',
-    spec:'Psychiatre',tel:'+216 71 234 567',
-    adresse:'Bureau N102, BLOC B, Résidence ERRIHAB, Lac 1, Tunis 1053',
+    spec:'Psychiatre',tel:'+216 71 234 567',adresse:'12 Avenue de la Liberté, Tunis',
     ville:'Tunis',duration:50,price:100,consultType:'Th. individuelle',gcal:false,lang:'fr',
     subscription:{plan:'trial',status:'trial',startDate:trialStart.toISOString(),trialDays:30},
     avail:{days:{mon:true,tue:true,wed:true,thu:true,fri:true,sat:false,sun:false},
@@ -1662,9 +1771,9 @@ function loadProDash(pro){
   document.getElementById('welcome-msg').textContent='Bonjour Dr. '+pro.ln+' 👋';
   document.getElementById('today-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const slug=(pro.fn+'-'+pro.ln).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
-  document.getElementById('booking-url-display').textContent='psychobook.tn/rdv/'+slug;
+  document.getElementById('booking-url-display').textContent='medbook.tn/rdv/'+slug;
   const embedEl=document.getElementById('embed-code');
-  if(embedEl) embedEl.textContent=`<iframe src="https://psychobook.tn/rdv/${slug}" width="100%" height="600" frameborder="0"></iframe>`;
+  if(embedEl) embedEl.textContent=`<iframe src="https://medbook.tn/rdv/${slug}" width="100%" height="600" frameborder="0"></iframe>`;
   document.getElementById('set-fn').value=pro.fn;
   document.getElementById('set-ln').value=pro.ln;
   document.getElementById('set-email').value=pro.email;
@@ -1802,21 +1911,11 @@ function sendReminderManual(id){
 }
 function addRdvToGcal(id){
   const db=getDB();const r=(db.rdvs||[]).find(x=>x.id===id);if(!r)return;
-  const s=getSession();const pro=s?db.pros.find(p=>p.id===s.id):null;
   const d=new Date(r.date+'T'+r.slot+':00');
-  const end=new Date(d.getTime()+(pro?.duration||50)*60*1000);
-  const fmtDt=dt=>{const pad=n=>String(n).padStart(2,'0');return `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;}
-  const typeLabel=(pro?.consultType||'Consultation')+(pro?.price?' ('+pro.price+' DT/'+pro.duration+'min)':'');
-  const adresse=pro?.adresse||'';
-  const params=new URLSearchParams({
-    action:'TEMPLATE',
-    text:typeLabel+' — '+r.patFn+' '+r.patLn+' & Dr. '+r.proLn,
-    dates:fmtDt(d)+'/'+fmtDt(end),
-    details:'PsychoBook — Patient: '+r.patEmail+(r.patTel?' — Tél: '+r.patTel:'')+(r.motif?' — Motif: '+r.motif:'')+(adresse?' — Adresse: '+adresse:''),
-    location:adresse,
-    ctz:'Africa/Tunis'
-  });
-  window.open('https://calendar.google.com/calendar/render?'+params.toString(),'_blank');
+  const end=new Date(d.getTime()+50*60*1000);
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('RDV '+r.patFn+' '+r.patLn)}&dates=${fmt(d)}/${fmt(end)}&details=${encodeURIComponent('Patient: '+r.patEmail+'\nMotif: '+(r.motif||'—'))}`;
+  window.open(url,'_blank');
 }
 
 // ══ PATIENTS ══
@@ -1923,19 +2022,9 @@ function copyLink(){
   navigator.clipboard?.writeText('https://'+url).catch(()=>{});
   toast2('🔗 Lien copié dans le presse-papier','green');
 }
-function openShareSheet(){
-  const url=document.getElementById('booking-url-display').textContent;
-  const el=document.getElementById('share-url-display');
-  if(el) el.textContent=url;
-  if(navigator.share){
-    navigator.share({title:'Réservation — PsychoBook',text:'Prenez rendez-vous en ligne :',url:'https://'+url}).catch(()=>{openModal('sharesheet');});
-  } else {
-    openModal('sharesheet');
-  }
-}
 function shareWhatsApp(){
   const url=document.getElementById('booking-url-display').textContent;
-  const msg=encodeURIComponent('Prenez rendez-vous en ligne avec moi sur PsychoBook : https://'+url);
+  const msg=encodeURIComponent('Prenez rendez-vous en ligne avec moi sur MedBook : https://'+url);
   window.open('https://wa.me/?text='+msg,'_blank');
 }
 function exportICS(){
@@ -1943,7 +2032,7 @@ function exportICS(){
   const db=getDB();
   const rdvs=(db.rdvs||[]).filter(r=>r.proId===s.id&&r.status!=='cancelled');
   const pro=db.pros.find(p=>p.id===s.id);
-  let ics='BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//PsychoBook//TN//FR\n';
+  let ics='BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MedBook//TN//FR\n';
   rdvs.forEach(r=>{
     const d=new Date(r.date+'T'+r.slot+':00');
     const end=new Date(d.getTime()+(pro?.duration||50)*60*1000);
@@ -1952,7 +2041,7 @@ function exportICS(){
   });
   ics+='END:VCALENDAR';
   const blob=new Blob([ics],{type:'text/calendar'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='psychobook-rdvs.ics';a.click();
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='medbook-rdvs.ics';a.click();
   toast2('⬇️ Fichier .ICS téléchargé','green');
 }
 function copyEmbed(){
@@ -2012,6 +2101,9 @@ let bkDate='',bkSlot='',bkCalDate=new Date();
 function openPatientBooking(){
   const s=getSession();if(!s)return;
   const db=getDB();const pro=db.pros.find(p=>p.id===s.id);if(!pro)return;
+  // Use the new specialty-aware public booking page
+  openPublicBookingPage(pro.id);
+  return;
   document.getElementById('bk-pro-name').textContent='Dr. '+pro.fn+' '+pro.ln;
   document.getElementById('bk-pro-spec').textContent=pro.spec+(pro.adresse?' · '+pro.adresse:'');
   // Show price chip if set
@@ -2179,52 +2271,20 @@ function addToGcal(){
   const s=getSession();const db=getDB();const pro=db.pros.find(p=>p.id===s.id);
   const d=new Date(bkDate+'T'+bkSlot+':00');
   const end=new Date(d.getTime()+(pro?.duration||50)*60*1000);
-  const fmt=dt=>{
-    const pad=n=>String(n).padStart(2,'0');
-    return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`.replace(/\d{8}T\d{6}/, m=>m);
-  };
-  const fmtDt=dt=>{const pad=n=>String(n).padStart(2,'0');return `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;}
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
   const typeLabel=(pro?.consultType||'Consultation')+(pro?.price?' ('+pro.price+' DT/'+pro.duration+'min)':'');
-  const title=typeLabel+' — Dr. '+pro?.fn+' '+pro?.ln;
-  const adresse=pro?.adresse||'';
-  const details='PsychoBook — Consultation médicale'+(adresse?'\nAdresse : '+adresse:'')+(pro?.tel?'\nTél : '+pro.tel:'');
-  const params=new URLSearchParams({
-    action:'TEMPLATE',
-    text:title,
-    dates:fmtDt(d)+'/'+fmtDt(end),
-    details:details,
-    location:adresse,
-    ctz:'Africa/Tunis'
-  });
-  window.open('https://calendar.google.com/calendar/render?'+params.toString(),'_blank');
+  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(typeLabel+' — Dr. '+pro?.fn+' '+pro?.ln)}&dates=${fmt(d)}/${fmt(end)}&details=${encodeURIComponent('MedBook — Consultation médicale\nAdresse : '+(pro?.adresse||''))}&location=${encodeURIComponent(pro?.adresse||'')}`;
+  window.open(url,'_blank');
 }
 function addToIcal(){
   const s=getSession();const db=getDB();const pro=db.pros.find(p=>p.id===s.id);
   const d=new Date(bkDate+'T'+bkSlot+':00');
   const end=new Date(d.getTime()+(pro?.duration||50)*60*1000);
-  const fmtDt=dt=>{const pad=n=>String(n).padStart(2,'0');return `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;}
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
   const typeLabel=(pro?.consultType||'Consultation')+(pro?.price?' ('+pro.price+' DT/'+pro.duration+'min)':'');
-  const adresse=pro?.adresse||'';
-  const uid='rdv-'+Date.now()+'@psychobook.tn';
-  const ics=[
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//PsychoBook//TN//FR',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
-    'BEGIN:VEVENT',
-    'UID:'+uid,
-    'SUMMARY:'+typeLabel+' — Dr. '+pro?.fn+' '+pro?.ln,
-    'DTSTART;TZID=Africa/Tunis:'+fmtDt(d),
-    'DTEND;TZID=Africa/Tunis:'+fmtDt(end),
-    'LOCATION:'+adresse,
-    'DESCRIPTION:PsychoBook — Consultation médicale'+(adresse?' — Adresse : '+adresse:'')+(pro?.tel?' — Tél : '+pro.tel:''),
-    'STATUS:CONFIRMED',
-    'END:VEVENT',
-    'END:VCALENDAR'
-  ].join('\r\n');
-  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rdv-psychobook.ics';a.click();
+  const ics=`BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MedBook//TN//FR\nBEGIN:VEVENT\nSUMMARY:${typeLabel} — Dr. ${pro?.fn} ${pro?.ln}\nDTSTART:${fmt(d)}\nDTEND:${fmt(end)}\nLOCATION:${pro?.adresse||''}\nDESCRIPTION:MedBook — Consultation médicale\\nAdresse : ${pro?.adresse||''}\nEND:VEVENT\nEND:VCALENDAR`;
+  const blob=new Blob([ics],{type:'text/calendar'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rdv-medbook.ics';a.click();
   toast2('📆 Fichier .ics téléchargé','green');
 }
 function cancelRdvPatient(){
@@ -2252,8 +2312,8 @@ function previewEmail(type){
   const mapUrl=pro.adresse?`https://maps.google.com/?q=${encodeURIComponent(pro.adresse)}`:'#';
   const gcalUrl=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(typeLabel+' — Dr. '+pro.fn+' '+pro.ln)}&dates=20260620T143000/20260620T${sampleEnd().replace(':','')}00&location=${encodeURIComponent(pro.adresse||'')}`;
   const icalUrl='#';
-  const cancelUrl='https://psychobook.tn/annuler/[TOKEN]';
-  const rescheduleUrl='https://psychobook.tn/reprogrammer/[TOKEN]';
+  const cancelUrl='https://medbook.tn/annuler/[TOKEN]';
+  const rescheduleUrl='https://medbook.tn/reprogrammer/[TOKEN]';
 
   const subjectMap={
     confirm:`Rendez-vous: [Patient] @ ${sampleDate}, ${sampleSlot} – ${sampleEnd()} (CET) | ${typeLabel}`,
@@ -2266,7 +2326,7 @@ function previewEmail(type){
 <div style="font-family:sans-serif;max-width:500px;color:#0F172A">
   <div style="background:#4F46E5;border-radius:12px;padding:16px 20px;margin-bottom:16px;text-align:center">
     <div style="font-size:1.4rem">🩺</div>
-    <div style="color:#fff;font-weight:700;font-size:1rem;margin-top:6px">PsychoBook</div>
+    <div style="color:#fff;font-weight:700;font-size:1rem;margin-top:6px">MedBook</div>
   </div>
   <p style="font-size:.95rem;margin-bottom:12px"><strong>Bonjour [Prénom patient],</strong></p>
   <p style="font-size:.88rem;color:#475569;margin-bottom:16px">Réservation confirmée.</p>
@@ -2294,7 +2354,7 @@ function previewEmail(type){
     Informez automatiquement vos collègues et partenaires lorsque vous recevez un rendez-vous avec la fonctionnalité "CC".<br/>
     <a href="#" style="color:#4F46E5">Notifier un collègue</a>
   </div>
-  <p style="font-size:.7rem;color:#CBD5E1;text-align:center;margin-top:10px">PsychoBook · psychobook.tn · 🇹🇳 Tunis, Tunisie</p>
+  <p style="font-size:.7rem;color:#CBD5E1;text-align:center;margin-top:10px">MedBook · medbook.tn · 🇹🇳 Tunis, Tunisie</p>
 </div>`;
 
   const reminderBody=(label,timeNote)=>`
@@ -2309,7 +2369,7 @@ function previewEmail(type){
     ${pro.price?`<div style="color:#94A3B8;font-size:.72rem;margin-top:6px">Prix</div><div>${pro.price} DT</div>`:''}
     <div style="margin-top:8px"><a href="${cancelUrl}" style="color:#4F46E5">Annuler</a> — ou — <a href="${rescheduleUrl}" style="color:#4F46E5">Reprogrammer</a></div>
   </div>
-  <p style="font-size:.7rem;color:#CBD5E1;text-align:center">PsychoBook · psychobook.tn</p>
+  <p style="font-size:.7rem;color:#CBD5E1;text-align:center">MedBook · medbook.tn</p>
 </div>`;
 
   const bodyMap={
@@ -2322,7 +2382,7 @@ function previewEmail(type){
   document.getElementById('ep-title').textContent=titles[type];
   document.getElementById('ep-content').innerHTML=`
     <div style="margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #E2E8F0">
-      <div class="ep-from">De : noreply@psychobook.tn · À : [patient@email.com]</div>
+      <div class="ep-from">De : noreply@medbook.tn · À : [patient@email.com]</div>
       <div class="ep-subject">Objet : ${escHtml(subjectMap[type])}</div>
     </div>
     <div style="padding:8px 0">${bodyMap[type]}</div>`;
@@ -2359,9 +2419,689 @@ function rescheduleAll(){
   });
 }
 
+
+// ══════════════════════════════════
+//  SPECIALTY CONFIG
+// ══════════════════════════════════
+const SPECIALTY_CONFIG = {
+  'Psychologue clinicien(ne)': {
+    ico:'🧠', color:'#7C3AED', colorL:'#EDE9FE',
+    label:'Psychologue',
+    services:[
+      {name:'Thérapie individuelle', duration:50, price:100, desc:'Séance en cabinet'},
+      {name:'Thérapie de couple', duration:60, price:140, desc:'Thérapie relationnelle'},
+      {name:'Bilan psychologique', duration:90, price:180, desc:'Évaluation complète'},
+    ],
+    motifs:['Anxiété / Stress','Dépression','Burn-out','Troubles du sommeil','Gestion émotionnelle','Traitement post-traumatique','Suivi régulier','Première consultation','Autre'],
+    features:['Rappels WhatsApp','Notes cliniques','Dossier patient confidentiel','Agenda séances'],
+  },
+  'Psychiatre': {
+    ico:'💊', color:'#1B4FD8', colorL:'#EEF2FF',
+    label:'Psychiatre',
+    services:[
+      {name:'Consultation psychiatrique', duration:45, price:120, desc:'Évaluation et suivi'},
+      {name:'Suivi médication', duration:30, price:80, desc:'Renouvellement ordonnance'},
+      {name:'Évaluation initiale', duration:60, price:150, desc:'Première évaluation'},
+    ],
+    motifs:['Dépression majeure','Troubles anxieux','Troubles bipolaires','Schizophrénie','TDAH adulte','Ordonnance / renouvellement','Bilan psychiatrique','Autre'],
+    features:['Ordonnances en ligne','Dossier médical','Suivi traitement','Rappels médicaments'],
+  },
+  'Médecin généraliste': {
+    ico:'🩺', color:'#0D9488', colorL:'#CCFBF1',
+    label:'Médecin généraliste',
+    services:[
+      {name:'Consultation générale', duration:20, price:35, desc:'Diagnostic et traitement'},
+      {name:'Certificat médical', duration:15, price:25, desc:'Aptitude / sport / emploi'},
+      {name:'Visite à domicile', duration:30, price:60, desc:'Sur demande'},
+    ],
+    motifs:['Fièvre / Infection','Douleur','Renouvellement ordonnance','Certificat médical','Bilan de santé','Suivi maladie chronique','Autre'],
+    features:['Ordonnances','Certificats','Bilan sanguin','Suivi vaccins'],
+  },
+  'Cardiologue': {
+    ico:'❤️', color:'#E11D48', colorL:'#FFE4E6',
+    label:'Cardiologue',
+    services:[
+      {name:'Consultation cardiologique', duration:30, price:90, desc:'Bilan cardiaque'},
+      {name:'ECG + consultation', duration:45, price:120, desc:'Électrocardiogramme'},
+      {name:'Échocardiographie', duration:45, price:150, desc:'Echographie cardiaque'},
+    ],
+    motifs:['Douleur thoracique','Palpitations','Hypertension','Bilan cardiovasculaire','Suivi post-AVC','Suivi post-opératoire','Autre'],
+    features:['Compte-rendu ECG','Historique tension','Résultats en ligne','Ordonnances'],
+  },
+  'Kinésithérapeute': {
+    ico:'🦴', color:'#D97706', colorL:'#FEF3C7',
+    label:'Kinésithérapeute',
+    services:[
+      {name:'Séance de kiné', duration:45, price:50, desc:'Rééducation standard'},
+      {name:'Massage thérapeutique', duration:60, price:70, desc:'Détente et récupération'},
+      {name:'Bilan postural', duration:30, price:40, desc:'Évaluation posture'},
+    ],
+    motifs:['Mal de dos','Douleur épaule','Rééducation post-op','Entorse / Foulure','Raideur cervicale','Sport et performance','Autre'],
+    features:['Programme personnalisé','Suivi rééducation','Exercices à domicile','Photos progression'],
+  },
+  'Ostéopathe': {
+    ico:'🌿', color:'#059669', colorL:'#D1FAE5',
+    label:'Ostéopathe',
+    services:[
+      {name:'Séance ostéopathie', duration:60, price:70, desc:'Traitement global'},
+      {name:'Séance nourrisson', duration:45, price:60, desc:'Bébé et enfant'},
+    ],
+    motifs:['Douleurs dorsales','Maux de tête','Troubles digestifs','Nourrisson','Sportif','Grossesse','Autre'],
+    features:['Dossier ostéo','Historique séances','Fiches exercices','Rappels rendez-vous'],
+  },
+  'Nutritionniste / Diététicien(ne)': {
+    ico:'🍎', color:'#16A34A', colorL:'#DCFCE7',
+    label:'Nutritionniste',
+    services:[
+      {name:'Bilan nutritionnel', duration:60, price:80, desc:'Évaluation complète'},
+      {name:'Suivi diététique', duration:30, price:50, desc:'Suivi régulier'},
+      {name:'Programme sportif', duration:45, price:70, desc:'Nutrition performance'},
+    ],
+    motifs:['Perte de poids','Prise de masse','Diabète / Cholestérol','Alimentation végétale','Troubles alimentaires','Femme enceinte','Autre'],
+    features:['Plan alimentaire PDF','Suivi poids','Recettes personnalisées','Bilan IMC'],
+  },
+  'Ophtalmologue': {
+    ico:'👁️', color:'#0EA5E9', colorL:'#E0F2FE',
+    label:'Ophtalmologue',
+    services:[
+      {name:'Examen de la vue', duration:30, price:60, desc:'Bilan visuel complet'},
+      {name:'Prescription lunettes', duration:20, price:40, desc:'Renouvellement'},
+      {name:'Fond d'œil', duration:30, price:80, desc:'Diagnostic rétine'},
+    ],
+    motifs:['Baisse de vision','Douleur oculaire','Ordonnance lunettes','Contrôle myopie','Glaucome','Corps flottants','Autre'],
+    features:['Ordonnances optiques','Historique vision','Acuité visuelle','Résultats fond d'œil'],
+  },
+  'Chirurgien-dentiste': {
+    ico:'🦷', color:'#64748B', colorL:'#F1F5F9',
+    label:'Dentiste',
+    services:[
+      {name:'Consultation', duration:30, price:30, desc:'Examen buccal'},
+      {name:'Détartrage', duration:45, price:60, desc:'Nettoyage professionnel'},
+      {name:'Urgence dentaire', duration:30, price:50, desc:'Douleur aiguë'},
+    ],
+    motifs:['Douleur dentaire','Contrôle régulier','Détartrage','Carie','Prothèse / Couronne','Urgence','Autre'],
+    features:['Radio dentaire','Dossier dentaire','Suivi orthodontie','Devis en ligne'],
+  },
+  'Pédiatre': {
+    ico:'👶', color:'#F59E0B', colorL:'#FEF3C7',
+    label:'Pédiatre',
+    services:[
+      {name:'Consultation pédiatrique', duration:25, price:50, desc:'Enfant 0–18 ans'},
+      {name:'Bilan de croissance', duration:30, price:60, desc:'Suivi développement'},
+      {name:'Vaccins', duration:20, price:40, desc:'Carnet de vaccination'},
+    ],
+    motifs:['Fièvre enfant','Toux / Rhume','Carnet de santé','Bilan croissance','Vaccins','Développement psychomoteur','Autre'],
+    features:['Carnet de santé','Courbe de croissance','Calendrier vaccins','Ordonnances pédiatriques'],
+  },
+  'ORL': {
+    ico:'👂', color:'#8B5CF6', colorL:'#EDE9FE',
+    label:'ORL',
+    services:[
+      {name:'Consultation ORL', duration:25, price:55, desc:'Oreille, nez, gorge'},
+      {name:'Audiogramme', duration:30, price:70, desc:'Bilan auditif'},
+    ],
+    motifs:['Douleur oreille','Sinusite','Maux de gorge','Perte auditive','Vertige','Bilan ORL','Autre'],
+    features:['Audiogramme','Résultats en ligne','Ordonnances','Suivi appareillage'],
+  },
+  'Dermatologue': {
+    ico:'🧬', color:'#EC4899', colorL:'#FCE7F3',
+    label:'Dermatologue',
+    services:[
+      {name:'Consultation dermatologique', duration:20, price:70, desc:'Diagnostic cutané'},
+      {name:'Cryothérapie', duration:20, price:60, desc:'Traitement verrues'},
+      {name:'Dermatoscopie', duration:30, price:90, desc:'Analyse grains de beauté'},
+    ],
+    motifs:['Acné','Eczéma','Grain de beauté','Psoriasis','Chute de cheveux','Contrôle annuel','Autre'],
+    features:['Photos dermatoscopiques','Dossier cutané','Ordonnances','Suivi traitements'],
+  },
+  'Sophrologue': {
+    ico:'🧘', color:'#6366F1', colorL:'#EEF2FF',
+    label:'Sophrologue',
+    services:[
+      {name:'Séance sophrologie', duration:60, price:70, desc:'Relaxation et équilibre'},
+      {name:'Programme anti-stress', duration:60, price:80, desc:'5 séances suivies'},
+    ],
+    motifs:['Gestion du stress','Troubles du sommeil','Préparation mentale','Douleurs chroniques','Confiance en soi','Autre'],
+    features:['Enregistrements audio','Programme personnalisé','Suivi séances','Exercices quotidiens'],
+  },
+  'Médecin du sport': {
+    ico:'🏃', color:'#F97316', colorL:'#FFF7ED',
+    label:'Médecin du sport',
+    services:[
+      {name:'Bilan sportif médical', duration:30, price:60, desc:'Certificat aptitude'},
+      {name:'Consultation blessure', duration:25, price:50, desc:'Diagnostic et traitement'},
+    ],
+    motifs:['Certificat médical sport','Blessure sportive','Retour à l'entraînement','Performance','Nutrition sportive','Autre'],
+    features:['Certificats d'aptitude','Suivi blessures','Programme récupération','Tests fonctionnels'],
+  },
+};
+
+// ══════════════════════════════════
+//  ADMIN AUTH
+// ══════════════════════════════════
+const ADMIN_CREDENTIALS = [{email:'admin@medbook.tn', pwd:'admin123'}];
+
+function doAdminLogin(){
+  const email = document.getElementById('adm-user').value.trim();
+  const pwd = document.getElementById('adm-pwd').value;
+  const ok = ADMIN_CREDENTIALS.some(c => c.email === email && c.pwd === pwd);
+  if(!ok){ toast2('Identifiants incorrects','red'); return; }
+  sessionStorage.setItem('mb_admin_session', JSON.stringify({email, loginAt: new Date().toISOString()}));
+  showView('v-admin');
+  loadAdminDash();
+  toast2('🛡️ Accès admin accordé · Bienvenue !','blue');
+}
+function doAdminLogout(){
+  sessionStorage.removeItem('mb_admin_session');
+  showView('v-landing');
+  toast2('Déconnexion admin','green');
+}
+function getAdminSession(){ try{ return JSON.parse(sessionStorage.getItem('mb_admin_session')||'null'); }catch{return null;} }
+function openAdminPortal(){
+  const s = getAdminSession();
+  if(s){ showView('v-admin'); loadAdminDash(); }
+  else { showView('v-admin-login'); }
+}
+function addAdminUser(){
+  const email = document.getElementById('cfg-new-admin-email').value.trim();
+  const pwd = document.getElementById('cfg-new-admin-pwd').value;
+  if(!email||!pwd){ toast2('Email et mot de passe requis','red'); return; }
+  ADMIN_CREDENTIALS.push({email, pwd});
+  toast2('Admin ajouté : '+email,'green');
+  document.getElementById('cfg-new-admin-email').value='';
+  document.getElementById('cfg-new-admin-pwd').value='';
+}
+function saveAdminConfig(){ toast2('⚙️ Configuration sauvegardée','green'); }
+
+// ══ ADMIN PANEL NAVIGATION ══
+function showAdminPanel(id, btn){
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('adm-panel-'+id).classList.add('on');
+  if(btn){
+    document.querySelectorAll('.admin-nav-btn').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+  if(id==='specialties') renderAdminSpecialties();
+  if(id==='revenue') renderAdminRevenue();
+  if(id==='activity') renderAdminActivity();
+  if(id==='pros') renderAdminPros('all','');
+  if(id==='pending') renderAdminPending();
+}
+
+// ══ LOAD ADMIN DASH ══
+function loadAdminDash(){
+  const db = getDB();
+  const pros = db.pros||[];
+  const rdvs = db.rdvs||[];
+  const pays = db.payments||[];
+  const active = pros.filter(p=>p.subscription?.status==='active').length;
+  const trial = pros.filter(p=>p.subscription?.status==='trial').length;
+  const pending = pros.filter(p=>p.subscription?.status==='pending').length;
+  document.getElementById('adm-st-pros').textContent = active;
+  document.getElementById('adm-st-pros-d').textContent = active+' actifs, '+trial+' essai';
+  document.getElementById('adm-st-trial').textContent = trial;
+  document.getElementById('adm-st-rdvs').textContent = rdvs.filter(r=>r.status!=='cancelled').length;
+  const rev = pays.reduce((s,p)=>(s+(p.amount||0)),0);
+  document.getElementById('adm-st-rev').textContent = rev+' TND';
+  // Pending badge
+  const pb = document.getElementById('adm-pending-badge');
+  if(pending>0){ pb.textContent=pending; pb.style.display=''; }
+  document.getElementById('adm-pending-count').textContent = pending+' en attente';
+  // Pending list in overview
+  renderAdminPendingList(document.getElementById('adm-pending-list-overview'), 3);
+  // Recent pros
+  const recentEl = document.getElementById('adm-recent-pros');
+  const recent = [...pros].sort((a,b)=>(b.id||'').localeCompare(a.id||'')).slice(0,5);
+  recentEl.innerHTML = recent.length===0
+    ? '<div style="font-size:.78rem;color:rgba(255,255,255,.35);padding:.5rem 0">Aucun professionnel enregistré.</div>'
+    : recent.map(p=>proRowHtml(p,false)).join('');
+}
+
+function proRowHtml(p, showActions=true){
+  const sub = p.subscription||{};
+  const statusLabel = {trial:'Essai',active:'Actif',expired:'Expiré',pending:'En attente'}[sub.status]||sub.status||'—';
+  const specCfg = SPECIALTY_CONFIG[p.spec];
+  const specIco = specCfg?specCfg.ico:'🩺';
+  return `<div class="pro-row">
+    <div class="pro-av">${specIco}</div>
+    <div style="flex:1;min-width:0">
+      <div class="pro-name">Dr. ${escHtml(p.fn||'')} ${escHtml(p.ln||'')} <span style="font-size:.6rem;color:rgba(255,255,255,.35)">#${p.id?.slice(-6)||'—'}</span></div>
+      <div class="pro-meta">${escHtml(p.spec||'—')} · ${escHtml(p.ville||'—')} · ${escHtml(p.email||'—')}</div>
+      ${showActions?`<div class="pro-actions">
+        ${sub.status==='pending'?`<button class="admin-btn approve" onclick="approvePro('${p.id}')">✅ Approuver</button>`:''}
+        ${sub.status==='trial'?`<button class="admin-btn approve" onclick="upgradePro('${p.id}','cabinet')">⬆️ Activer Cabinet</button>`:''}
+        ${sub.status==='active'?`<button class="admin-btn" onclick="upgradePro('${p.id}','essential')">Changer plan</button>`:''}
+        <button class="admin-btn" onclick="sendAccessCode('${p.id}')">📧 Envoyer code</button>
+        <button class="admin-btn revoke" onclick="revokePro('${p.id}')">🔒 Révoquer</button>
+        <button class="admin-btn danger" onclick="deletePro('${p.id}')">🗑️ Supprimer</button>
+      </div>`:''}
+    </div>
+    <span class="pro-status-badge ${sub.status||'pending'}">${statusLabel}</span>
+  </div>`;
+}
+
+let adminFilter='all', adminSearch='';
+function renderAdminPros(filter, search){
+  adminFilter=filter||adminFilter; adminSearch=search!==undefined?search:adminSearch;
+  const db=getDB(); let pros=db.pros||[];
+  if(adminFilter!=='all') pros=pros.filter(p=>(p.subscription?.status||'pending')===adminFilter);
+  if(adminSearch) pros=pros.filter(p=>(p.fn+p.ln+p.email+p.spec+p.ville).toLowerCase().includes(adminSearch.toLowerCase()));
+  const el=document.getElementById('adm-pros-list');
+  el.innerHTML = pros.length===0
+    ? '<div style="text-align:center;padding:2rem;font-size:.8rem;color:rgba(255,255,255,.3)">Aucun professionnel trouvé.</div>'
+    : pros.map(p=>proRowHtml(p,true)).join('');
+}
+function adminSearchPros(q){ renderAdminPros(null, q); }
+function adminFilterPros(f, btn){
+  document.querySelectorAll('.aft').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderAdminPros(f, null);
+}
+function renderAdminPending(){
+  renderAdminPendingList(document.getElementById('adm-pending-list'), 999);
+}
+function renderAdminPendingList(el, limit){
+  const db=getDB();
+  const pending=(db.pros||[]).filter(p=>(p.subscription?.status||'pending')==='pending').slice(0,limit);
+  el.innerHTML = pending.length===0
+    ? '<div style="font-size:.78rem;color:rgba(255,255,255,.35);padding:.65rem 0">✅ Aucune demande en attente.</div>'
+    : pending.map(p=>proRowHtml(p,true)).join('');
+}
+
+// ══ PRO ACTIONS ══
+function approvePro(id){
+  const db=getDB(); const p=db.pros.find(x=>x.id===id); if(!p)return;
+  p.subscription={...p.subscription,status:'trial',plan:'trial',startDate:new Date().toISOString(),trialDays:30};
+  saveDB(db); loadAdminDash(); renderAdminPros(null,null); renderAdminPending();
+  addActivity('Accès approuvé pour Dr. '+p.fn+' '+p.ln+' ('+p.spec+')');
+  toast2('✅ Accès approuvé · Email de bienvenue envoyé','green');
+}
+function upgradePro(id, plan){
+  const db=getDB(); const p=db.pros.find(x=>x.id===id); if(!p)return;
+  const renew=new Date(); renew.setFullYear(renew.getFullYear()+1);
+  p.subscription={plan,status:'active',startDate:new Date().toISOString(),renewDate:renew.toLocaleDateString('fr-FR')};
+  const amounts={essential:290,cabinet:590};
+  if(!db.payments) db.payments=[];
+  db.payments.push({id:'pay-'+Date.now(),proId:id,plan,amount:amounts[plan]||0,currency:'TND',method:'admin',date:new Date().toISOString(),status:'paid'});
+  saveDB(db); loadAdminDash(); renderAdminPros(null,null);
+  addActivity('Plan '+plan+' activé pour Dr. '+p.fn+' '+p.ln);
+  toast2('✅ Plan '+plan+' activé pour Dr. '+p.ln,'green');
+}
+function revokePro(id){
+  if(!confirm('Révoquer l'accès de ce professionnel ?')) return;
+  const db=getDB(); const p=db.pros.find(x=>x.id===id); if(!p)return;
+  p.subscription={...p.subscription,status:'expired'};
+  saveDB(db); loadAdminDash(); renderAdminPros(null,null);
+  addActivity('Accès révoqué pour Dr. '+p.fn+' '+p.ln);
+  toast2('🔒 Accès révoqué','green');
+}
+function deletePro(id){
+  if(!confirm('Supprimer définitivement ce compte professionnel ? Cette action est irréversible.')) return;
+  const db=getDB();
+  db.pros=(db.pros||[]).filter(x=>x.id!==id);
+  db.rdvs=(db.rdvs||[]).filter(x=>x.proId!==id);
+  saveDB(db); loadAdminDash(); renderAdminPros(null,null);
+  toast2('🗑️ Compte supprimé','green');
+}
+function sendAccessCode(id){
+  const db=getDB(); const p=db.pros.find(x=>x.id===id); if(!p)return;
+  const code='PB-'+Math.random().toString(36).substr(2,8).toUpperCase();
+  toast2('📧 Code '+code+' envoyé à '+p.email,'blue');
+}
+
+// ══ ACCESS CODE GENERATION ══
+function openAdminAccessModal(){
+  document.getElementById('acc-fn').value='';
+  document.getElementById('acc-ln').value='';
+  document.getElementById('acc-email').value='';
+  document.getElementById('acc-spec').value='';
+  document.getElementById('acc-plan').value='trial';
+  const pwd='Pbk'+Math.random().toString(36).substr(2,8);
+  document.getElementById('acc-pwd').value=pwd;
+  document.getElementById('acc-code-display').style.display='none';
+  document.getElementById('modal-admin-access').classList.add('open');
+}
+function closeAdminAccessModal(){
+  document.getElementById('modal-admin-access').classList.remove('open');
+}
+function createProfessionalAccess(){
+  const fn=document.getElementById('acc-fn').value.trim();
+  const ln=document.getElementById('acc-ln').value.trim();
+  const email=document.getElementById('acc-email').value.trim();
+  const spec=document.getElementById('acc-spec').value;
+  const ville=document.getElementById('acc-ville').value;
+  const plan=document.getElementById('acc-plan').value;
+  const pwd=document.getElementById('acc-pwd').value;
+  if(!fn||!ln||!email||!spec){toast2('Tous les champs obligatoires sont requis','red');return;}
+  const db=getDB();
+  if(!db.pros) db.pros=[];
+  if(db.pros.find(p=>p.email===email)){toast2('Email déjà utilisé','red');return;}
+  const code='PB-'+Math.random().toString(36).substr(2,8).toUpperCase();
+  const renew=new Date(); renew.setFullYear(renew.getFullYear()+1);
+  const sub = plan==='trial'
+    ? {plan:'trial',status:'trial',startDate:new Date().toISOString(),trialDays:30}
+    : {plan,status:'active',startDate:new Date().toISOString(),renewDate:renew.toLocaleDateString('fr-FR')};
+  const specCfg = SPECIALTY_CONFIG[spec]||{};
+  const defaultSlots = ['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00'];
+  const pro={
+    id:'pro-'+Date.now(), fn, ln, email, spec, ville,
+    tel:'', adresse:'', duration: specCfg.services?.[0]?.duration||50,
+    price: specCfg.services?.[0]?.price||100,
+    consultType: specCfg.services?.[0]?.name||'Consultation',
+    gcal:false, lang:'fr', subscription:sub, accessCode:code,
+    avail:{days:{mon:true,tue:true,wed:true,thu:true,fri:true,sat:false,sun:false},slots:defaultSlots},
+    createdAt:new Date().toISOString()
+  };
+  db.pros.push(pro);
+  if(plan!=='trial' && plan!=='pending'){
+    const amounts={essential:290,cabinet:590};
+    if(!db.payments) db.payments=[];
+    db.payments.push({id:'pay-'+Date.now(),proId:pro.id,plan,amount:amounts[plan]||0,currency:'TND',method:'admin',date:new Date().toISOString(),status:'paid'});
+  }
+  saveDB(db);
+  document.getElementById('acc-code-val').textContent=code;
+  document.getElementById('acc-code-display').style.display='';
+  loadAdminDash(); renderAdminPros(null,null);
+  addActivity('Nouvel accès créé pour Dr. '+fn+' '+ln+' ('+spec+') — '+plan);
+  toast2('✅ Accès créé ! Code : '+code+' · Email envoyé à '+email,'green');
+}
+
+// ══ SPECIALTIES ══
+function renderAdminSpecialties(){
+  const el = document.getElementById('adm-spec-grid');
+  el.innerHTML = Object.entries(SPECIALTY_CONFIG).map(([name,cfg])=>`
+    <div class="spec-config-card" onclick="openSpecDetail('${escHtml(name)}')">
+      <div class="spec-header">
+        <div class="spec-ico-big" style="background:${cfg.colorL}">${cfg.ico}</div>
+        <div>
+          <div class="spec-title">${escHtml(name)}</div>
+          <div class="spec-desc-admin">${cfg.services.length} services · ${cfg.motifs.length} motifs</div>
+        </div>
+      </div>
+      <div class="spec-features-list">
+        ${cfg.features.map(f=>`<span class="spec-feat-chip">${escHtml(f)}</span>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function openSpecDetail(name){
+  const cfg = SPECIALTY_CONFIG[name]; if(!cfg)return;
+  document.getElementById('spec-detail-title').textContent=cfg.ico+' '+name;
+  document.getElementById('spec-detail-content').innerHTML=`
+    <div style="margin-bottom:.9rem">
+      <div style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.45rem">Services disponibles</div>
+      ${cfg.services.map(s=>`
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.65rem .85rem;margin-bottom:.4rem">
+          <div style="font-size:.82rem;font-weight:700;color:#fff">${escHtml(s.name)}</div>
+          <div style="font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.1rem">${s.duration}min · ${s.price} DT · ${escHtml(s.desc)}</div>
+        </div>`).join('')}
+    </div>
+    <div style="margin-bottom:.9rem">
+      <div style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.45rem">Motifs de consultation</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.35rem">
+        ${cfg.motifs.map(m=>`<span style="background:rgba(107,158,255,.12);border:1px solid rgba(107,158,255,.2);border-radius:99px;padding:.2rem .6rem;font-size:.65rem;color:#93C5FD">${escHtml(m)}</span>`).join('')}
+      </div>
+    </div>
+    <div>
+      <div style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.45rem">Fonctionnalités incluses</div>
+      <div style="display:flex;flex-direction:column;gap:.3rem">
+        ${cfg.features.map(f=>`<div style="font-size:.76rem;color:rgba(255,255,255,.6);display:flex;gap:.4rem">✓ ${escHtml(f)}</div>`).join('')}
+      </div>
+    </div>`;
+  document.getElementById('modal-spec-detail').classList.add('open');
+}
+function closeSpecDetail(){ document.getElementById('modal-spec-detail').classList.remove('open'); }
+
+// ══ REVENUE ══
+function renderAdminRevenue(){
+  const db=getDB(); const pays=db.payments||[];
+  const essential=pays.filter(p=>p.plan==='essential').length;
+  const cabinet=pays.filter(p=>p.plan==='cabinet').length;
+  document.getElementById('adm-rev-essential').textContent=essential;
+  document.getElementById('adm-rev-cabinet').textContent=cabinet;
+  const el=document.getElementById('adm-payments-list');
+  if(pays.length===0){el.innerHTML='<div style="font-size:.78rem;color:rgba(255,255,255,.35);padding:.65rem 0">Aucun paiement enregistré.</div>';return;}
+  const db2=getDB();
+  el.innerHTML=[...pays].reverse().map(p=>{
+    const pro=(db2.pros||[]).find(x=>x.id===p.proId);
+    return `<div style="display:flex;align-items:center;gap:.75rem;padding:.7rem;border:1px solid rgba(255,255,255,.08);border-radius:var(--r-md);margin-bottom:.45rem;background:rgba(255,255,255,.03)">
+      <div style="font-size:1.1rem">✅</div>
+      <div style="flex:1">
+        <div style="font-size:.8rem;font-weight:600;color:#fff">${pro?'Dr. '+pro.fn+' '+pro.ln:'Pro inconnu'} — ${p.plan==='cabinet'?'Cabinet':'Essentiel'}</div>
+        <div style="font-size:.68rem;color:rgba(255,255,255,.35)">${new Date(p.date).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})} · ${p.method==='admin'?'Créé admin':p.method}</div>
+      </div>
+      <div style="font-size:.86rem;font-weight:700;color:#34D399">${p.amount} TND</div>
+    </div>`;
+  }).join('');
+}
+
+// ══ ACTIVITY LOG ══
+let activityLog=[];
+function addActivity(text){
+  activityLog.unshift({text,time:new Date().toISOString()});
+  if(activityLog.length>50) activityLog=activityLog.slice(0,50);
+}
+function renderAdminActivity(){
+  const el=document.getElementById('adm-activity-log');
+  if(activityLog.length===0){el.innerHTML='<div style="font-size:.78rem;color:rgba(255,255,255,.3);padding:.5rem 0">Aucune activité récente.</div>';return;}
+  el.innerHTML=activityLog.map(a=>`
+    <div class="activity-item">
+      <div class="act-dot"></div>
+      <div>
+        <div class="act-text">${escHtml(a.text)}</div>
+        <div class="act-time">${new Date(a.time).toLocaleString('fr-FR')}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════
+//  PUBLIC BOOKING PAGE (by specialité)
+// ══════════════════════════════════
+let bpPro=null, bpService=null, bpDate='', bpSlot='', bpCalDate=new Date();
+const MONTHS_FR2=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+function openPublicBookingPage(proId){
+  const db=getDB(); const pro=db.pros?.find(p=>p.id===proId); if(!pro)return;
+  bpPro=pro; bpService=null; bpDate=''; bpSlot=''; bpCalDate=new Date();
+  const cfg=SPECIALTY_CONFIG[pro.spec]||{};
+  const ico=cfg.ico||'🩺';
+  document.getElementById('bp-av').textContent=ico;
+  document.getElementById('bp-name').textContent='Dr. '+pro.fn+' '+pro.ln;
+  document.getElementById('bp-spec').textContent=pro.spec+(pro.ville?' · '+pro.ville:'');
+  document.getElementById('bp-addr').textContent=pro.adresse||'';
+  // Services
+  const services = cfg.services||[{name:pro.consultType||'Consultation',duration:pro.duration||50,price:pro.price||100,desc:''}];
+  const sl=document.getElementById('bp-services-list');
+  sl.innerHTML=services.map((s,i)=>`
+    <div class="bp-service-card" onclick="bpSelectService(${i})" id="bp-svc-${i}">
+      <div style="display:flex;align-items:center;gap:.65rem;flex:1">
+        <div class="bp-service-ico" style="background:${cfg.colorL||'#EEF2FF'}">${ico}</div>
+        <div>
+          <div class="bp-service-name">${escHtml(s.name)}</div>
+          <div class="bp-service-meta">⏱ ${s.duration}min · ${escHtml(s.desc||'')}</div>
+        </div>
+      </div>
+      <div class="bp-service-price">${s.price} DT</div>
+    </div>`).join('');
+  document.getElementById('bp-cal').style.display='none';
+  document.getElementById('bp-cal-label').style.display='none';
+  document.getElementById('bp-slots-section').style.display='none';
+  document.getElementById('bp-continue-btn').disabled=true;
+  document.getElementById('bp-step-service').style.display='';
+  document.getElementById('bp-step-form').style.display='none';
+  document.getElementById('bp-step-success').style.display='none';
+  // Motifs
+  const motifs=cfg.motifs||['Première consultation','Suivi régulier','Autre'];
+  const sel=document.getElementById('bp-motif-sel');
+  sel.innerHTML='<option value="">— Optionnel —</option>'+motifs.map(m=>`<option>${escHtml(m)}</option>`).join('');
+  showView('v-booking-page');
+}
+function bpSelectService(i){
+  const cfg=SPECIALTY_CONFIG[bpPro?.spec]||{};
+  const services=cfg.services||[{name:bpPro?.consultType||'Consultation',duration:bpPro?.duration||50,price:bpPro?.price||100}];
+  bpService=services[i];
+  document.querySelectorAll('.bp-service-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
+  document.getElementById('bp-cal').style.display='';
+  document.getElementById('bp-cal-label').style.display='';
+  bpDate=''; bpSlot='';
+  document.getElementById('bp-slots-section').style.display='none';
+  document.getElementById('bp-continue-btn').disabled=true;
+  bpRenderCal();
+}
+function bpRenderCal(){
+  const y=bpCalDate.getFullYear(),m=bpCalDate.getMonth();
+  document.getElementById('bp-cal-title').textContent=MONTHS_FR2[m]+' '+y;
+  const grid=document.getElementById('bp-cal-grid'); grid.innerHTML='';
+  const avail=bpPro?.avail||{days:{mon:true,tue:true,wed:true,thu:true,fri:true},slots:[]};
+  const dayKeys=['sun','mon','tue','wed','thu','fri','sat'];
+  const firstDay=new Date(y,m,1).getDay();
+  const offset=firstDay===0?6:firstDay-1;
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const today=new Date(); today.setHours(0,0,0,0);
+  for(let i=0;i<offset;i++) grid.innerHTML+='<div class="bk-day empty"></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const dateObj=new Date(y,m,d);
+    const dateStr=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dayKey=dayKeys[dateObj.getDay()];
+    const isPast=dateObj<today;
+    const isUnavail=!avail.days[dayKey];
+    const isToday=dateStr===today.toISOString().split('T')[0];
+    let cls='bk-day';
+    if(isPast||isUnavail) cls+=' '+(isPast?'past':'unavail');
+    else if(isToday) cls+=' today';
+    if(dateStr===bpDate) cls+=' selected';
+    const click=(isPast||isUnavail)?'':`onclick="bpSelectDate('${dateStr}',this)"`;
+    grid.innerHTML+=`<div class="${cls}" ${click}>${d}</div>`;
+  }
+}
+function bpPrev(){ bpCalDate.setMonth(bpCalDate.getMonth()-1); bpRenderCal(); }
+function bpNext(){ bpCalDate.setMonth(bpCalDate.getMonth()+1); bpRenderCal(); }
+function bpSelectDate(date,el){
+  bpDate=date; bpSlot='';
+  document.querySelectorAll('#bp-cal-grid .bk-day').forEach(d=>d.classList.remove('selected'));
+  el.classList.add('selected');
+  const db=getDB();
+  const avail=bpPro?.avail?.slots||['09:00','10:00','11:00','14:00','15:00','16:00'];
+  const booked=(db.rdvs||[]).filter(r=>r.proId===bpPro?.id&&r.date===date&&r.status!=='cancelled').map(r=>r.slot);
+  const free=avail.filter(sl=>!booked.includes(sl));
+  const d=new Date(date+'T12:00:00');
+  document.getElementById('bp-slot-day-title').textContent='⏰ Créneaux disponibles — '+d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  const sg=document.getElementById('bp-slots-grid');
+  sg.innerHTML='';
+  if(free.length===0){
+    sg.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:var(--muted);padding:.75rem">Aucun créneau disponible ce jour.</div>';
+  } else {
+    free.forEach(sl=>{
+      const btn=document.createElement('div');
+      btn.className='bp-slot-btn'; btn.textContent=sl;
+      btn.onclick=()=>{
+        document.querySelectorAll('.bp-slot-btn').forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected'); bpSlot=sl;
+        document.getElementById('bp-continue-btn').disabled=false;
+      };
+      sg.appendChild(btn);
+    });
+  }
+  document.getElementById('bp-slots-section').style.display='';
+  document.getElementById('bp-continue-btn').disabled=true;
+}
+function bpGoForm(){
+  if(!bpDate||!bpSlot||!bpService){toast2('Sélectionnez une date et un créneau','red');return;}
+  const d=new Date(bpDate+'T12:00:00');
+  const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const dur=bpService.duration||50;
+  const endMin=()=>{const[h,m]=bpSlot.split(':').map(Number);const tot=h*60+m+dur;return String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');};
+  document.getElementById('bp-summary').innerHTML=
+    `<strong>${escHtml(bpService.name)}</strong> · ${bpService.price} DT / ${dur}min<br/>`+
+    `📅 ${label}<br/>⏰ ${bpSlot} – ${endMin()} (CET · Tunisie)<br/>`+
+    `🩺 Dr. ${escHtml(bpPro?.fn||'')} ${escHtml(bpPro?.ln||'')}${bpPro?.adresse?`<br/>📍 ${escHtml(bpPro.adresse)}`:''}`;
+  document.getElementById('bp-step-service').style.display='none';
+  document.getElementById('bp-step-form').style.display='';
+}
+function bpBackToService(){
+  document.getElementById('bp-step-form').style.display='none';
+  document.getElementById('bp-step-service').style.display='';
+}
+function bpConfirm(){
+  const fn=document.getElementById('bp-fn').value.trim();
+  const ln=document.getElementById('bp-ln').value.trim();
+  const email=document.getElementById('bp-email').value.trim();
+  const rgpd=document.getElementById('bp-rgpd').checked;
+  if(!fn||!ln){toast2('Prénom et nom requis','red');return;}
+  if(!email||!email.includes('@')){toast2('Email valide requis','red');return;}
+  if(!rgpd){toast2('Veuillez accepter la politique de confidentialité','red');return;}
+  const tel=document.getElementById('bp-tel').value.trim();
+  const motif=document.getElementById('bp-motif-sel').value;
+  const msg=document.getElementById('bp-msg').value.trim();
+  const db=getDB();
+  const dur=bpService?.duration||50;
+  const endMin=()=>{const[h,m]=bpSlot.split(':').map(Number);const tot=h*60+m+dur;return String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');};
+  const rdv={id:'rdv-'+Date.now(),proId:bpPro.id,proFn:bpPro.fn,proLn:bpPro.ln,proEmail:bpPro.email,spec:bpPro.spec,
+    patFn:fn,patLn:ln,patEmail:email,patTel:tel,
+    date:bpDate,slot:bpSlot,type:'presentiel',motif,message:msg,
+    serviceName:bpService?.name,servicePrice:bpService?.price,serviceDuration:dur,
+    status:'confirmed',reminders:{r24:false,r2:false,r15:false},
+    createdAt:new Date().toISOString()};
+  if(!db.rdvs) db.rdvs=[];
+  db.rdvs.push(rdv); saveDB(db);
+  scheduleReminders(rdv);
+  const d=new Date(bpDate+'T12:00:00');
+  const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('bp-success-detail').innerHTML=
+    `<div style="display:flex;flex-direction:column;gap:.3rem">
+      <div>👤 <strong>${escHtml(fn)} ${escHtml(ln)}</strong></div>
+      <div>📅 ${label}</div>
+      <div>⏰ ${bpSlot} – ${endMin()} (CET · Tunisie)</div>
+      <div>🩺 Dr. ${escHtml(bpPro.fn)} ${escHtml(bpPro.ln)}</div>
+      <div>🎫 <strong>${escHtml(bpService?.name||'Consultation')}</strong> · ${bpService?.price||0} DT / ${dur}min</div>
+      ${motif?`<div>📋 ${escHtml(motif)}</div>`:''}
+      ${bpPro.adresse?`<div>📍 ${escHtml(bpPro.adresse)}</div>`:''}
+      ${bpPro.tel?`<div>📞 ${escHtml(bpPro.tel)}</div>`:''}
+    </div>
+    <div style="margin-top:.75rem;padding:.65rem;background:#ECFDF5;border:1px solid rgba(13,148,136,.2);border-radius:8px;font-size:.72rem;color:var(--emerald-d)">
+      📧 Confirmation envoyée à <strong>${escHtml(email)}</strong><br/>
+      ⏰ Rappels automatiques : 24h, 2h et 15min avant votre RDV
+    </div>`;
+  document.getElementById('bp-step-form').style.display='none';
+  document.getElementById('bp-step-success').style.display='';
+  toast2('✅ RDV confirmé ! Email envoyé à '+email,'green');
+}
+function addBpToGcal(){
+  if(!bpPro||!bpDate||!bpSlot)return;
+  const d=new Date(bpDate+'T'+bpSlot+':00');
+  const end=new Date(d.getTime()+(bpService?.duration||50)*60*1000);
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  const title=(bpService?.name||'Consultation')+' — Dr. '+bpPro.fn+' '+bpPro.ln;
+  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${fmt(d)}/${fmt(end)}&location=${encodeURIComponent(bpPro.adresse||'')}`;
+  window.open(url,'_blank');
+}
+function addBpToIcal(){
+  if(!bpPro||!bpDate||!bpSlot)return;
+  const d=new Date(bpDate+'T'+bpSlot+':00');
+  const end=new Date(d.getTime()+(bpService?.duration||50)*60*1000);
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  const title=(bpService?.name||'Consultation')+' — Dr. '+bpPro.fn+' '+bpPro.ln;
+  const ics=`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//MedBook//TN//FR
+BEGIN:VEVENT
+SUMMARY:${title}
+DTSTART:${fmt(d)}
+DTEND:${fmt(end)}
+LOCATION:${bpPro.adresse||''}
+END:VEVENT
+END:VCALENDAR`;
+  const blob=new Blob([ics],{type:'text/calendar'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rdv-medbook.ics';a.click();
+}
+
+// ══ Hook into existing nav for admin ══
+// Add admin link to footer
+
 // ══ INIT ══
 function init(){
   seedDemo();
+  // Check if URL has #admin
+  if(window.location.hash==='#admin'){ openAdminPortal(); return; }
   const s=getSession();
   if(s){
     const db=getDB();const pro=db.pros?.find(p=>p.id===s.id);
@@ -2374,5 +3114,308 @@ function init(){
 }
 init();
 </script>
+
+<!-- ════════════ ADMIN LOGIN ════════════ -->
+<div class="view" id="v-admin-login">
+  <div class="admin-login-wrap">
+    <div class="admin-login-box">
+      <div class="admin-login-logo">
+        <div class="admin-shield">🛡️</div>
+        <div class="admin-login-title">MedBook Admin</div>
+        <div class="admin-login-sub">Portail administrateur — Accès restreint</div>
+      </div>
+      <div class="admin-fgroup"><label>Identifiant admin</label>
+        <input class="admin-finput" id="adm-user" placeholder="admin@medbook.tn" type="email"/>
+      </div>
+      <div class="admin-fgroup"><label>Mot de passe</label>
+        <input class="admin-finput" id="adm-pwd" placeholder="••••••••" type="password"/>
+      </div>
+      <button class="admin-submit" onclick="doAdminLogin()">🔐 Accéder au portail →</button>
+      <button class="admin-cancel-btn" onclick="showView('v-landing')">← Retour au site</button>
+      <div style="text-align:center;margin-top:1rem;font-size:.65rem;color:rgba(255,255,255,.2)">Demo: admin@medbook.tn / admin123</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ ADMIN DASHBOARD ════════════ -->
+<div class="view" id="v-admin">
+  <div class="admin-layout">
+    <div class="admin-topbar">
+      <div class="admin-logo">
+        🛡️ MedBook <span class="admin-badge">ADMIN</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:.6rem">
+        <button class="admin-btn" onclick="openAdminAccessModal()">➕ Ajouter un pro</button>
+        <button class="admin-btn" onclick="doAdminLogout()">Déconnexion</button>
+      </div>
+    </div>
+    <div class="admin-nav">
+      <button class="admin-nav-btn on" onclick="showAdminPanel('overview',this)">📊 Vue d'ensemble</button>
+      <button class="admin-nav-btn" onclick="showAdminPanel('pros',this)">👥 Professionnels</button>
+      <button class="admin-nav-btn" onclick="showAdminPanel('pending',this)">⏳ En attente <span class="tnav-badge" id="adm-pending-badge" style="display:none">0</span></button>
+      <button class="admin-nav-btn" onclick="showAdminPanel('specialties',this)">🩺 Spécialités</button>
+      <button class="admin-nav-btn" onclick="showAdminPanel('revenue',this)">💰 Revenus</button>
+      <button class="admin-nav-btn" onclick="showAdminPanel('activity',this)">📋 Activité</button>
+      <button class="admin-nav-btn" onclick="showAdminPanel('config',this)">⚙️ Configuration</button>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- ── OVERVIEW ── -->
+      <div class="admin-panel on" id="adm-panel-overview">
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:1rem">Tableau de bord Medlab 🇹🇳</div>
+        <div class="admin-stat-grid">
+          <div class="astat"><div class="astat-val" id="adm-st-pros">0</div><div class="astat-lbl">Professionnels actifs</div><div class="astat-delta" id="adm-st-pros-d">enregistrés</div></div>
+          <div class="astat"><div class="astat-val" id="adm-st-trial">0</div><div class="astat-lbl">En période d'essai</div><div class="astat-delta">30j offerts</div></div>
+          <div class="astat"><div class="astat-val" id="adm-st-rdvs">0</div><div class="astat-lbl">RDV total plateforme</div><div class="astat-delta">tous pros confondus</div></div>
+          <div class="astat"><div class="astat-val" id="adm-st-rev">0</div><div class="astat-lbl">Revenus TND</div><div class="astat-delta">abonnements</div></div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Demandes d'accès récentes <span id="adm-pending-count"></span></div>
+          <div id="adm-pending-list-overview"></div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Derniers professionnels inscrits <span>récents</span></div>
+          <div id="adm-recent-pros"></div>
+        </div>
+      </div>
+
+      <!-- ── PROFESSIONALS ── -->
+      <div class="admin-panel" id="adm-panel-pros">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff">👥 Professionnels inscrits</div>
+          <button class="admin-btn approve" onclick="openAdminAccessModal()">➕ Créer accès</button>
+        </div>
+        <input class="admin-search" placeholder="🔍 Rechercher par nom, email, spécialité…" oninput="adminSearchPros(this.value)"/>
+        <div class="admin-filter-tabs">
+          <div class="aft on" onclick="adminFilterPros('all',this)">Tous</div>
+          <div class="aft" onclick="adminFilterPros('active',this)">Actifs</div>
+          <div class="aft" onclick="adminFilterPros('trial',this)">Essai</div>
+          <div class="aft" onclick="adminFilterPros('expired',this)">Expirés</div>
+          <div class="aft" onclick="adminFilterPros('pending',this)">En attente</div>
+        </div>
+        <div id="adm-pros-list"></div>
+      </div>
+
+      <!-- ── PENDING ── -->
+      <div class="admin-panel" id="adm-panel-pending">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.9rem">⏳ Demandes d'accès en attente d'approbation</div>
+        <div class="admin-card" style="margin-bottom:.75rem">
+          <div style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">
+            💡 Chaque professionnel qui s'inscrit commence en <strong style="color:#FBBF24">statut "En attente"</strong>. L'admin doit approuver l'accès pour qu'il puisse utiliser la plateforme. Vous pouvez aussi créer des accès directement depuis ce portail.
+          </div>
+        </div>
+        <div id="adm-pending-list"></div>
+      </div>
+
+      <!-- ── SPECIALTIES ── -->
+      <div class="admin-panel" id="adm-panel-specialties">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.5rem">🩺 Configuration par spécialité</div>
+        <div style="font-size:.76rem;color:rgba(255,255,255,.45);margin-bottom:1rem">Chaque spécialité possède ses propres motifs de consultation, durées suggérées, et personnalisation de la page de réservation patient.</div>
+        <div class="spec-config-grid" id="adm-spec-grid"></div>
+      </div>
+
+      <!-- ── REVENUE ── -->
+      <div class="admin-panel" id="adm-panel-revenue">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.9rem">💰 Revenus & Abonnements</div>
+        <div class="admin-stat-grid">
+          <div class="astat"><div class="astat-val" id="adm-rev-essential">0</div><div class="astat-lbl">Plans Essentiel</div><div class="astat-delta">290 TND/an chacun</div></div>
+          <div class="astat"><div class="astat-val" id="adm-rev-cabinet">0</div><div class="astat-lbl">Plans Cabinet</div><div class="astat-delta">590 TND/an chacun</div></div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Historique des paiements <span>toute la plateforme</span></div>
+          <div id="adm-payments-list"></div>
+        </div>
+      </div>
+
+      <!-- ── ACTIVITY ── -->
+      <div class="admin-panel" id="adm-panel-activity">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.9rem">📋 Journal d'activité</div>
+        <div class="admin-card">
+          <div class="admin-card-title">Événements récents <span>automatique</span></div>
+          <div id="adm-activity-log"></div>
+        </div>
+      </div>
+
+      <!-- ── CONFIG ── -->
+      <div class="admin-panel" id="adm-panel-config">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.9rem">⚙️ Configuration de la plateforme</div>
+        <div class="admin-card">
+          <div class="admin-card-title">Paramètres globaux</div>
+          <div class="admin-fgroup"><label>Durée d'essai (jours)</label>
+            <input class="admin-finput" id="cfg-trial-days" value="30" type="number"/>
+          </div>
+          <div class="admin-fgroup"><label>Email de support</label>
+            <input class="admin-finput" id="cfg-support-email" value="reservation.medlab@gmail.com"/>
+          </div>
+          <div class="admin-fgroup"><label>WhatsApp support</label>
+            <input class="admin-finput" id="cfg-wa" value="+216 XX XXX XXX"/>
+          </div>
+          <div class="admin-fgroup"><label>Domaine plateforme</label>
+            <input class="admin-finput" id="cfg-domain" value="medbook.tn"/>
+          </div>
+          <button class="admin-submit" onclick="saveAdminConfig()">💾 Sauvegarder la configuration</button>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Gestion des accès admin</div>
+          <div style="font-size:.76rem;color:rgba(255,255,255,.45);margin-bottom:.75rem">Identifiants admin par défaut (démo) : admin@medbook.tn / admin123</div>
+          <div class="admin-fgroup"><label>Nouvel email admin</label>
+            <input class="admin-finput" id="cfg-new-admin-email" placeholder="admin2@medlab.tn"/>
+          </div>
+          <div class="admin-fgroup"><label>Nouveau mot de passe admin</label>
+            <input class="admin-finput" type="password" id="cfg-new-admin-pwd" placeholder="••••••••"/>
+          </div>
+          <button class="admin-submit" onclick="addAdminUser()">➕ Ajouter cet admin</button>
+        </div>
+      </div>
+
+    </div><!-- /admin-content -->
+  </div>
+</div><!-- /v-admin -->
+
+<!-- ════ ACCESS CREATION MODAL ════ -->
+<div class="access-modal" id="modal-admin-access">
+  <div class="access-box">
+    <div class="access-box-title">🔑 Créer un accès professionnel</div>
+    <div class="admin-fgroup"><label>Prénom *</label>
+      <input class="admin-finput" id="acc-fn" placeholder="Amira"/>
+    </div>
+    <div class="admin-fgroup"><label>Nom *</label>
+      <input class="admin-finput" id="acc-ln" placeholder="Ben Salah"/>
+    </div>
+    <div class="admin-fgroup"><label>Email professionnel *</label>
+      <input class="admin-finput" id="acc-email" type="email" placeholder="dr.bensalah@cabinet.tn"/>
+    </div>
+    <div class="admin-fgroup"><label>Spécialité *</label>
+      <select class="admin-fselect" id="acc-spec">
+        <option value="">— Choisir —</option>
+        <option>Psychologue clinicien(ne)</option><option>Psychiatre</option>
+        <option>Médecin généraliste</option><option>Pédiatre</option>
+        <option>Cardiologue</option><option>Dermatologue</option>
+        <option>Kinésithérapeute</option><option>Ostéopathe</option>
+        <option>Nutritionniste / Diététicien(ne)</option>
+        <option>Ophtalmologue</option><option>ORL</option>
+        <option>Chirurgien-dentiste</option><option>Sophrologue</option>
+        <option>Médecin du sport</option><option>Autre</option>
+      </select>
+    </div>
+    <div class="admin-fgroup"><label>Ville</label>
+      <select class="admin-fselect" id="acc-ville">
+        <option>Tunis</option><option>Sfax</option><option>Sousse</option>
+        <option>Monastir</option><option>Bizerte</option><option>Kairouan</option>
+        <option>Nabeul</option><option>Ariana</option><option>La Marsa</option><option>Autre</option>
+      </select>
+    </div>
+    <div class="admin-fgroup"><label>Plan d'accès</label>
+      <select class="admin-fselect" id="acc-plan">
+        <option value="trial">Essai gratuit 30 jours</option>
+        <option value="essential">Plan Essentiel (290 TND/an)</option>
+        <option value="cabinet">Plan Cabinet (590 TND/an)</option>
+      </select>
+    </div>
+    <div class="admin-fgroup"><label>Mot de passe temporaire *</label>
+      <input class="admin-finput" id="acc-pwd" type="text" placeholder="Généré automatiquement"/>
+      <div style="font-size:.65rem;color:rgba(255,255,255,.3);margin-top:.25rem">Le professionnel devra changer son mot de passe à la première connexion.</div>
+    </div>
+    <div id="acc-code-display" style="display:none">
+      <div class="access-code-display">
+        <div class="access-code-val" id="acc-code-val">——</div>
+        <div class="access-code-note">Code d'accès unique à communiquer au professionnel</div>
+      </div>
+    </div>
+    <button class="admin-submit" onclick="createProfessionalAccess()">✅ Créer l'accès & générer le code</button>
+    <button class="admin-cancel-btn" onclick="closeAdminAccessModal()">Annuler</button>
+  </div>
+</div>
+
+<!-- ════ SPECIALTY DETAIL MODAL ════ -->
+<div class="access-modal" id="modal-spec-detail">
+  <div class="access-box" style="max-width:500px">
+    <div class="access-box-title" id="spec-detail-title">🩺 Configuration spécialité</div>
+    <div id="spec-detail-content"></div>
+    <button class="admin-cancel-btn" onclick="closeSpecDetail()">Fermer</button>
+  </div>
+</div>
+
+<!-- ════════════ PUBLIC BOOKING PAGE ════════════ -->
+<div class="view" id="v-booking-page">
+  <div id="bp-step-service">
+    <div class="bp-header">
+      <div class="bp-header-av" id="bp-av">🩺</div>
+      <div class="bp-header-name" id="bp-name">Dr. —</div>
+      <div class="bp-header-spec" id="bp-spec">—</div>
+      <div class="bp-header-addr" id="bp-addr"></div>
+    </div>
+    <div class="bp-services">
+      <div class="bp-service-title">Choisissez votre type de consultation</div>
+      <div id="bp-services-list"></div>
+    </div>
+    <div class="bp-cal-section">
+      <div class="bp-cal-title" id="bp-cal-label" style="display:none">📅 Choisissez une date</div>
+      <div class="bk-cal" id="bp-cal" style="display:none">
+        <div class="bk-cal-header">
+          <button class="bk-cal-nav" onclick="bpPrev()">‹</button>
+          <div class="bk-cal-title" id="bp-cal-title"></div>
+          <button class="bk-cal-nav" onclick="bpNext()">›</button>
+        </div>
+        <div class="bk-dow"><div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div></div>
+        <div class="bk-cal-grid" id="bp-cal-grid"></div>
+      </div>
+    </div>
+    <div class="bp-slot-section" id="bp-slots-section" style="display:none">
+      <div class="bp-slot-day-title" id="bp-slot-day-title">⏰ Créneaux disponibles</div>
+      <div class="bp-slots-grid" id="bp-slots-grid"></div>
+    </div>
+    <div style="padding:0 1.25rem 2rem;max-width:560px;margin:0 auto">
+      <button class="bp-continue-btn" id="bp-continue-btn" disabled onclick="bpGoForm()">Continuer →</button>
+    </div>
+    <div class="bp-powered">Propulsé par <a href="#">MedBook</a> · 🇹🇳 Tunis, Tunisie</div>
+  </div>
+
+  <div id="bp-step-form" style="display:none">
+    <div style="background:linear-gradient(135deg,var(--sapphire),var(--emerald));padding:1rem 1.25rem;display:flex;align-items:center;gap:.75rem">
+      <button onclick="bpBackToService()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:var(--r-sm);padding:.4rem .75rem;font-size:.74rem;cursor:pointer">← Retour</button>
+      <div style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:#fff">Vos informations</div>
+    </div>
+    <div class="bp-form-section">
+      <div class="bp-summary-card" id="bp-summary"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem">
+        <div class="fgroup"><label>Prénom *</label><input class="finput" id="bp-fn" placeholder="Yassine"/></div>
+        <div class="fgroup"><label>Nom *</label><input class="finput" id="bp-ln" placeholder="Trabelsi"/></div>
+      </div>
+      <div class="fgroup"><label>Email * <span style="font-weight:400;color:var(--muted)">(rappels automatiques)</span></label>
+        <input class="finput" id="bp-email" type="email" placeholder="yassine@email.com"/>
+      </div>
+      <div class="fgroup"><label>Téléphone</label>
+        <input class="finput" id="bp-tel" type="tel" placeholder="+216 55 …"/>
+      </div>
+      <div class="fgroup"><label>Motif</label>
+        <select class="fselect" id="bp-motif-sel"></select>
+      </div>
+      <div class="fgroup"><label>Message (optionnel)</label>
+        <textarea class="farea" id="bp-msg" placeholder="Précisez votre situation…" style="min-height:56px"></textarea>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:.65rem;margin-bottom:.85rem;display:flex;align-items:flex-start;gap:.55rem">
+        <input type="checkbox" id="bp-rgpd" style="margin-top:.1rem;accent-color:var(--sapphire);width:14px;height:14px;flex-shrink:0"/>
+        <label for="bp-rgpd" style="font-size:.7rem;color:var(--muted);line-height:1.55;cursor:pointer">J'accepte que mes données soient utilisées pour la gestion de ce RDV et l'envoi de rappels. Traitement conforme à la réglementation tunisienne.</label>
+      </div>
+      <button onclick="bpConfirm()" style="width:100%;background:var(--sapphire);color:#fff;border:none;border-radius:var(--r-md);padding:.82rem;font-size:.9rem;font-weight:700;cursor:pointer;transition:all var(--anim)">✅ Confirmer le rendez-vous</button>
+    </div>
+  </div>
+
+  <div id="bp-step-success" style="display:none">
+    <div style="padding:3rem 1.25rem;text-align:center;max-width:480px;margin:0 auto">
+      <div style="font-size:3rem;margin-bottom:.75rem">✅</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:800;color:var(--ink);margin-bottom:.5rem">Rendez-vous confirmé !</h2>
+      <p style="font-size:.85rem;color:var(--slate);margin-bottom:1.25rem;line-height:1.7">Un email de confirmation a été envoyé. Des rappels automatiques vous seront adressés avant votre consultation.</p>
+      <div id="bp-success-detail" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:1rem;margin-bottom:1rem;text-align:left;font-size:.8rem;line-height:1.85;color:var(--slate)"></div>
+      <button onclick="addBpToGcal()" style="width:100%;background:#1A73E8;color:#fff;border:none;border-radius:var(--r-md);padding:.7rem;font-size:.82rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📅 Ajouter à Google Calendar</button>
+      <button onclick="addBpToIcal()" style="width:100%;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:var(--r-md);padding:.68rem;font-size:.82rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📆 Télécharger iCal (.ics)</button>
+      <button onclick="showView('v-landing')" style="width:100%;background:var(--surface);color:var(--slate);border:1px solid var(--line);border-radius:var(--r-md);padding:.65rem;font-size:.8rem;font-weight:500;cursor:pointer">Retour à l'accueil</button>
+    </div>
+    <div class="bp-powered">Propulsé par <a href="#">MedBook</a> · 🇹🇳</div>
+  </div>
+</div><!-- /v-booking-page -->
+
 </body>
 </html>
