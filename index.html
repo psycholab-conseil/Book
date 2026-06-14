@@ -1421,14 +1421,17 @@ function clearSession(){sessionStorage.removeItem('mb_session')}
 
 function seedDemo(){
   const db=getDB();
-  if(db.seeded) return;
+  // Force re-seed if demo pro is wrong version
+  if(db.seeded && db.pros && db.pros[0] && db.pros[0].fn==='Aymen') return;
+  db.seeded=false;
   const today=new Date();
   const fmt=d=>d.toISOString().split('T')[0];
   const add=(n)=>{const d=new Date(today);d.setDate(d.getDate()+n);return d};
   const trialStart=new Date(today);trialStart.setDate(trialStart.getDate()-2);
   db.pros=[{
-    id:'pro-demo',fn:'Amira',ln:'Ben Salah',email:'dr.bensalah@cabinet.tn',
-    spec:'Psychiatre',tel:'+216 71 234 567',adresse:'12 Avenue de la Liberté, Tunis',
+    id:'pro-demo',fn:'Aymen',ln:'Khalsi',email:'neuropsy.aymenkhalsi@gmail.com',
+    spec:'Psychologue clinicien(ne)',tel:'+216 53 330 991',wa:'+216 50 500 024',
+    adresse:'Bureau N102, BLOC B, Résidence ERRIHAB, Lac 1',
     ville:'Tunis',duration:50,price:100,consultType:'Th. individuelle',gcal:false,lang:'fr',
     subscription:{plan:'trial',status:'trial',startDate:trialStart.toISOString(),trialDays:30},
     avail:{days:{mon:true,tue:true,wed:true,thu:true,fri:true,sat:false,sun:false},
@@ -2285,9 +2288,18 @@ function getRdvUrl(pro){
 }
 function findProBySlug(slug){
   const db=getDB(); const pros=db.pros||[];
-  const s2=slug.toLowerCase();
-  return pros.find(p=>buildSlug(p)===s2)||
-    pros.find(p=>s2.includes((p.ln||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z]/g,'')))||null;
+  const s2=slug.toLowerCase().trim();
+  // Exact slug match
+  let p=pros.find(p=>buildSlug(p)===s2);
+  if(p) return p;
+  // Last name match
+  p=pros.find(p=>(p.ln||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'')===s2.replace(/-/g,''));
+  if(p) return p;
+  // Partial match - any part of slug is in name
+  p=pros.find(p=>s2.split('-').some(part=>part.length>2&&((p.fn||'').toLowerCase().includes(part)||(p.ln||'').toLowerCase().includes(part))));
+  if(p) return p;
+  // Last resort: first pro
+  return pros[0]||null;
 }
 function init(){
   seedDemo();
