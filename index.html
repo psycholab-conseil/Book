@@ -1343,7 +1343,7 @@ input,select,textarea{appearance:none;-webkit-appearance:none}
           <div class="blc-title">🔗 Votre page de réservation patient</div>
           <div class="blc-sub">Partagez ce lien — vos patients réservent en autonomie, 24h/24</div>
           <div class="blc-url">
-            <span id="booking-url-display">medbook.tn/rdv/…</span>
+            <span id="booking-url-display">Chargement du lien…</span>
             <button onclick="copyLink()" style="background:none;border:none;color:var(--sapphire);font-size:.72rem;font-weight:700;cursor:pointer;flex-shrink:0">Copier</button>
           </div>
           <div class="blc-actions">
@@ -1774,7 +1774,7 @@ input,select,textarea{appearance:none;-webkit-appearance:none}
         <div class="profile-section">
           <div class="profile-section-title">Votre lien de réservation public</div>
           <div style="background:linear-gradient(135deg,var(--sapphire-l),#F0FDF9);border:1.5px solid var(--sapphire-m);border-radius:var(--r-md);padding:.9rem">
-            <div style="font-family:'DM Mono',monospace;font-size:.76rem;color:var(--sapphire);margin-bottom:.65rem;word-break:break-all" id="public-link-display">medbook.tn/rdv/…</div>
+            <div style="font-family:'DM Mono',monospace;font-size:.76rem;color:var(--sapphire);margin-bottom:.65rem;word-break:break-all" id="public-link-display">Chargement du lien…</div>
             <div style="display:flex;gap:.4rem;flex-wrap:wrap">
               <button onclick="copyPublicLink()" class="blc-btn primary">📋 Copier</button>
               <button onclick="sharePublicLinkWA()" class="blc-btn secondary">📱 WhatsApp</button>
@@ -2071,6 +2071,16 @@ input,select,textarea{appearance:none;-webkit-appearance:none}
 //  DATA LAYER
 // ══════════════════════════════════
 const DB_KEY='medbook_tn_db';
+
+// ── Get the real shareable base URL (works on any hosting) ──
+function getAppBaseUrl(){
+  return window.location.origin + window.location.pathname;
+}
+function getRdvUrl(pro){
+  var slug = buildSlug(pro);
+  return getAppBaseUrl() + '#rdv/' + slug;
+}
+
 function getDB(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch{return{}}}
 function saveDB(d){localStorage.setItem(DB_KEY,JSON.stringify(d))}
 function getSession(){try{return JSON.parse(sessionStorage.getItem('mb_session')||'null')}catch{return null}}
@@ -2286,9 +2296,9 @@ function loadProDash(pro){
   document.getElementById('welcome-msg').textContent='Bonjour Dr. '+pro.ln+' 👋';
   document.getElementById('today-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const slug0=(pro.fn+'-'+pro.ln).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
-  document.getElementById('booking-url-display').textContent=window.location.origin+window.location.pathname+'#rdv/'+slug0;
+  document.getElementById('booking-url-display').textContent=getRdvUrl(pro);
   const embedEl=document.getElementById('embed-code');
-  if(embedEl) embedEl.textContent=`<iframe src="https://medbook.tn/rdv/${slug0}" width="100%" height="600" frameborder="0"></iframe>`;
+  if(embedEl) embedEl.textContent='<iframe src="'+getRdvUrl(pro)+'" width="100%" height="600" frameborder="0" style="border-radius:16px"></iframe>';
   document.getElementById('set-fn').value=pro.fn;
   document.getElementById('set-ln').value=pro.ln;
   document.getElementById('set-email').value=pro.email;
@@ -2316,7 +2326,7 @@ function loadProDash(pro){
   updateTbAvatar(pro);
   updateProfileCompleteness(pro);
   const linkEl=document.getElementById('public-link-display');
-  if(linkEl) linkEl.textContent='medbook.tn/rdv/'+buildSlug(pro);
+  if(linkEl) linkEl.textContent=getRdvUrl(pro);
   updateStats(pro.id);
   renderNextRdvs(pro.id);
   if(typeof initProfileModal==='function') initProfileModal(pro);
@@ -2552,7 +2562,7 @@ function saveSettings(){
   updateTbAvatar(pro);
   const slug=buildSlug(pro);
   const linkEl=document.getElementById('public-link-display');
-  if(linkEl) linkEl.textContent=window.location.origin+window.location.pathname+'#rdv/'+slug;
+  if(linkEl) linkEl.textContent=getRdvUrl(pro);
   toast2('✅ Profil sauvegardé et publié !','green');
   updateOverviewProfileCard(pro);
 }
@@ -3461,10 +3471,7 @@ function openPublicBookingPage(proId){
   if(!p){toast2('Profil introuvable','red');return;}
   window._rdvProOverride=p;
   // Update URL so link is shareable
-  var slug=buildSlug(p);
-  if(history.pushState){
-    history.pushState(null,'','#rdv/'+slug);
-  }
+  if(history.pushState){history.pushState(null,'','#rdv/'+buildSlug(p));}
   showView('v-booking-page');
   var rl=document.getElementById('rdv-loading'),rn=document.getElementById('rdv-not-found'),rw=document.getElementById('rdv-bp-wrap');
   if(rl)rl.classList.remove('hide');if(rn)rn.classList.remove('on');if(rw)rw.style.display='none';
@@ -3754,7 +3761,7 @@ function openProfileModal(){
   // Slug/link
   const slug=buildSlugFromPro(pro);
   const linkEl=document.getElementById('pmod-link-url');
-  if(linkEl) linkEl.textContent=window.location.origin+window.location.pathname+'#rdv/'+slug;
+  if(linkEl) linkEl.textContent=getRdvUrl(pro);
   // Completeness
   pmodUpdateCompleteness(pro);
   // Open
@@ -3807,7 +3814,7 @@ function saveProfileModal(){
   // Update slug link
   const slug=buildSlugFromPro(pro);
   const linkEl=document.getElementById('pmod-link-url');
-  if(linkEl) linkEl.textContent=window.location.origin+window.location.pathname+'#rdv/'+slug;
+  if(linkEl) linkEl.textContent=getRdvUrl(pro);
   const bdUrl=document.getElementById('booking-url-display');
   if(bdUrl) bdUrl.textContent=window.location.origin+window.location.pathname+'#rdv/'+slug;
   toast2('✅ Profil sauvegardé et publié !','green');
@@ -3916,24 +3923,23 @@ function pmodUpdateTopbarIncomplete(pro){
 function pmodCopyLink(){
   const s=getSession(),db=getDB();
   const pro=db.pros?.find(p=>p.id===s?.id);
-  if(!pro){toast2("Connectez-vous d'abord","red");return;}
-  const url=window.location.origin+window.location.pathname+'#rdv/'+buildSlug(pro);
-  navigator.clipboard?.writeText(url).catch(()=>{});
+  if(!pro) return;
+  navigator.clipboard?.writeText(getRdvUrl(pro)).catch(()=>{});
   toast2('🔗 Lien copié !','green');
 }
 function pmodShareWA(){
   const s=getSession(),db=getDB();
   const pro=db.pros?.find(p=>p.id===s?.id); if(!pro) return;
-  const url=window.location.origin+window.location.pathname+'#rdv/'+buildSlug(pro);
-  const msg=encodeURIComponent('📅 Prenez rendez-vous en ligne avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+', '+pro.ville+') :\n'+url);
+  const url=getRdvUrl(pro);
+  const msg=encodeURIComponent('📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+(pro.ville?', '+pro.ville:'')+') :\n'+url);
   window.open('https://wa.me/?text='+msg,'_blank');
 }
 function pmodShareEmail(){
   const s=getSession(),db=getDB();
   const pro=db.pros?.find(p=>p.id===s?.id); if(!pro) return;
-  const url=window.location.origin+window.location.pathname+'#rdv/'+buildSlug(pro);
+  const url=getRdvUrl(pro);
   const sub=encodeURIComponent('Rendez-vous en ligne — Dr. '+pro.fn+' '+pro.ln);
-  const body=encodeURIComponent('Bonjour,\n\nPrenez rendez-vous en ligne avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+url+'\n\nCordialement');
+  const body=encodeURIComponent('Bonjour,\n\nPrenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+url+'\n\nCordialement');
   window.open('mailto:?subject='+sub+'&body='+body,'_blank');
 }
 function pmodPreviewPage(){
@@ -4090,7 +4096,7 @@ function onSpecChange(){
 
 // ── Public link helpers ──
 function copyPublicLink(){
-  const url = (document.getElementById('public-link-display')||{}).textContent||'medbook.tn/rdv/…';
+  const url = (document.getElementById('public-link-display')||{}).textContent||getAppBaseUrl()+'#rdv/…';
   navigator.clipboard?.writeText('https://'+url).catch(()=>{});
   toast2('🔗 Lien copié !','green');
 }
@@ -4098,11 +4104,11 @@ function sharePublicLinkWA(){
   const s=getSession(); const db=getDB();
   const pro=db.pros?.find(p=>p.id===s?.id); if(!pro) return;
   const slug=buildSlug(pro);
-  const msg=encodeURIComponent(`Prenez rendez-vous en ligne avec Dr. ${pro.fn} ${pro.ln} (${pro.spec}) :\nhttps://medbook.tn/rdv/${slug}`);
+  const msg=encodeURIComponent(`Prenez rendez-vous en ligne avec Dr. ${pro.fn} ${pro.ln} (${pro.spec}) :\n'+getRdvUrl(pro)+'`);
   window.open('https://wa.me/?text='+msg,'_blank');
 }
 function copyEmbedCode(){
-  const url = (document.getElementById('public-link-display')||{}).textContent||'medbook.tn/rdv/pro';
+  const url = (document.getElementById('public-link-display')||{}).textContent||getAppBaseUrl()+'#rdv/pro';
   const code = `<iframe src="https://${url}" width="100%" height="700" frameborder="0" style="border-radius:16px"></iframe>`;
   navigator.clipboard?.writeText(code).catch(()=>{});
   toast2('📋 Code iframe copié !','green');
@@ -4193,14 +4199,14 @@ function bpCopyLink(){
 function bpShareWA(){
   const pro=bpPro; if(!pro) return;
   const slug=buildSlug(pro);
-  const msg=encodeURIComponent(`Prenez rendez-vous avec Dr. ${pro.fn} ${pro.ln} (${pro.spec||''}) :\nhttps://medbook.tn/rdv/${slug}`);
+  const msg=encodeURIComponent(`Prenez rendez-vous avec Dr. ${pro.fn} ${pro.ln} (${pro.spec||''}) :\n'+getRdvUrl(pro)+'`);
   window.open('https://wa.me/?text='+msg,'_blank');
 }
 function bpShareEmail(){
   const pro=bpPro; if(!pro) return;
   const slug=buildSlug(pro);
   const sub=encodeURIComponent(`Rendez-vous en ligne — Dr. ${pro.fn} ${pro.ln}`);
-  const body=encodeURIComponent(`Bonjour,\n\nJe vous invite à prendre rendez-vous en ligne avec Dr. ${pro.fn} ${pro.ln} (${pro.spec||''}) :\nhttps://medbook.tn/rdv/${slug}\n\nCordialement`);
+  const body=encodeURIComponent('Bonjour,\n\nPrenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+url+'\n\nCordialement');
   window.open(`mailto:?subject=${sub}&body=${body}`,'_blank');
 }
 
@@ -4212,7 +4218,7 @@ function bpShareEmail(){
 const AI_KB = {
   agenda: {
     q: `Comment fonctionne mon agenda en ligne ?`,
-    a: `Votre agenda MedBook est automatiquement en ligne dès votre inscription.\n\n📅 Comment ça marche :\n• Un lien unique est généré pour vous (ex: medbook.tn/rdv/dr-nom)\n• Vos patients cliquent sur ce lien pour réserver\n• Vous voyez tous les RDV dans l'onglet Rendez-vous ou Calendrier\n\n💡 Partagez votre lien via WhatsApp, SMS ou sur votre site web.`
+    a: `Votre agenda MedBook est automatiquement en ligne dès votre inscription.\n\n📅 Comment ça marche :\n• Un lien unique est généré pour vous (ex: votre-lien-actuel#rdv/votre-nom)\n• Vos patients cliquent sur ce lien pour réserver\n• Vous voyez tous les RDV dans l'onglet Rendez-vous ou Calendrier\n\n💡 Partagez votre lien via WhatsApp, SMS ou sur votre site web.`
   },
   lien: {
     q: `Comment partager mon lien de réservation ?`,
@@ -4864,7 +4870,7 @@ function rdvCopyLink(){
   rdvToast('🔗 Lien copié !','green');
 }
 function rdvShareWA(){
-  const msg='Prenez rendez-vous en ligne avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+window.location.href;
+  const msg='Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+window.location.href;
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 function rdvShareEmail(){
@@ -5515,7 +5521,7 @@ window.addEventListener('popstate',function(){
         </div>
       </div>
       <div class="pmod-link-card">
-        <div class="pmod-link-url" id="pmod-link-url">medbook.tn/rdv/…</div>
+        <div class="pmod-link-url" id="pmod-link-url">Chargement du lien…</div>
         <div class="pmod-link-btns">
           <button class="pmod-link-btn primary" onclick="pmodCopyLink()">📋 Copier</button>
           <button class="pmod-link-btn wa" onclick="pmodShareWA()">📱 WhatsApp</button>
