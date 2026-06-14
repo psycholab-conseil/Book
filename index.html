@@ -4446,8 +4446,12 @@ function updateAiFab(){
 setTimeout(updateAiFab,150);
 
 /* ══ PAGE RÉSERVATION PATIENT (namespace isolé) ══ */
-(function() {
-var pro=null,selService=null,selDate='',selSlot='',calDate=new Date();
+
+// ══ RDV PAGE - Global state variables ══
+var _rdvPro=null,_rdvService=null,_rdvDate='',_rdvSlot='',_rdvCalDate=new Date();
+
+
+
 // ══════════════════════════════════
 //  DATA — reads from localStorage (same origin as main app)
 // ══════════════════════════════════
@@ -4746,6 +4750,7 @@ function rdvGoStep2(){
   const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const dur=selService.duration||pro.duration||50;
   const end=(()=>{const[h,m]=selSlot.split(':').map(Number);const t=h*60+m+dur;return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');})();
+
   const addr=(pro.bureau?pro.bureau+', ':'')+pro.adresse+(pro.ville?', '+pro.ville:'');
   document.getElementById('bp-summary').innerHTML=
     '<strong>'+escHtml(selService.name)+'</strong> · '+selService.price+' DT · '+dur+'min<br/>'+
@@ -4893,7 +4898,6 @@ window.rdvConfirmRdv=rdvConfirmRdv;window.rdvAddGcal=rdvAddGcal;
 window.rdvAddIcal=rdvAddIcal;window.rdvContactWA=rdvContactWA;
 window.rdvNewRdv=rdvNewRdv;window.rdvCopyLink=rdvCopyLink;
 window.rdvShareWA=rdvShareWA;window.rdvShareEmail=rdvShareEmail;
-})();
 
 window.addEventListener('popstate',function(){
   var hash=window.location.hash.replace('#','');
