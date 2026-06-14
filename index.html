@@ -1960,7 +1960,8 @@ let bkDate='',bkSlot='',bkCalDate=new Date();
 function openPatientBooking(){
   const s=getSession();if(!s)return;
   const db=getDB();const pro=db.pros.find(p=>p.id===s.id);if(!pro)return;
-  if(history.pushState)history.pushState(null,'',getRdvUrl(pro));
+  const shareLink=getProShareLink(pro);
+  if(history.pushState)history.pushState(null,'',shareLink);
   showView('v-booking-page');renderPatientPage(pro);return;
   document.getElementById('bk-pro-name').textContent='Dr. '+pro.fn+' '+pro.ln;
   document.getElementById('bk-pro-spec').textContent=pro.spec+(pro.adresse?' · '+pro.adresse:'');
@@ -2284,7 +2285,8 @@ function buildSlug(pro){
     .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 }
 function getRdvUrl(pro){
-  return window.location.origin+window.location.pathname+'#rdv/'+buildSlug(pro);
+  // Use encoded format so link works on ALL devices
+  return window.location.origin+window.location.pathname+'#pro/'+encodePro(pro);
 }
 function findProBySlug(slug){
   const db=getDB(); const pros=db.pros||[];
@@ -2301,12 +2303,44 @@ function findProBySlug(slug){
   // Last resort: first pro
   return pros[0]||null;
 }
+function decodePro(b64){
+  try{
+    // Add padding back
+    const pad=b64.length%4===0?'':(b64.length%4===2?'==':'=');
+    const json=atob(b64.replace(/-/g,'+').replace(/_/g,'/')+pad);
+    return JSON.parse(json);
+  }catch(e){return null;}
+}
+function encodePro(pro){
+  const d={fn:pro.fn,ln:pro.ln,spec:pro.spec,titre:pro.titre||'',
+    tel:pro.tel||'',wa:pro.wa||'',adresse:pro.adresse||'',ville:pro.ville||'',
+    bio:pro.bio||'',experience:pro.experience||0,photo:pro.photo||'',
+    duration:pro.duration||50,price:pro.price||100,consultType:pro.consultType||'Consultation',
+    consultLangs:pro.consultLangs||[],modes:pro.modes||['cabinet'],avail:pro.avail||Object.create(null)};
+  try{return btoa(unescape(encodeURIComponent(JSON.stringify(d)))).replace(/[+]/g,'-').replace(/[/]/g,'_').replace(/[=]/g,'');}
+  catch(e){return '';}
+}
+function getProShareLink(pro){
+  return window.location.origin+window.location.pathname+'#pro/'+encodePro(pro);
+}
 function init(){
   seedDemo();
   const hash=window.location.hash.replace('#','');
+  // NEW: #pro/BASE64 - patient link with encoded pro data
+  if(hash.startsWith('pro/')){
+    const pro=decodePro(hash.slice(4));
+    if(pro){
+      pro.id=pro.id||'shared-pro';
+      showView('v-booking-page');
+      setTimeout(()=>renderPatientPage(pro),30);
+      return;
+    }
+  }
+  // Legacy: #rdv/slug (works if pro is in localStorage)
   if(hash.startsWith('rdv/')){
     const slug=hash.slice(4);
-    const pro=findProBySlug(slug);
+    let pro=findProBySlug(slug);
+    if(!pro) pro=(getDB().pros||[])[0]||null;
     if(pro){
       showView('v-booking-page');
       setTimeout(()=>renderPatientPage(pro),30);
@@ -2465,8 +2499,8 @@ function bkIcal(){
   a.download='rdv.ics'; a.click();
 }
 function bkReset(){_bkDate='';_bkSlot='';_bkSvc=null;bkShow(1);bkDraw();el('bk-slots-wrap').style.display='none';['bk-fn','bk-ln','bk-email','bk-tel'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});var m=document.getElementById('bk-motif');if(m)m.value='';var r=document.getElementById('bk-rgpd');if(r)r.checked=false;window.scrollTo(0,0);}
-function bkCopy(){var pro=_bkPro;if(!pro)return;navigator.clipboard&&navigator.clipboard.writeText(getRdvUrl(pro));toast2('🔗 Lien copié !','green');}
-function bkWA(){var pro=_bkPro;if(!pro)return;var msg='📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+getRdvUrl(pro);window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+function bkCopy(){var pro=_bkPro;if(!pro)return;var url=typeof getProShareLink!=='undefined'?getProShareLink(pro):getRdvUrl(pro);navigator.clipboard&&navigator.clipboard.writeText(url);toast2('🔗 Lien copié !','green');}
+function bkWA(){var pro=_bkPro;if(!pro)return;var url=typeof getProShareLink!=='undefined'?getProShareLink(pro):getRdvUrl(pro);var msg='📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+(pro.ville?', '+pro.ville:'')+') :\n'+url;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
 function bkEmail(){var pro=_bkPro;if(!pro)return;var url=getRdvUrl(pro);var sub=encodeURIComponent('Rendez-vous — Dr. '+pro.fn+' '+pro.ln);var body=encodeURIComponent('Prenez rendez-vous :\n'+url);window.open('mailto:?subject='+sub+'&body='+body,'_blank');}
 
 // Also fix openPatientBooking to use renderPatientPage
