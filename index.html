@@ -515,18 +515,25 @@ a{text-decoration:none;color:inherit}
 </style>
 </head>
 <body>
+<div id="app-loading" style="position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999">
+  <div style="width:48px;height:48px;border:4px solid #EEF2FF;border-top-color:#1B4FD8;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:1rem"></div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#1B4FD8">MedBook</div>
+  <div style="font-size:.76rem;color:#718096;margin-top:.25rem">Chargement…</div>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)} }</style>
+
 
 <!-- ══ TOAST ══ -->
 <div id="toast"></div>
 
 <!-- ════════════ LANDING ════════════ -->
-<div class="view on" id="v-landing">
+<div class="view" id="v-landing">
 
   <!-- NAV — logo + CTA only, no nav links on mobile -->
   <nav class="nav">
     <div class="nav-logo">
-      <div class="nav-logo-mark">P</div>
-      <div class="nav-logo-text">Psycho<span>Book</span></div>
+      <div class="nav-logo-mark">M</div>
+      <div class="nav-logo-text">Med<span>Book</span></div>
     </div>
     <button class="nav-cta" onclick="openAuth()">Accès Pro →</button>
   </nav>
@@ -737,7 +744,7 @@ a{text-decoration:none;color:inherit}
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-logo">Psycho<span style="color:#6B9EFF">Book</span></div>
+    <div class="footer-logo">Med<span style="color:#6B9EFF">Book</span></div>
     <div class="footer-sub">Prise de rendez-vous médicaux en ligne · 🇹🇳 Tunisie<br/>Édité par <strong style="color:rgba(255,255,255,.7)">Medlab</strong></div>
     <div class="footer-links">
       <a onclick="openAuth()">Accès professionnel</a>
@@ -762,7 +769,7 @@ a{text-decoration:none;color:inherit}
     <!-- Topbar -->
     <div class="topbar">
       <div class="topbar-left">
-        <div class="tb-logo">Psycho<span>Book</span></div>
+        <div class="tb-logo">Med<span>Book</span></div>
         <div class="tb-sep"></div>
         <div>
           <div class="tb-pro-name" id="tb-pro-name">Dr. —</div>
@@ -1276,7 +1283,7 @@ a{text-decoration:none;color:inherit}
 <!-- ════ AUTH MODAL ════ -->
 <div id="modal-auth" class="open" style="display:none">
   <div class="auth-box">
-    <div class="auth-logo">Psycho<span>Book</span><div style="font-size:.65rem;font-weight:400;color:var(--muted);margin-top:.2rem">🇹🇳 Pour les professionnels de santé en Tunisie</div></div>
+    <div class="auth-logo">Med<span>Book</span><div style="font-size:.65rem;font-weight:400;color:var(--muted);margin-top:.2rem">🇹🇳 Pour les professionnels de santé en Tunisie</div></div>
     <div class="auth-tabs">
       <button class="auth-tab on" onclick="switchAuthTab('login',this)">Connexion</button>
       <button class="auth-tab" onclick="switchAuthTab('register',this)">Inscription</button>
@@ -1436,7 +1443,7 @@ a{text-decoration:none;color:inherit}
 //  DATA LAYER
 // ══════════════════════════════════
 const DB_KEY='medbook_tn_db';
-function getDB(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch(e){return{};}
+function getDB(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch(e){return{};} }
 function saveDB(d){localStorage.setItem(DB_KEY,JSON.stringify(d))}
 function getSession(){try{return JSON.parse(sessionStorage.getItem('mb_session')||'null')}catch{return null} }
 function setSession(s){sessionStorage.setItem('mb_session',JSON.stringify(s))}
@@ -1978,6 +1985,8 @@ function addBlockSlot(){toast2('🔒 Créneau bloqué pour cette journée','blue
 // ══ BOOKING MODAL (Patient) ══
 let bkDate='',bkSlot='',bkCalDate=new Date();
 function openPatientBookingFor(proId){
+  const loader=document.getElementById('app-loading');
+  if(loader) loader.style.display='none';
   const db=getDB();
   const pro=db.pros&&db.pros.find(p=>p.id===proId);
   if(!pro){
@@ -1989,11 +1998,13 @@ function openPatientBookingFor(proId){
   // Pre-fill booking page with this pro's data
   window._guestPro=pro;
   showView('v-booking-page');
+  _bkPro=pro;
   renderPublicBookingPage(pro);
 }
 function openPatientBooking(){
   const s=getSession();if(!s)return;
   const db=getDB();const pro=db.pros.find(p=>p.id===s.id);if(!pro)return;
+  if(typeof getRdvUrl==='function'&&history.pushState)history.pushState(null,'',getRdvUrl(pro));
   openPatientBookingFor(pro.id);return;
   document.getElementById('bk-pro-name').textContent='Dr. '+pro.fn+' '+pro.ln;
   document.getElementById('bk-pro-spec').textContent=pro.spec+(pro.adresse?' · '+pro.adresse:'');
@@ -2346,6 +2357,9 @@ function init(){
     showView('v-landing');
   }
   rescheduleAll();
+  // Hide loading spinner
+  const loader=document.getElementById('app-loading');
+  if(loader) loader.style.display='none';
 }
 
 // ══ PUBLIC PATIENT BOOKING PAGE ══
@@ -2439,137 +2453,273 @@ function bkAddGcal(){
 
 
 
-// ══ BOOKING PAGE CALENDAR ══
-var _bkCalDate=new Date();
-var _bkPro=null;
-window._guestDate='';window._guestSlot='';window._guestService=null;window._guestPro=null;
 
-var BK_MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-var BK_DAYS=['sun','mon','tue','wed','thu','fri','sat'];
+// ══════════════════════════════════
+//  PATIENT BOOKING PAGE — Complete
+// ══════════════════════════════════
+var _bkPro=null,_bkSvc=null,_bkDate='',_bkSlot='',_bkCalDate=new Date();
+var BK_MO=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+var BK_DK=['sun','mon','tue','wed','thu','fri','sat'];
+var SPEC_COLORS={'Psychologue clinicien(ne)':{ico:'🧠',color:'#7C3AED',light:'#EDE9FE'},'Psychiatre':{ico:'💊',color:'#1B4FD8',light:'#EEF2FF'},'Médecin généraliste':{ico:'🩺',color:'#0D9488',light:'#CCFBF1'},'Cardiologue':{ico:'❤️',color:'#E11D48',light:'#FFE4E6'},'Kinésithérapeute':{ico:'🦴',color:'#D97706',light:'#FEF3C7'},'Dermatologue':{ico:'🧬',color:'#EC4899',light:'#FCE7F3'},'Pédiatre':{ico:'👶',color:'#F59E0B',light:'#FEF3C7'},'Nutritionniste / Diététicien(ne)':{ico:'🍎',color:'#16A34A',light:'#DCFCE7'},'Ophtalmologue':{ico:'👁️',color:'#0EA5E9',light:'#E0F2FE'},'ORL':{ico:'👂',color:'#8B5CF6',light:'#EDE9FE'},'Chirurgien-dentiste':{ico:'🦷',color:'#64748B',light:'#F1F5F9'},'Ostéopathe':{ico:'🌿',color:'#059669',light:'#D1FAE5'},'Sophrologue':{ico:'🧘',color:'#6366F1',light:'#EEF2FF'},'Médecin du sport':{ico:'🏃',color:'#F97316',light:'#FFF7ED'} };
+var SPEC_SVCS={'Psychologue clinicien(ne)':[{n:'Thérapie individuelle',d:50,p:100,desc:'Séance en cabinet'},{n:'Thérapie de couple',d:60,p:140,desc:'Thérapie relationnelle'},{n:'Bilan psychologique',d:90,p:180,desc:'Évaluation complète'}],'Psychiatre':[{n:'Consultation psychiatrique',d:45,p:120,desc:'Évaluation et suivi'},{n:'Suivi médication',d:30,p:80,desc:'Renouvellement ordonnance'}],'Médecin généraliste':[{n:'Consultation générale',d:20,p:35,desc:'Diagnostic et traitement'},{n:'Certificat médical',d:15,p:25,desc:'Aptitude / sport / emploi'}],'Cardiologue':[{n:'Consultation cardiologique',d:30,p:90,desc:'Bilan cardiaque'},{n:'ECG + consultation',d:45,p:120,desc:'Électrocardiogramme'}],'Kinésithérapeute':[{n:'Séance de kiné',d:45,p:50,desc:'Rééducation standard'},{n:'Massage thérapeutique',d:60,p:70,desc:'Détente et récupération'}],'Pédiatre':[{n:'Consultation pédiatrique',d:25,p:50,desc:'Enfant 0–18 ans'},{n:'Vaccins',d:20,p:40,desc:'Carnet de vaccination'}],'Chirurgien-dentiste':[{n:'Consultation',d:30,p:30,desc:'Examen buccal'},{n:'Détartrage',d:45,p:60,desc:'Nettoyage'},{n:'Urgence dentaire',d:30,p:50,desc:'Douleur aiguë'}],'Dermatologue':[{n:'Consultation dermatologique',d:20,p:70,desc:'Diagnostic cutané'},{n:'Dermatoscopie',d:30,p:90,desc:'Analyse grains de beauté'}]};
+var SPEC_MOTIFS={'Psychologue clinicien(ne)':['Anxiété / Stress','Dépression','Burn-out','Troubles du sommeil','Gestion émotionnelle','Traumatisme','Suivi régulier','Première consultation','Autre'],'Psychiatre':['Dépression majeure','Troubles anxieux','Troubles bipolaires','TDAH adulte','Ordonnance / renouvellement','Autre'],'Médecin généraliste':['Fièvre / Infection','Douleur','Renouvellement ordonnance','Certificat médical','Bilan de santé','Autre'],'Cardiologue':['Douleur thoracique','Palpitations','Hypertension','Bilan cardiovasculaire','Autre'],'Kinésithérapeute':['Mal de dos','Douleur épaule','Entorse','Rééducation post-op','Autre'],'Pédiatre':['Fièvre enfant','Toux / Rhume','Bilan croissance','Vaccins','Autre'],'Chirurgien-dentiste':['Douleur dentaire','Contrôle régulier','Urgence','Autre'],'Dermatologue':['Acné','Eczéma','Grain de beauté','Psoriasis','Autre']};
 
-function bkRenderCal(pro){
-  _bkPro=pro||window._guestPro;
-  if(!_bkPro) return;
+function renderPublicBookingPage(pro){
+  _bkPro=pro; _bkSvc=null; _bkDate=''; _bkSlot=''; _bkCalDate=new Date();
+  var cfg=SPEC_COLORS[pro.spec]||{ico:'🩺',color:'#1B4FD8',light:'#EEF2FF'};
+  
+  // Header
+  var av=document.getElementById('bk-av');
+  if(av){if(pro.photo)av.innerHTML='<img src="'+pro.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';else av.innerHTML=cfg.ico;}
+  // Update header gradient color
+  var hdr=document.getElementById('bk-header');
+  if(hdr) hdr.style.background='linear-gradient(145deg,'+cfg.color+' 0%,#0D9488 100%)';
+  var nm=document.getElementById('bk-name');if(nm)nm.textContent='Dr. '+pro.fn+' '+pro.ln;
+  var ti=document.getElementById('bk-titre');if(ti&&pro.titre){ti.textContent=pro.titre;ti.style.display='';}
+  var sp=document.getElementById('bk-spec');if(sp)sp.textContent=(pro.spec||'')+(pro.ville?' · '+pro.ville:'');
+  if(pro.adresse){var ad=document.getElementById('bk-addr');var at=document.getElementById('bk-addr-text');if(ad&&at){at.textContent=pro.adresse+(pro.ville?', '+pro.ville:'');ad.style.display='';} }
+  
+  // Badges (langues + modes)
+  var bg=document.getElementById('bk-badges');
+  if(bg){
+    bg.innerHTML='';
+    var items=(pro.consultLangs||[]).concat((pro.modes||['cabinet']).map(function(m){return{cabinet:'🏥 Cabinet',video:'📹 Vidéo',domicile:'🏠 Domicile'}[m]||m;}));
+    items.forEach(function(b){var s=document.createElement('span');s.style.cssText='background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:.22rem .65rem;font-size:.65rem;font-weight:600;color:#fff;backdrop-filter:blur(4px)';s.textContent=b;bg.appendChild(s);});
+  }
+  // Stats
+  if(pro.experience){var st=document.getElementById('bk-stats');if(st){st.style.display='flex';document.getElementById('bk-stat-exp').textContent=pro.experience+'+';document.getElementById('bk-stat-langs').textContent=(pro.consultLangs||[]).length||'—';} }
+  
+  // Bio
+  if(pro.bio){
+    var bc=document.getElementById('bk-bio-card');if(bc)bc.style.display='';
+    var bt=document.getElementById('bk-bio-text');if(bt)bt.textContent=pro.bio;
+    var cp=document.getElementById('bk-contact-pills');
+    if(cp){
+      cp.innerHTML='';
+      [{t:'📞 '+pro.tel,h:'tel:'+(pro.tel||'').replace(/\s/g,'')},{t:'📱 WhatsApp',h:'https://wa.me/'+(pro.wa||'').replace(/[^0-9]/g,'')},{t:'🌐 Site web',h:pro.website}].forEach(function(p){if(!p.t.replace(/[📞📱🌐\s]/g,''))return;var a=document.createElement('a');a.style.cssText='background:#F7F8FC;border:1px solid #E2E8F0;border-radius:99px;padding:.25rem .7rem;font-size:.7rem;color:#4A5568;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem';a.textContent=p.t;a.href=p.h||'#';a.target='_blank';cp.appendChild(a);});
+    }
+    if(pro.adresse){var ml=document.getElementById('bk-map-link');var mt=document.getElementById('bk-map-txt');if(ml&&mt){mt.textContent=pro.adresse+(pro.ville?', '+pro.ville:'');ml.href='https://maps.google.com/?q='+encodeURIComponent((pro.adresse||'')+', '+(pro.ville||'')+', Tunisie');ml.style.display='flex';} }
+  }
+  
+  // Services
+  var sl=document.getElementById('bk-svcs');
+  if(sl){
+    sl.innerHTML='';
+    var svcs=SPEC_SVCS[pro.spec]||[{n:pro.consultType||'Consultation',d:pro.duration||50,p:pro.price||100,desc:''}];
+    svcs.forEach(function(svc,i){
+      var card=document.createElement('div');
+      card.style.cssText='display:flex;align-items:center;gap:.75rem;border:1.5px solid #E2E8F0;border-radius:14px;padding:.9rem 1rem;margin-bottom:.5rem;cursor:pointer;transition:all .2s;background:#fff';
+      card.innerHTML='<div style="width:42px;height:42px;border-radius:10px;background:'+cfg.light+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">'+cfg.ico+'</div><div style="flex:1"><div style="font-size:.87rem;font-weight:700;color:#0D1117">'+svc.n+'</div><div style="font-size:.72rem;color:#718096;margin-top:.05rem">⏱ '+svc.d+'min'+(svc.desc?' · '+svc.desc:'')+'</div></div><div style="font-size:.92rem;font-weight:800;color:'+cfg.color+';white-space:nowrap">'+svc.p+' DT</div>';
+      card.onclick=function(){document.querySelectorAll('#bk-svcs > div').forEach(function(c){c.style.borderColor='#E2E8F0';c.style.background='#fff';});card.style.borderColor=cfg.color;card.style.background=cfg.light;_bkSvc=svc;};
+      if(i===0){setTimeout(function(){card.click();},10);}
+      sl.appendChild(card);
+    });
+  }
+  
+  // Motifs
+  var mo=document.getElementById('bk-motif');
+  if(mo){
+    mo.innerHTML='<option value="">— Optionnel —</option>';
+    var motifs=SPEC_MOTIFS[pro.spec]||['Première consultation','Suivi régulier','Autre'];
+    motifs.forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;mo.appendChild(o);});
+  }
+  
+  // Back button
+  var bb=document.getElementById('bk-back-btn');
+  if(bb){if(getSession()){bb.style.display='flex';}else{bb.style.display='none';} }
+  
+  // Show step 1
+  bkShowStep(1);
+  bkDrawCal();
+}
+
+function bkShowStep(n){
+  ['bk-step1','bk-step2','bk-step3'].forEach(function(id,i){var el=document.getElementById(id);if(el)el.style.display=(i===n-1)?'':'none';});
+}
+
+function bkDrawCal(){
+  var pro=_bkPro;if(!pro)return;
   var y=_bkCalDate.getFullYear(),m=_bkCalDate.getMonth();
-  document.getElementById('bk-cal-title').textContent=BK_MONTHS[m]+' '+y;
-  var grid=document.getElementById('bk-cal-grid'); grid.innerHTML='';
-  var avail=_bkPro.avail||{days:{mon:true,tue:true,wed:true,thu:true,fri:true},slots:[]};
+  document.getElementById('bk-cal-hdr').textContent=BK_MO[m]+' '+y;
+  var grid=document.getElementById('bk-grid');grid.innerHTML='';
+  var avail=pro.avail||{days:{mon:true,tue:true,wed:true,thu:true,fri:true},slots:[]};
   var today=new Date();today.setHours(0,0,0,0);
-  var firstDay=new Date(y,m,1).getDay();
-  var offset=firstDay===0?6:firstDay-1;
-  var daysInMonth=new Date(y,m+1,0).getDate();
-  for(var i=0;i<offset;i++){var empty=document.createElement('div');empty.className='bk-day';grid.appendChild(empty);}
-  for(var d=1;d<=daysInMonth;d++){
+  var todayStr=today.toISOString().split('T')[0];
+  var first=new Date(y,m,1).getDay();
+  var offset=first===0?6:first-1;
+  var dim=new Date(y,m+1,0).getDate();
+  for(var i=0;i<offset;i++){var e=document.createElement('div');e.style.cssText='aspect-ratio:1';grid.appendChild(e);}
+  for(var d=1;d<=dim;d++){
     (function(day){
-      var dateObj=new Date(y,m,day);
-      var dateStr=y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
-      var dayKey=BK_DAYS[dateObj.getDay()];
-      var isPast=dateObj<today;
-      var isUnavail=!avail.days[dayKey];
-      var isToday=dateStr===today.toISOString().split('T')[0];
+      var dObj=new Date(y,m,day);
+      var dStr=y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+      var dk=BK_DK[dObj.getDay()];
+      var past=dObj<today,unavail=!avail.days[dk],isToday=dStr===todayStr;
       var el=document.createElement('div');
       el.textContent=day;
-      el.className='bk-day'+(isPast||isUnavail?' past':'')+(isToday?' today':'');
-      if(dateStr===window._guestDate) el.classList.add('selected');
-      if(!isPast&&!isUnavail) el.onclick=function(){bkSelectDate(dateStr,el);};
+      el.style.cssText='aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:500;transition:all .18s;'+(past||unavail?'color:#E2E8F0;cursor:default;':'cursor:pointer;color:#0D1117;')+(isToday&&!past?'background:#1B4FD8;color:#fff;font-weight:700;':'')+(dStr===_bkDate&&!isToday?'background:#EEF2FF;color:#1B4FD8;font-weight:700;box-shadow:inset 0 0 0 2px #C7D2FE;':'');
+      if(!past&&!unavail)el.onclick=function(){bkPickDate(dStr,el);};
       grid.appendChild(el);
     })(d);
   }
 }
-function bkCalPrev(){_bkCalDate.setMonth(_bkCalDate.getMonth()-1);bkRenderCal();}
-function bkCalNext(){_bkCalDate.setMonth(_bkCalDate.getMonth()+1);bkRenderCal();}
+function bkPrev(){_bkCalDate.setMonth(_bkCalDate.getMonth()-1);bkDrawCal();}
+function bkNext(){_bkCalDate.setMonth(_bkCalDate.getMonth()+1);bkDrawCal();}
 
-function bkSelectDate(date,el){
-  window._guestDate=date;window._guestSlot='';
-  document.querySelectorAll('.bk-day').forEach(function(d){d.classList.remove('selected');});
-  el.classList.add('selected');
-  var pro=window._guestPro; if(!pro) return;
+function bkPickDate(date,el){
+  _bkDate=date;_bkSlot='';
+  document.querySelectorAll('#bk-grid > div').forEach(function(d){if(!d.style.background.includes('1B4FD8'))d.style.background='';d.style.boxShadow='';d.style.color='';d.style.fontWeight='';});
+  bkDrawCal();
+  var pro=_bkPro;if(!pro)return;
   var db=getDB();
-  var avail=pro.avail&&pro.avail.slots||['09:00','10:00','11:00','14:00','15:00','16:00'];
+  var slots=pro.avail&&pro.avail.slots||['09:00','09:45','10:30','11:15','14:00','14:45','15:30','16:15','17:00'];
   var booked=(db.rdvs||[]).filter(function(r){return r.proId===pro.id&&r.date===date&&r.status!=='cancelled';}).map(function(r){return r.slot;});
-  var free=avail.filter(function(s){return !booked.includes(s);});
+  var free=slots.filter(function(s){return !booked.includes(s);});
   var d=new Date(date+'T12:00:00');
-  document.getElementById('bk-slots-day').textContent='⏰ '+d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
-  var sg=document.getElementById('bk-slots-grid'); sg.innerHTML='';
-  if(free.length===0){
-    sg.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:#718096;padding:.75rem">Aucun créneau disponible. Choisissez une autre date.</div>';
-  } else {
-    free.forEach(function(sl){
-      var btn=document.createElement('div');btn.className='bk-slot';btn.textContent=sl;
-      btn.onclick=function(){
-        document.querySelectorAll('.bk-slot').forEach(function(b){b.classList.remove('selected');});
-        btn.classList.add('selected');window._guestSlot=sl;
-        bkShowForm();
-      };
-      sg.appendChild(btn);
-    });
-  }
-  document.getElementById('bk-slots-section').style.display='';
+  document.getElementById('bk-slots-hdr').textContent='⏰ '+d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  var sg=document.getElementById('bk-slots');sg.innerHTML='';
+  if(free.length===0){sg.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:#718096;padding:.85rem;background:#fff;border-radius:10px">Aucun créneau disponible. Choisissez une autre date.</div>';}
+  else{free.forEach(function(sl){var btn=document.createElement('div');btn.style.cssText='border:1.5px solid #C7D2FE;border-radius:9px;padding:.55rem;text-align:center;font-size:.8rem;font-weight:600;color:#1B4FD8;background:#fff;cursor:pointer;transition:all .18s';btn.textContent=sl;btn.onclick=function(){document.querySelectorAll('#bk-slots > div').forEach(function(b){b.style.background='#fff';b.style.color='#1B4FD8';b.style.borderColor='#C7D2FE';});btn.style.background='#1B4FD8';btn.style.color='#fff';btn.style.borderColor='#1B4FD8';_bkSlot=sl;var cta=document.getElementById('bk-cta');if(cta){cta.disabled=false;cta.style.opacity='1';} };sg.appendChild(btn);});}
+  document.getElementById('bk-slots-wrap').style.display='';
+  var cta=document.getElementById('bk-cta');if(cta){cta.disabled=true;cta.style.opacity='.4';}
 }
 
-function bkShowForm(){
-  var pro=window._guestPro; var svc=window._guestService;
-  if(!pro||!window._guestDate||!window._guestSlot) return;
-  var d=new Date(window._guestDate+'T12:00:00');
+function bkToForm(){
+  if(!_bkSvc||!_bkDate||!_bkSlot){toast2('Sélectionnez un service, une date et un créneau','red');return;}
+  var d=new Date(_bkDate+'T12:00:00');
   var label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  var dur=svc&&svc.duration||pro.duration||50;
-  var hh=parseInt(window._guestSlot.split(':')[0]);
-  var mm=parseInt(window._guestSlot.split(':')[1]);
-  var tot=hh*60+mm+dur;
-  var endStr=String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
+  var h=parseInt(_bkSlot.split(':')[0]),m=parseInt(_bkSlot.split(':')[1]);
+  var tot=h*60+m+(_bkSvc.d||50);
+  var end=String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
+  var pro=_bkPro;
   var addr=(pro.bureau?pro.bureau+', ':'')+pro.adresse+(pro.ville?', '+pro.ville:'');
-  document.getElementById('bk-rdv-summary').innerHTML=
-    '<strong>'+(svc?escHtml(svc.name):escHtml(pro.consultType||'Consultation'))+'</strong> · '+(svc?svc.price:pro.price)+' DT · '+dur+'min<br/>'+
-    '📅 '+label+'<br/>⏰ '+window._guestSlot+' – '+endStr+'<br/>'+
+  document.getElementById('bk-summary').innerHTML=
+    '<strong>'+escHtml(_bkSvc.n)+'</strong> · '+_bkSvc.p+' DT · '+_bkSvc.d+'min<br/>'+
+    '📅 '+label+'<br/>⏰ '+_bkSlot+' – '+end+' (CET · Tunisie)<br/>'+
     '🩺 Dr. '+escHtml(pro.fn)+' '+escHtml(pro.ln)+
     (addr?'<br/>📍 '+escHtml(addr):'');
-  document.getElementById('bk-cal-section').style.display='none';
-  document.getElementById('bk-form-section').style.display='';
+  bkShowStep(2);
+  window.scrollTo(0,0);
+}
+function bkBack1(){bkShowStep(1);}
+
+function bkConfirm(){
+  var fn=(document.getElementById('bk-fn').value||'').trim();
+  var ln=(document.getElementById('bk-ln').value||'').trim();
+  var email=(document.getElementById('bk-email').value||'').trim();
+  var rgpd=document.getElementById('bk-rgpd').checked;
+  if(!fn||!ln){toast2('Prénom et nom requis','red');return;}
+  if(!email||!email.includes('@')){toast2('Email valide requis','red');return;}
+  if(!rgpd){toast2('Acceptez la politique de confidentialité','red');return;}
+  var pro=_bkPro;var svc=_bkSvc;
+  var db=getDB();if(!db.rdvs)db.rdvs=[];
+  var dur=svc.d||50;
+  var h=parseInt(_bkSlot.split(':')[0]),m=parseInt(_bkSlot.split(':')[1]);
+  var tot=h*60+m+dur;
+  var end=String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
+  var rdv={id:'rdv-'+Date.now(),proId:pro.id,proFn:pro.fn,proLn:pro.ln,spec:pro.spec,
+    patFn:fn,patLn:ln,patEmail:email,patTel:(document.getElementById('bk-tel').value||'').trim(),
+    date:_bkDate,slot:_bkSlot,serviceName:svc.n,servicePrice:svc.p,serviceDuration:dur,
+    motif:(document.getElementById('bk-motif').value||''),
+    msg:(document.getElementById('bk-msg').value||'').trim(),
+    status:'confirmed',reminders:{r24:false,r2:false},createdAt:new Date().toISOString()};
+  db.rdvs.push(rdv);saveDB(db);
+  window._bkLastRdv=rdv;
+  // Show success
+  var d=new Date(_bkDate+'T12:00:00');
+  var label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  var addr=(pro.bureau?pro.bureau+', ':'')+pro.adresse+(pro.ville?', '+pro.ville:'');
+  document.getElementById('bk-ok-detail').innerHTML=
+    '<div style="display:flex;flex-direction:column;gap:.3rem">'+
+    '<div>👤 <strong>'+escHtml(fn)+' '+escHtml(ln)+'</strong></div>'+
+    '<div>📅 '+label+'</div><div>⏰ '+_bkSlot+' – '+end+'</div>'+
+    '<div>🩺 Dr. '+escHtml(pro.fn)+' '+escHtml(pro.ln)+'</div>'+
+    '<div>🎫 '+escHtml(svc.n)+' · '+svc.p+' DT · '+dur+'min</div>'+
+    (rdv.motif?'<div>📋 '+escHtml(rdv.motif)+'</div>':'')+
+    (addr?'<div>📍 '+escHtml(addr)+'</div>':'')+
+    (pro.tel?'<div>📞 '+escHtml(pro.tel)+'</div>':'')+
+    '<div style="margin-top:.4rem;padding:.5rem;background:#EEF2FF;border-radius:8px;font-size:.72rem;color:#1B4FD8">📧 Confirmation envoyée à <strong>'+escHtml(email)+'</strong></div>'+
+    '</div>';
+  if(pro.wa){var wb=document.getElementById('bk-wa-btn');if(wb)wb.style.display='';}
+  bkShowStep(3);window.scrollTo(0,0);
+  if(typeof scheduleReminders==='function')scheduleReminders(rdv);
+  toast2('✅ RDV confirmé !','green');
 }
 
-function bkBackToCal(){
-  document.getElementById('bk-form-section').style.display='none';
-  document.getElementById('bk-cal-section').style.display='';
-  window._guestSlot='';
+function bkAddGcal(){
+  var r=window._bkLastRdv;if(!r)return;
+  var d=new Date(r.date+'T'+r.slot+':00');
+  var end=new Date(d.getTime()+r.serviceDuration*60000);
+  var fmt=function(dt){return dt.toISOString().replace(/[-:]/g,'').split('.')[0];};
+  var pro=_bkPro;
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(r.serviceName+' — Dr. '+pro.fn+' '+pro.ln)+'&dates='+fmt(d)+'/'+fmt(end)+'&location='+encodeURIComponent(pro.adresse||''),'_blank');
+}
+function bkAddIcal(){
+  var r=window._bkLastRdv;if(!r)return;
+  var pro=_bkPro;
+  var d=new Date(r.date+'T'+r.slot+':00');
+  var end=new Date(d.getTime()+r.serviceDuration*60000);
+  var fmt=function(dt){return dt.toISOString().replace(/[-:]/g,'').split('.')[0];};
+  var ics='BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MedBook//TN//FR\nBEGIN:VEVENT\nSUMMARY:'+r.serviceName+' — Dr. '+pro.fn+' '+pro.ln+'\nDTSTART:'+fmt(d)+'\nDTEND:'+fmt(end)+'\nLOCATION:'+pro.adresse+'\nEND:VEVENT\nEND:VCALENDAR';
+  var blob=new Blob([ics],{type:'text/calendar'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rdv-medbook.ics';a.click();
+}
+function bkContactWA(){
+  var pro=_bkPro;if(!pro||!pro.wa)return;
+  var r=window._bkLastRdv;if(!r)return;
+  var d=new Date(r.date+'T12:00:00');
+  var label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  var msg='Bonjour Dr. '+pro.fn+' '+pro.ln+', je viens de confirmer mon RDV du '+label+' à '+r.slot+' via MedBook.';
+  window.open('https://wa.me/'+(pro.wa||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg),'_blank');
+}
+function bkReset(){
+  _bkDate='';_bkSlot='';_bkSvc=null;
+  document.getElementById('bk-fn').value='';document.getElementById('bk-ln').value='';
+  document.getElementById('bk-email').value='';document.getElementById('bk-tel').value='';
+  document.getElementById('bk-motif').value='';document.getElementById('bk-msg').value='';
+  document.getElementById('bk-rgpd').checked=false;
+  bkShowStep(1);bkDrawCal();
+  document.getElementById('bk-slots-wrap').style.display='none';
+  window.scrollTo(0,0);
 }
 
-function bkNewRdv(){
-  window._guestDate='';window._guestSlot='';
-  var success=document.getElementById('bk-success');if(success)success.style.display='none';
-  var form=document.getElementById('bk-form-section');if(form)form.style.display='none';
-  var cal=document.getElementById('bk-cal-section');if(cal){cal.style.display='';bkRenderCal();}
-  document.getElementById('bk-slots-section').style.display='none';
-  ['bk-fn','bk-ln','bk-email','bk-tel'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
-  var rgpd=document.getElementById('bk-rgpd');if(rgpd)rgpd.checked=false;
+function bkGoBack(){
+  if(history.pushState)history.pushState(null,'',window.location.pathname);
+  showView('v-pro');
 }
-
-function bkCopyLink(){
-  var pro=window._guestPro; if(!pro) return;
-  var url=getRdvUrl(pro);
-  navigator.clipboard&&navigator.clipboard.writeText(url).catch(function(){});
+function bkCopy(){
+  var pro=_bkPro;if(!pro)return;
+  var url=typeof getRdvUrl==='function'?getRdvUrl(pro):(window.location.origin+window.location.pathname+'#rdv/'+(pro.fn+'-'+pro.ln).toLowerCase().replace(/\s+/g,'-'));
+  navigator.clipboard&&navigator.clipboard.writeText(url);
   toast2('🔗 Lien copié !','green');
 }
-function bkShareWA(){
-  var pro=window._guestPro; if(!pro) return;
-  var url=getRdvUrl(pro);
-  var msg=encodeURIComponent('📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+(pro.ville?', '+pro.ville:'')+') :\n'+url);
-  window.open('https://wa.me/?text='+msg,'_blank');
+function bkWAShare(){
+  var pro=_bkPro;if(!pro)return;
+  var url=typeof getRdvUrl==='function'?getRdvUrl(pro):(window.location.href);
+  var msg='📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+(pro.ville?', '+pro.ville:'')+') :\n'+url;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+function bkEmailShare(){
+  var pro=_bkPro;if(!pro)return;
+  var url=typeof getRdvUrl==='function'?getRdvUrl(pro):(window.location.href);
+  var sub=encodeURIComponent('Rendez-vous en ligne — Dr. '+pro.fn+' '+pro.ln);
+  var body=encodeURIComponent('Bonjour,\n\nPrenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+url+'\n\nCordialement');
+  window.open('mailto:?subject='+sub+'&body='+body,'_blank');
 }
 
-// popstate for browser back button
+// popstate handler
 window.addEventListener('popstate',function(){
   var hash=window.location.hash.replace('#','');
   if(hash.startsWith('rdv/')){
     var slug=hash.slice(4);
     var pro=findProBySlug(slug);
-    if(pro){window._guestPro=pro;openPatientBookingFor(pro.id);}
+    if(pro){_bkPro=pro;showView('v-booking-page');renderPublicBookingPage(pro);}
   } else {
     var s=getSession();
     if(s)showView('v-pro');else showView('v-landing');
   }
 });
 
-}
 init();
 </script>
 
