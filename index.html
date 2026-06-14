@@ -2286,7 +2286,7 @@ function loadProDash(pro){
   document.getElementById('welcome-msg').textContent='Bonjour Dr. '+pro.ln+' 👋';
   document.getElementById('today-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const slug0=(pro.fn+'-'+pro.ln).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
-  document.getElementById('booking-url-display').textContent='[votre-domaine]/rdv.html#'+slug0;
+  document.getElementById('booking-url-display').textContent=window.location.origin+window.location.pathname+'#rdv/'+slug0;
   const embedEl=document.getElementById('embed-code');
   if(embedEl) embedEl.textContent=`<iframe src="https://medbook.tn/rdv/${slug0}" width="100%" height="600" frameborder="0"></iframe>`;
   document.getElementById('set-fn').value=pro.fn;
@@ -2552,7 +2552,7 @@ function saveSettings(){
   updateTbAvatar(pro);
   const slug=buildSlug(pro);
   const linkEl=document.getElementById('public-link-display');
-  if(linkEl) linkEl.textContent='[votre-domaine]/rdv.html#'+slug;
+  if(linkEl) linkEl.textContent=window.location.origin+window.location.pathname+'#rdv/'+slug;
   toast2('✅ Profil sauvegardé et publié !','green');
   updateOverviewProfileCard(pro);
 }
@@ -3457,9 +3457,14 @@ const MONTHS_FR2=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Ao
 
 function openPublicBookingPage(proId){
   var s=getSession(),db=getDB();
-  var p=db.pros&&db.pros.find(function(x){return x.id===(proId||s&&s.id);});
+  var p=db.pros&&db.pros.find(function(x){return x.id===(proId||(s&&s.id));});
   if(!p){toast2('Profil introuvable','red');return;}
   window._rdvProOverride=p;
+  // Update URL so link is shareable
+  var slug=buildSlug(p);
+  if(history.pushState){
+    history.pushState(null,'','#rdv/'+slug);
+  }
   showView('v-booking-page');
   var rl=document.getElementById('rdv-loading'),rn=document.getElementById('rdv-not-found'),rw=document.getElementById('rdv-bp-wrap');
   if(rl)rl.classList.remove('hide');if(rn)rn.classList.remove('on');if(rw)rw.style.display='none';
@@ -3628,10 +3633,70 @@ END:VCALENDAR`;
 // Add admin link to footer
 
 // ══ INIT ══
+function buildSlug(pro){
+  return ((pro.fn||'')+'-'+(pro.ln||'')).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
+function findProBySlug(slug){
+  const db=getDB();
+  const pros=db.pros||[];
+  slug=(slug||'').toLowerCase().trim();
+  // exact match first
+  let p=pros.find(p=>buildSlug(p)===slug);
+  if(p) return p;
+  // partial: last name
+  p=pros.find(p=>(p.ln||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'')===slug.replace(/-/g,''));
+  if(p) return p;
+  // any part matches
+  p=pros.find(p=>slug.includes((p.ln||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,''))
+    ||(p.ln||'').toLowerCase().includes(slug.replace(/-/g,' ')));
+  return p||null;
+}
+
 function init(){
   seedDemo();
-  // Check if URL has #admin
-  if(window.location.hash==='#admin'){ openAdminPortal(); return; }
+  const hash = window.location.hash.replace('#','');
+  
+  // ── Patient booking via URL hash ──
+  // Supports: #rdv/aymen-khalsi  OR  #aymen-khalsi  OR  ?rdv=aymen-khalsi
+  let rdvSlug = null;
+  if(hash.startsWith('rdv/')){
+    rdvSlug = hash.slice(4);
+  } else if(!hash || hash==='admin' || hash==='pro'){
+    rdvSlug = null;
+  } else {
+    // Check URL param
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('rdv')) rdvSlug = params.get('rdv');
+  }
+  
+  if(rdvSlug){
+    const pro = findProBySlug(rdvSlug);
+    if(pro){
+      showView('v-booking-page');
+      window._rdvProOverride = pro;
+      setTimeout(function(){
+        if(window.rdvPageInit) window.rdvPageInit();
+      }, 50);
+      return;
+    } else {
+      // Pro not found - show booking page with not-found state
+      showView('v-booking-page');
+      setTimeout(function(){
+        const rl=document.getElementById('rdv-loading');
+        const nf=document.getElementById('rdv-not-found');
+        if(rl) rl.classList.add('hide');
+        if(nf) nf.classList.add('on');
+      },50);
+      return;
+    }
+  }
+  
+  // ── Admin portal ──
+  if(hash==='admin'){ openAdminPortal(); return; }
+  
+  // ── Pro dashboard (logged in) ──
   const s=getSession();
   if(s){
     const db=getDB();const pro=db.pros?.find(p=>p.id===s.id);
@@ -3689,7 +3754,7 @@ function openProfileModal(){
   // Slug/link
   const slug=buildSlugFromPro(pro);
   const linkEl=document.getElementById('pmod-link-url');
-  if(linkEl) linkEl.textContent='[votre-domaine]/rdv.html#'+slug;
+  if(linkEl) linkEl.textContent=window.location.origin+window.location.pathname+'#rdv/'+slug;
   // Completeness
   pmodUpdateCompleteness(pro);
   // Open
@@ -3742,9 +3807,9 @@ function saveProfileModal(){
   // Update slug link
   const slug=buildSlugFromPro(pro);
   const linkEl=document.getElementById('pmod-link-url');
-  if(linkEl) linkEl.textContent='[votre-domaine]/rdv.html#'+slug;
+  if(linkEl) linkEl.textContent=window.location.origin+window.location.pathname+'#rdv/'+slug;
   const bdUrl=document.getElementById('booking-url-display');
-  if(bdUrl) bdUrl.textContent='[votre-domaine]/rdv.html#'+slug;
+  if(bdUrl) bdUrl.textContent=window.location.origin+window.location.pathname+'#rdv/'+slug;
   toast2('✅ Profil sauvegardé et publié !','green');
   closeProfileModal();
 }
@@ -3849,23 +3914,26 @@ function pmodUpdateTopbarIncomplete(pro){
 }
 
 function pmodCopyLink(){
-  const url=(document.getElementById('pmod-link-url')||{textContent:''}).textContent;
-  navigator.clipboard?.writeText('https://'+url).catch(()=>{});
+  const s=getSession(),db=getDB();
+  const pro=db.pros?.find(p=>p.id===s?.id);
+  if(!pro){toast2("Connectez-vous d'abord","red");return;}
+  const url=window.location.origin+window.location.pathname+'#rdv/'+buildSlug(pro);
+  navigator.clipboard?.writeText(url).catch(()=>{});
   toast2('🔗 Lien copié !','green');
 }
 function pmodShareWA(){
-  const s=getSession(); const db=getDB();
+  const s=getSession(),db=getDB();
   const pro=db.pros?.find(p=>p.id===s?.id); if(!pro) return;
-  const slug=buildSlugFromPro(pro);
-  const msg=encodeURIComponent('Prenez rendez-vous en ligne avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\nhttps://medbook.tn/rdv/'+slug);
+  const url=window.location.origin+window.location.pathname+'#rdv/'+buildSlug(pro);
+  const msg=encodeURIComponent('📅 Prenez rendez-vous en ligne avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+', '+pro.ville+') :\n'+url);
   window.open('https://wa.me/?text='+msg,'_blank');
 }
 function pmodShareEmail(){
-  const s=getSession(); const db=getDB();
+  const s=getSession(),db=getDB();
   const pro=db.pros?.find(p=>p.id===s?.id); if(!pro) return;
-  const slug=buildSlugFromPro(pro);
+  const url=window.location.origin+window.location.pathname+'#rdv/'+buildSlug(pro);
   const sub=encodeURIComponent('Rendez-vous en ligne — Dr. '+pro.fn+' '+pro.ln);
-  const body=encodeURIComponent('Bonjour,\n\nPrenez rendez-vous en ligne :\nhttps://medbook.tn/rdv/'+slug+'\n\nCordialement');
+  const body=encodeURIComponent('Bonjour,\n\nPrenez rendez-vous en ligne avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+url+'\n\nCordialement');
   window.open('mailto:?subject='+sub+'&body='+body,'_blank');
 }
 function pmodPreviewPage(){
@@ -4482,7 +4550,10 @@ function rdvPageInit(){
     if(!bb){bb=document.createElement('button');bb.id='rdv-bb';
       bb.style.cssText='position:fixed;top:.75rem;left:.75rem;z-index:300;background:rgba(255,255,255,.95);border:1px solid #C7D2FE;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:700;color:#1B4FD8;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.1);display:flex;align-items:center;gap:.35rem';
       bb.innerHTML='&#8592; Tableau de bord';
-      bb.onclick=function(){if(typeof showView==='function')showView('v-pro');};
+      bb.onclick=function(){
+  if(history.pushState) history.pushState(null,'',window.location.pathname);
+  if(typeof showView==='function')showView('v-pro');
+};
       var v=document.getElementById('v-booking-page');if(v)v.appendChild(bb);
     }
     bb.style.display='flex';
@@ -4817,6 +4888,18 @@ window.rdvAddIcal=rdvAddIcal;window.rdvContactWA=rdvContactWA;
 window.rdvNewRdv=rdvNewRdv;window.rdvCopyLink=rdvCopyLink;
 window.rdvShareWA=rdvShareWA;window.rdvShareEmail=rdvShareEmail;
 })();
+
+window.addEventListener('popstate',function(){
+  var hash=window.location.hash.replace('#','');
+  if(hash.startsWith('rdv/')){
+    var slug=hash.slice(4);
+    var pro=findProBySlug(slug);
+    if(pro){window._rdvProOverride=pro;showView('v-booking-page');setTimeout(function(){if(window.rdvPageInit)window.rdvPageInit();},30);}
+  } else if(!hash){
+    var s=getSession();
+    if(s)showView('v-pro');else showView('v-landing');
+  }
+});
 </script>
 
 <!-- ════════════ ADMIN LOGIN ════════════ -->
@@ -5044,7 +5127,7 @@ window.rdvShareWA=rdvShareWA;window.rdvShareEmail=rdvShareEmail;
 <!-- ════════════ PUBLIC BOOKING PAGE ════════════ -->
 <div class="view" id="v-booking-page">
 <div id="rdv-loading"><div class="loading-spinner"></div><div class="loading-text">Chargement du cabinet…</div></div>
-<div id="rdv-not-found"><div class="nf-ico">🔍</div><div class="nf-title">Cabinet introuvable</div><div class="nf-sub">Ce lien de réservation n'existe pas ou n'est plus actif.<br/>Vérifiez le lien ou contactez votre professionnel de santé.</div><a class="nf-btn" href="index.html">← Retour à MedBook</a></div>
+<div id="rdv-not-found"><div class="nf-ico">🔍</div><div class="nf-title">Cabinet introuvable</div><div class="nf-sub" id="rdv-nf-sub">Chargement du cabinet en cours…<br/>Si la page ne s'affiche pas, le lien est peut-être incorrect.</div><a class="nf-btn" href="index.html">← Retour à MedBook</a></div>
 
 <div id="rdv-bp-wrap" class="bp-wrap" style="display:none">
 
