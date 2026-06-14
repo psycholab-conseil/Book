@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<!-- 
+  IMPORTANT FOR GITHUB PAGES:
+  Create a file named .nojekyll (empty file) in your repository root
+  to prevent Jekyll from processing this file.
+  Without it, GitHub Pages may corrupt the CSS animations.
+-->
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
@@ -60,9 +67,9 @@ a{text-decoration:none;color:inherit}
 .nav-cta:hover{background:var(--sapphire-d);transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,79,216,.35)}
 
 /* ══ HERO — full-bleed mobile card ══ */
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes floatUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideRight{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{opacity:1} 50%{opacity:.3} }
+@keyframes floatUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+@keyframes slideRight{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)} }
 
 .hero{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:72px 0 0;background:#ffffff;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:linear-gradient(145deg,#EEF2FF 0%,#FAFBFF 55%,#ECFDF5 100%);pointer-events:none}
@@ -183,14 +190,14 @@ a{text-decoration:none;color:inherit}
 #modal-auth{display:none;position:fixed;inset:0;background:rgba(13,17,23,.6);z-index:500;align-items:center;justify-content:center;padding:1rem}
 #modal-auth.open{display:flex}
 .auth-box{background:#fff;border-radius:var(--r-xl);padding:2rem 1.75rem;width:100%;max-width:400px;box-shadow:var(--shadow-lg);animation:modalIn .22s ease}
-@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(-10px)}to{opacity:1;transform:none} }
 .auth-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);text-align:center;margin-bottom:1.25rem}
 .auth-logo span{color:var(--sapphire)}
 .auth-tabs{display:flex;gap:0;background:var(--surface);border-radius:var(--r-md);padding:.25rem;margin-bottom:1.25rem}
 .auth-tab{flex:1;border:none;background:transparent;border-radius:10px;padding:.55rem;font-size:.82rem;font-weight:500;color:var(--muted);transition:all var(--anim)}
 .auth-tab.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:var(--shadow-sm)}
 .auth-form-section{animation:fadeIn .2s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1} }
 
 /* ══ FORM COMMON ══ */
 .fgroup{margin-bottom:.7rem}
@@ -1429,9 +1436,9 @@ a{text-decoration:none;color:inherit}
 //  DATA LAYER
 // ══════════════════════════════════
 const DB_KEY='medbook_tn_db';
-function getDB(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch{return{}}}
+function getDB(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch(e){return{};}
 function saveDB(d){localStorage.setItem(DB_KEY,JSON.stringify(d))}
-function getSession(){try{return JSON.parse(sessionStorage.getItem('mb_session')||'null')}catch{return null}}
+function getSession(){try{return JSON.parse(sessionStorage.getItem('mb_session')||'null')}catch{return null} }
 function setSession(s){sessionStorage.setItem('mb_session',JSON.stringify(s))}
 function clearSession(){sessionStorage.removeItem('mb_session')}
 
@@ -1518,7 +1525,7 @@ function doRegister(){
   const pro={id:'pro-'+Date.now(),fn,ln,email,spec,ville,tel:'',adresse:'',duration:50,gcal:false,lang:'fr',
     subscription:{plan:'trial',status:'trial',startDate:trialStart.toISOString(),trialDays:30},
     avail:{days:{mon:true,tue:true,wed:true,thu:true,fri:true,sat:false,sun:false},
-      slots:['09:00','10:00','11:00','14:00','15:00','16:00','17:00']}};
+      slots:['09:00','10:00','11:00','14:00','15:00','16:00','17:00']} };
   db.pros.push(pro);
   if(!db.rdvs) db.rdvs=[];
   if(!db.payments) db.payments=[];
@@ -2562,6 +2569,7 @@ window.addEventListener('popstate',function(){
   }
 });
 
+}
 init();
 </script>
 
