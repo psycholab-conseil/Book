@@ -1444,8 +1444,8 @@ function clearSession(){sessionStorage.removeItem('mb_session')}
 
 function seedDemo(){
   const db=getDB();
-  if(db.seeded&&db.pros&&db.pros[0]&&db.pros[0].fn==='Aymen') return;
-  db.seeded=false;
+  // Always ensure Dr. Khalsi exists
+  if(db.pros&&db.pros.length>0&&db.pros[0].fn==='Aymen') return;
   const today=new Date();
   const fmt=d=>d.toISOString().split('T')[0];
   const add=(n)=>{const d=new Date(today);d.setDate(d.getDate()+n);return d};
@@ -2818,76 +2818,92 @@ function init(){
   seedDemo();
   var hash = window.location.hash.replace('#','');
 
-  // ── Lien patient: #rdv/aymen-khalsi ──
+  // Patient link: #rdv/slug
   if(hash.startsWith('rdv/')){
     var slug = hash.slice(4);
-
-    // Show loading overlay (sur la page existante, pas de reload)
+    
+    // Show loading overlay
     var overlay = document.createElement('div');
     overlay.id = 'fb-loading';
     overlay.style.cssText = 'position:fixed;inset:0;background:#F0F4FF;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;font-family:"DM Sans",sans-serif';
-    overlay.innerHTML = '<div style="width:52px;height:52px;border:4px solid #EEF2FF;border-top-color:#1B4FD8;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:1.25rem"></div>'
-      + '<div style="font-family:\'Playfair Display\',serif;font-size:1.2rem;font-weight:700;color:#1B4FD8">MedBook</div>'
-      + '<div style="font-size:.78rem;color:#718096;margin-top:.3rem">Chargement du cabinet...</div>';
+    overlay.innerHTML = '<div style="width:52px;height:52px;border:4px solid #EEF2FF;border-top-color:#1B4FD8;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:1.25rem"></div><div style="font-family:\'Playfair Display\',serif;font-size:1.2rem;font-weight:700;color:#1B4FD8">MedBook</div><div style="font-size:.78rem;color:#718096;margin-top:.3rem">Chargement du cabinet...</div>';
     document.body.appendChild(overlay);
-
-    // Load from Firebase
+    
+    function removeOverlay(){ var o=document.getElementById('fb-loading'); if(o)o.remove(); }
+    
+    function showProPage(pro){
+      removeOverlay();
+      showView('v-patient');
+      initPatientPage(pro);
+    }
+    
+    function findLocalPro(slug){
+      var db = getDB(); var pros = db.pros||[];
+      // Try exact slug match
+      for(var i=0;i<pros.length;i++){
+        var p=pros[i];
+        var s=((p.fn||'')+'-'+(p.ln||'')).toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+          .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+        if(s===slug) return p;
+      }
+      // Try partial match on last name
+      var parts = slug.split('-');
+      for(var i=0;i<pros.length;i++){
+        var p=pros[i];
+        var ln=(p.ln||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'');
+        if(parts.some(function(pt){return pt.length>2&&ln.includes(pt);})) return p;
+      }
+      // Return first pro as fallback
+      return pros[0]||null;
+    }
+    
+    // Try Firebase first (with 3s timeout)
+    var fbDone = false;
+    var timer = setTimeout(function(){
+      if(fbDone) return;
+      fbDone = true;
+      // Firebase timed out - use local data
+      var pro = findLocalPro(slug);
+      if(pro) showProPage(pro);
+      else { removeOverlay(); showView('v-landing'); }
+    }, 3000);
+    
     fbGetPro(slug, function(pro){
-      // Remove overlay
-      var ov = document.getElementById('fb-loading');
-      if(ov) ov.remove();
-
+      if(fbDone) return;
+      fbDone = true;
+      clearTimeout(timer);
       if(pro){
-        // Show patient page with Firebase data
-        showView('v-patient');
-        initPatientPage(pro);
+        showProPage(pro);
       } else {
-        // Pro not found - maybe they haven't synced yet, try localStorage
-        var db = getDB();
-        var localPro = db.pros && db.pros.find(function(p){
-          return fbSlug(p.fn,p.ln) === slug;
-        });
-        if(localPro){
-          showView('v-patient');
-          initPatientPage(localPro);
-        } else {
-          // Not found anywhere
-          showView('v-landing');
-          toast2('Cabinet introuvable. Le praticien doit se connecter une fois pour activer son lien.','red');
-        }
+        // Not in Firebase yet - use local
+        var localPro = findLocalPro(slug);
+        if(localPro) showProPage(localPro);
+        else { removeOverlay(); showView('v-landing'); }
       }
     });
     return;
   }
 
-  // ── Admin ──
-  if(hash === 'admin'){ try{openAdminPortal();}catch(e){} return; }
+  if(hash==='admin'){ try{openAdminPortal();}catch(e){} return; }
 
-  // ── Praticien connecté ──
-  var s = getSession();
+  var s=getSession();
   if(s){
-    var db = getDB();
-    var pro = db.pros && db.pros.find(function(p){return p.id===s.id;});
+    var db=getDB();
+    var pro=db.pros&&db.pros.find(function(p){return p.id===s.id;});
     if(pro){
-      closeAuthModal();
-      loadProDash(pro);
-      // Sync profil vers Firebase dès la connexion
-      fbSavePro(pro, function(ok){
-        if(ok) console.log('Profil synced to Firebase');
-      });
-      // Charger les RDVs Firebase
+      closeAuthModal(); loadProDash(pro);
+      fbSavePro(pro, null);
       fbLoadRdvsIntoDash(pro);
-      // Mettre à jour le lien d'affichage
-      var linkEl = document.getElementById('booking-url-display');
-      if(linkEl) linkEl.textContent = fbGetPatientLink(pro);
-    } else {
-      showView('v-landing');
-    }
+      var le=document.getElementById('booking-url-display');
+      if(le) le.textContent=fbGetPatientLink(pro);
+    } else showView('v-landing');
   } else {
     showView('v-landing');
   }
   rescheduleAll();
 }
+
 
 
 
