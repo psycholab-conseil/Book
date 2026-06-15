@@ -2498,64 +2498,121 @@ function initPatientPage(pro){
     svcs:[{n:pro.consultType||'Consultation',d:pro.duration||50,p:pro.price||100}],
     motifs:['Première consultation','Suivi régulier','Autre']};
   
-  // Header color
+  // ── Header couleur selon spécialité ──
   var hdr=patEl('pat-header');
   if(hdr) hdr.style.background='linear-gradient(145deg,'+cfg.col+',#0D9488)';
   
-  // Avatar
+  // ── Avatar ──
   var av=patEl('pat-av');
   if(av){
     if(pro.photo) av.innerHTML='<img src="'+pro.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';
     else av.textContent=cfg.ico;
+    av.style.fontSize='2.6rem';
   }
   
-  // Info
+  // ── Nom, titre, spécialité ──
   var nm=patEl('pat-name'); if(nm)nm.textContent='Dr. '+pro.fn+' '+pro.ln;
-  var ti=patEl('pat-titre'); if(ti&&pro.titre){ti.textContent=pro.titre;ti.style.display='';}else if(ti)ti.style.display='none';
-  var sp=patEl('pat-spec'); if(sp)sp.textContent=(pro.spec||'')+(pro.ville?' · '+pro.ville:'');
-  var ad=patEl('pat-addr'); if(ad&&pro.adresse){ad.textContent='📍 '+pro.adresse+(pro.ville?', '+pro.ville:'');ad.style.display='';}else if(ad)ad.style.display='none';
   
-  // Badges
-  var bg=patEl('pat-badges'); if(bg){bg.innerHTML='';
-    var items=(pro.consultLangs||[]).concat((pro.modes||['cabinet']).map(function(m){return{cabinet:'🏥 Cabinet',video:'📹 Vidéo',domicile:'🏠 Domicile'}[m]||m;}));
-    items.forEach(function(b){var s=document.createElement('span');s.style.cssText='background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:.22rem .65rem;font-size:.65rem;font-weight:600;color:#fff';s.textContent=b;bg.appendChild(s);});
-  }
+  var ti=patEl('pat-titre');
+  if(ti){ if(pro.titre){ti.textContent=pro.titre;ti.style.display='';} else ti.style.display='none'; }
   
-  // Bio
-  if(pro.bio){
-    var bc=patEl('pat-bio-card');if(bc)bc.style.display='';
-    var bt=patEl('pat-bio-text');if(bt)bt.textContent=pro.bio;
-    if(pro.adresse){var ml=patEl('pat-map-link');if(ml){ml.href='https://maps.google.com/?q='+encodeURIComponent((pro.adresse||'')+', '+(pro.ville||'')+', Tunisie');ml.textContent='📍 Voir sur Google Maps: '+pro.adresse+(pro.ville?', '+pro.ville:'');ml.style.display='flex';} }
-  }
+  var sp=patEl('pat-spec');
+  if(sp) sp.textContent=(pro.spec||'')+(pro.ville?' · '+pro.ville:'');
   
-  // Services
-  var sl=patEl('pat-svcs');if(sl){sl.innerHTML='';
-    cfg.svcs.forEach(function(svc,i){
-      var d=document.createElement('div');
-      d.style.cssText='display:flex;align-items:center;gap:.75rem;border:1.5px solid #E2E8F0;border-radius:14px;padding:.9rem 1rem;margin-bottom:.5rem;cursor:pointer;transition:all .2s;background:#fff';
-      d.innerHTML='<div style="width:42px;height:42px;border-radius:10px;background:'+cfg.lt+';display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0">'+cfg.ico+'</div><div style="flex:1"><div style="font-size:.87rem;font-weight:700;color:#0D1117">'+patEsc(svc.n)+'</div><div style="font-size:.72rem;color:#718096">⏱ '+svc.d+'min</div></div><div style="font-size:.92rem;font-weight:800;color:'+cfg.col+';white-space:nowrap;padding-left:.5rem">'+svc.p+' DT</div>';
-      d.onclick=function(){document.querySelectorAll('#pat-svcs > div').forEach(function(c){c.style.borderColor='#E2E8F0';c.style.background='#fff';});d.style.borderColor=cfg.col;d.style.background=cfg.lt;_patSvc=svc;};
-      if(i===0)setTimeout(function(){d.click();},20);
-      sl.appendChild(d);
+  // ── Badges ──
+  var bg=patEl('pat-badges'); if(bg){ bg.innerHTML='';
+    var items=(pro.consultLangs||[]).concat((pro.modes||['cabinet']).map(function(m){
+      return {cabinet:'🏥 Cabinet',video:'📹 Vidéo',domicile:'🏠 Domicile'}[m]||m;
+    }));
+    items.forEach(function(b){
+      var s=document.createElement('span');
+      s.style.cssText='background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:.22rem .68rem;font-size:.65rem;font-weight:600;color:#fff';
+      s.textContent=b; bg.appendChild(s);
     });
   }
   
-  // Motifs
-  var mo=patEl('pat-motif');if(mo){mo.innerHTML='<option value="">— Optionnel —</option>';cfg.motifs.forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;mo.appendChild(o);});}
+  // ── Carte d'identité: Stats ──
+  if(pro.experience && pro.experience > 0){
+    var sew=patEl('pat-stat-exp-wrap'); if(sew)sew.style.display='';
+    var se=patEl('pat-stat-exp'); if(se)se.textContent=pro.experience+'+';
+    var sr=patEl('pat-stats-row'); if(sr)sr.style.display='flex';
+  }
+  if(pro.consultLangs && pro.consultLangs.length > 0){
+    var slw=patEl('pat-stat-lang-wrap'); if(slw)slw.style.display='';
+    var sl2=patEl('pat-stat-lang'); if(sl2)sl2.textContent=pro.consultLangs.length;
+    var sr2=patEl('pat-stats-row'); if(sr2)sr2.style.display='flex';
+  }
   
-  // Back btn
-  var bb=patEl('pat-back-btn');if(bb)bb.style.display=getSession()?'flex':'none';
+  // ── Bio ──
+  if(pro.bio){
+    var bw=patEl('pat-bio-wrap'); if(bw)bw.style.display='';
+    var bt=patEl('pat-bio-text'); if(bt)bt.textContent=pro.bio;
+  }
   
-  // Share bar
-  var link=fbGetPatientLink(pro);
-  var ld=patEl('pat-link-display');if(ld)ld.textContent=link;
+  // ── Adresse + Maps ──
+  if(pro.adresse || pro.ville){
+    var aw=patEl('pat-addr-wrap'); if(aw)aw.style.display='';
+    var ml=patEl('pat-map-link');
+    var at=patEl('pat-addr-text');
+    if(ml&&at){
+      var fullAddr=(pro.adresse||'')+(pro.ville?', '+pro.ville:'');
+      at.textContent=fullAddr;
+      ml.href='https://maps.google.com/?q='+encodeURIComponent(fullAddr+', Tunisie');
+    }
+  }
+  
+  // ── Contacts ──
+  var ct=patEl('pat-contacts'); if(ct){ ct.innerHTML='';
+    if(pro.tel){
+      var a1=document.createElement('a');
+      a1.href='tel:'+pro.tel.replace(/\s/g,'');
+      a1.style.cssText='display:inline-flex;align-items:center;gap:.35rem;background:#F0FDF9;border:1px solid #A7F3D0;border-radius:99px;padding:.3rem .75rem;font-size:.72rem;font-weight:600;color:#065F46;text-decoration:none';
+      a1.innerHTML='📞 '+pro.tel; ct.appendChild(a1);
+    }
+    if(pro.wa){
+      var a2=document.createElement('a');
+      a2.href='https://wa.me/'+pro.wa.replace(/[^0-9]/g,'');
+      a2.target='_blank';
+      a2.style.cssText='display:inline-flex;align-items:center;gap:.35rem;background:#ECFDF5;border:1px solid #A7F3D0;border-radius:99px;padding:.3rem .75rem;font-size:.72rem;font-weight:600;color:#25D366;text-decoration:none';
+      a2.innerHTML='📱 WhatsApp'; ct.appendChild(a2);
+    }
+    if(pro.email){
+      var a3=document.createElement('a');
+      a3.href='mailto:'+pro.email;
+      a3.style.cssText='display:inline-flex;align-items:center;gap:.35rem;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:99px;padding:.3rem .75rem;font-size:.72rem;font-weight:600;color:#1B4FD8;text-decoration:none';
+      a3.innerHTML='📧 Email'; ct.appendChild(a3);
+    }
+  }
+  
+  // ── Services ──
+  var svEl=patEl('pat-svcs'); if(svEl){ svEl.innerHTML='';
+    cfg.svcs.forEach(function(svc,i){
+      var d=document.createElement('div');
+      d.style.cssText='display:flex;align-items:center;gap:.75rem;border:1.5px solid #E2E8F0;border-radius:14px;padding:.9rem 1rem;margin-bottom:.5rem;cursor:pointer;transition:all .2s;background:#fff';
+      d.innerHTML='<div style="width:44px;height:44px;border-radius:11px;background:'+cfg.lt+';display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">'+cfg.ico+'</div>'
+        +'<div style="flex:1"><div style="font-size:.88rem;font-weight:700;color:#0D1117">'+patEsc(svc.n)+'</div><div style="font-size:.72rem;color:#718096;margin-top:.05rem">⏱ '+svc.d+'min</div></div>'
+        +'<div style="font-size:.92rem;font-weight:800;color:'+cfg.col+';white-space:nowrap">'+svc.p+' DT</div>';
+      d.onclick=function(){
+        document.querySelectorAll('#pat-svcs > div').forEach(function(c){c.style.borderColor='#E2E8F0';c.style.background='#fff';});
+        d.style.borderColor=cfg.col; d.style.background=cfg.lt; _patSvc=svc;
+      };
+      if(i===0) setTimeout(function(){d.click();},20);
+      svEl.appendChild(d);
+    });
+  }
+  
+  // ── Motifs ──
+  var mo=patEl('pat-motif');
+  if(mo){
+    mo.innerHTML='<option value="">— Optionnel —</option>';
+    cfg.motifs.forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;mo.appendChild(o);});
+  }
+  
+  // ── Bouton retour (praticien seulement) ──
+  var bb=patEl('pat-back-btn'); if(bb)bb.style.display=getSession()?'flex':'none';
   
   patShowStep(1);
   patDrawCal();
-  
-  // Sync share link in dashboard
-  var bd=document.getElementById('booking-url-display');
-  if(bd) bd.textContent=link;
 }
 
 function patShowStep(n){
@@ -2759,60 +2816,79 @@ function patGoBack(){
 
 function init(){
   seedDemo();
-  var hash=window.location.hash.replace('#','');
-  
-  // Patient link: #rdv/aymen-khalsi → load from Firebase
+  var hash = window.location.hash.replace('#','');
+
+  // ── Lien patient: #rdv/aymen-khalsi ──
   if(hash.startsWith('rdv/')){
-    var slug=hash.slice(4);
-    // Show loading
-    document.body.innerHTML='<div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#F0F4FF;font-family:DM Sans,sans-serif"><div style="width:48px;height:48px;border:4px solid #EEF2FF;border-top-color:#1B4FD8;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:1rem"></div><div style="font-family:Playfair Display,serif;font-size:1.1rem;font-weight:700;color:#1B4FD8">MedBook</div><div style="font-size:.76rem;color:#718096;margin-top:.25rem">Chargement du cabinet...</div><style>@keyframes spin{to{transform:rotate(360deg)} }</style></div>';
+    var slug = hash.slice(4);
+
+    // Show loading overlay (sur la page existante, pas de reload)
+    var overlay = document.createElement('div');
+    overlay.id = 'fb-loading';
+    overlay.style.cssText = 'position:fixed;inset:0;background:#F0F4FF;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;font-family:"DM Sans",sans-serif';
+    overlay.innerHTML = '<div style="width:52px;height:52px;border:4px solid #EEF2FF;border-top-color:#1B4FD8;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:1.25rem"></div>'
+      + '<div style="font-family:\'Playfair Display\',serif;font-size:1.2rem;font-weight:700;color:#1B4FD8">MedBook</div>'
+      + '<div style="font-size:.78rem;color:#718096;margin-top:.3rem">Chargement du cabinet...</div>';
+    document.body.appendChild(overlay);
+
+    // Load from Firebase
     fbGetPro(slug, function(pro){
+      // Remove overlay
+      var ov = document.getElementById('fb-loading');
+      if(ov) ov.remove();
+
       if(pro){
-        document.body.innerHTML='';
-        location.reload();
-        // Actually we need to restore the page - use a flag
-        sessionStorage.setItem('mb_load_pro', JSON.stringify({pro:pro,slug:slug}));
-        location.reload();
+        // Show patient page with Firebase data
+        showView('v-patient');
+        initPatientPage(pro);
       } else {
-        document.body.innerHTML='<div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#F0F4FF;text-align:center;padding:2rem;font-family:DM Sans,sans-serif"><div style="font-size:3rem;margin-bottom:1rem">🔍</div><div style="font-family:Playfair Display,serif;font-size:1.4rem;font-weight:700;color:#0D1117;margin-bottom:.5rem">Cabinet introuvable</div><div style="font-size:.86rem;color:#718096;margin-bottom:1.5rem">Ce lien de réservation est invalide ou inactif.</div><a href="'+window.location.pathname+'" style="background:#1B4FD8;color:#fff;text-decoration:none;border-radius:10px;padding:.75rem 1.5rem;font-size:.88rem;font-weight:700">Retour à MedBook</a></div>';
+        // Pro not found - maybe they haven't synced yet, try localStorage
+        var db = getDB();
+        var localPro = db.pros && db.pros.find(function(p){
+          return fbSlug(p.fn,p.ln) === slug;
+        });
+        if(localPro){
+          showView('v-patient');
+          initPatientPage(localPro);
+        } else {
+          // Not found anywhere
+          showView('v-landing');
+          toast2('Cabinet introuvable. Le praticien doit se connecter une fois pour activer son lien.','red');
+        }
       }
     });
     return;
   }
-  
-  // Check for pre-loaded pro data (after reload)
-  var loadPro = sessionStorage.getItem('mb_load_pro');
-  if(loadPro){
-    sessionStorage.removeItem('mb_load_pro');
-    try{
-      var data=JSON.parse(loadPro);
-      if(data.pro){
-        showView('v-patient');
-        initPatientPage(data.pro);
-        if(history.pushState)history.pushState(null,'','#rdv/'+data.slug);
-        return;
-      }
-    }catch(e){}
-  }
-  
-  if(hash==='admin'){try{openAdminPortal();}catch(e){}return;}
-  
-  var s=getSession();
+
+  // ── Admin ──
+  if(hash === 'admin'){ try{openAdminPortal();}catch(e){} return; }
+
+  // ── Praticien connecté ──
+  var s = getSession();
   if(s){
-    var db=getDB(); var pro=db.pros&&db.pros.find(function(p){return p.id===s.id;});
+    var db = getDB();
+    var pro = db.pros && db.pros.find(function(p){return p.id===s.id;});
     if(pro){
       closeAuthModal();
       loadProDash(pro);
-      // Sync profile to Firebase
-      fbSavePro(pro, null);
-      // Load Firebase RDVs
+      // Sync profil vers Firebase dès la connexion
+      fbSavePro(pro, function(ok){
+        if(ok) console.log('Profil synced to Firebase');
+      });
+      // Charger les RDVs Firebase
       fbLoadRdvsIntoDash(pro);
-    } else showView('v-landing');
+      // Mettre à jour le lien d'affichage
+      var linkEl = document.getElementById('booking-url-display');
+      if(linkEl) linkEl.textContent = fbGetPatientLink(pro);
+    } else {
+      showView('v-landing');
+    }
   } else {
     showView('v-landing');
   }
   rescheduleAll();
 }
+
 
 
 // ══ PUBLIC PATIENT BOOKING PAGE ══
@@ -3114,79 +3190,147 @@ init();
 
 
 <!-- PAGE PATIENT PUBLIQUE -->
-<div class="view" id="v-patient" style="background:#F0F4FF;min-height:100dvh">
+<div class="view" id="v-patient" style="background:#F0F4FF;min-height:100dvh;font-family:'DM Sans',sans-serif">
 
-  <button id="pat-back-btn" onclick="patGoBack()" style="display:none;position:fixed;top:.75rem;left:.75rem;z-index:300;background:rgba(255,255,255,.95);border:1.5px solid #C7D2FE;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:700;color:#1B4FD8;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.12);align-items:center;gap:.35rem">← Tableau de bord</button>
+  <!-- Bouton retour dashboard -->
+  <button id="pat-back-btn" onclick="patGoBack()" style="display:none;position:fixed;top:.75rem;left:.75rem;z-index:300;background:rgba(255,255,255,.95);border:1.5px solid #C7D2FE;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:700;color:#1B4FD8;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.12);align-items:center;gap:.35rem">← Mon espace</button>
 
-  <!-- HEADER -->
-  <div id="pat-header" style="background:linear-gradient(145deg,#1B4FD8,#0D9488);padding:2.5rem 1.25rem 5rem;text-align:center;position:relative;overflow:hidden">
-    <div style="position:absolute;inset:0;opacity:.05;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:18px 18px"></div>
-    <div style="position:absolute;bottom:-2px;left:0;right:0;height:52px;background:#F0F4FF;border-radius:60% 60% 0 0/100% 100% 0 0;z-index:1"></div>
-    <div id="pat-av" style="width:90px;height:90px;border-radius:50%;border:4px solid rgba(255,255,255,.45);background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:2.4rem;margin:0 auto 1rem;position:relative;z-index:2;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.15)">🩺</div>
-    <div id="pat-name" style="font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;color:#fff;position:relative;z-index:2">Dr. —</div>
-    <div id="pat-titre" style="font-size:.74rem;color:rgba(255,255,255,.78);margin-top:.22rem;position:relative;z-index:2;display:none"></div>
-    <div id="pat-spec" style="font-size:.86rem;color:rgba(255,255,255,.9);margin-top:.22rem;position:relative;z-index:2;font-weight:500">—</div>
-    <div id="pat-addr" style="font-size:.72rem;color:rgba(255,255,255,.65);margin-top:.25rem;position:relative;z-index:2;display:none"></div>
-    <div id="pat-badges" style="display:flex;flex-wrap:wrap;justify-content:center;gap:.35rem;margin-top:.75rem;position:relative;z-index:2"></div>
+  <!-- ══ CARTE PROFESSIONNELLE ══ -->
+  <div id="pat-header" style="background:linear-gradient(145deg,#1B4FD8,#0D9488);padding:0;position:relative;overflow:hidden">
+    
+    <!-- Motif de fond -->
+    <div style="position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle,#fff 1.5px,transparent 1.5px);background-size:20px 20px"></div>
+    
+    <!-- Contenu header -->
+    <div style="padding:2.5rem 1.25rem 4.5rem;text-align:center;position:relative;z-index:2">
+      
+      <!-- Avatar -->
+      <div id="pat-av" style="width:96px;height:96px;border-radius:50%;border:4px solid rgba(255,255,255,.5);background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:2.6rem;margin:0 auto 1rem;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2)">🩺</div>
+      
+      <!-- Nom -->
+      <div id="pat-name" style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:#fff;line-height:1.2">Dr. —</div>
+      
+      <!-- Titre -->
+      <div id="pat-titre" style="display:none;font-size:.74rem;color:rgba(255,255,255,.75);margin-top:.3rem;line-height:1.5"></div>
+      
+      <!-- Spécialité + Ville -->
+      <div id="pat-spec" style="font-size:.88rem;color:rgba(255,255,255,.9);margin-top:.3rem;font-weight:500">—</div>
+      
+      <!-- Badges modes/langues -->
+      <div id="pat-badges" style="display:flex;flex-wrap:wrap;justify-content:center;gap:.35rem;margin-top:.85rem"></div>
+    </div>
+    
+    <!-- Vague de séparation -->
+    <div style="position:absolute;bottom:-2px;left:0;right:0;height:52px;background:#F0F4FF;border-radius:60% 60% 0 0/100% 100% 0 0;z-index:3"></div>
   </div>
 
-  <!-- CONTENT -->
+  <!-- ══ CONTENU ══ -->
   <div style="max-width:560px;margin:0 auto;padding:0 1rem 4rem">
 
-    <!-- Bio -->
-    <div id="pat-bio-card" style="display:none;background:#fff;border-radius:16px;padding:1.1rem;margin-bottom:.85rem;box-shadow:0 2px 16px rgba(0,0,0,.08)">
-      <div id="pat-bio-text" style="font-size:.82rem;color:#4A5568;line-height:1.78"></div>
-      <a id="pat-map-link" href="#" target="_blank" style="display:none;align-items:center;gap:.5rem;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:.6rem .9rem;font-size:.76rem;color:#1B4FD8;font-weight:600;margin-top:.65rem;text-decoration:none"></a>
+    <!-- ── CARTE D'IDENTITÉ PROFESSIONNELLE ── -->
+    <div id="pat-id-card" style="background:#fff;border-radius:20px;padding:1.25rem;margin-bottom:.85rem;box-shadow:0 4px 24px rgba(0,0,0,.1);margin-top:-.5rem">
+      
+      <!-- Expérience + langues -->
+      <div id="pat-stats-row" style="display:none;border-bottom:1px solid #F0F4FF;padding-bottom:.85rem;margin-bottom:.85rem;display:flex;justify-content:center;gap:2rem;text-align:center">
+        <div id="pat-stat-exp-wrap" style="display:none">
+          <div id="pat-stat-exp" style="font-size:1.3rem;font-weight:800;color:#1B4FD8"></div>
+          <div style="font-size:.62rem;color:#A0AEC0;text-transform:uppercase;letter-spacing:.05em">ans exp.</div>
+        </div>
+        <div id="pat-stat-lang-wrap" style="display:none">
+          <div id="pat-stat-lang" style="font-size:1.3rem;font-weight:800;color:#1B4FD8"></div>
+          <div style="font-size:.62rem;color:#A0AEC0;text-transform:uppercase;letter-spacing:.05em">langues</div>
+        </div>
+      </div>
+      
+      <!-- Bio -->
+      <div id="pat-bio-wrap" style="display:none;margin-bottom:.85rem">
+        <div id="pat-bio-text" style="font-size:.82rem;color:#4A5568;line-height:1.8"></div>
+      </div>
+      
+      <!-- Adresse + Maps -->
+      <div id="pat-addr-wrap" style="display:none;margin-bottom:.75rem">
+        <a id="pat-map-link" href="#" target="_blank" style="display:flex;align-items:flex-start;gap:.65rem;background:#F0F4FF;border:1px solid #C7D2FE;border-radius:12px;padding:.8rem 1rem;text-decoration:none;transition:background .2s">
+          <div style="width:36px;height:36px;background:#1B4FD8;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem">📍</div>
+          <div>
+            <div id="pat-addr-text" style="font-size:.8rem;font-weight:600;color:#1B4FD8;line-height:1.5"></div>
+            <div style="font-size:.68rem;color:#718096;margin-top:.1rem">Ouvrir dans Google Maps →</div>
+          </div>
+        </a>
+      </div>
+      
+      <!-- Contacts -->
+      <div id="pat-contacts" style="display:flex;flex-wrap:wrap;gap:.4rem"></div>
     </div>
 
-    <!-- STEP 1: Service + Calendar + Slots -->
-    <div id="pat-s1">
-      <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin:.5rem 0 .6rem">Type de consultation</div>
-      <div id="pat-svcs"></div>
+    <!-- ── SERVICES ── -->
+    <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin:.25rem 0 .6rem">Type de consultation</div>
+    <div id="pat-svcs"></div>
 
-      <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin:.85rem 0 .5rem">Choisissez une date</div>
+    <!-- ── ÉTAPE 1: Calendrier + Créneaux ── -->
+    <div id="pat-s1">
+      <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin:.85rem 0 .55rem">Choisissez une date</div>
       <div style="background:#fff;border-radius:16px;padding:1rem;box-shadow:0 2px 16px rgba(0,0,0,.08)">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
-          <button onclick="patPrev()" style="width:34px;height:34px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font-size:.9rem;cursor:pointer;color:#4A5568">‹</button>
+          <button onclick="patPrev()" style="width:36px;height:36px;border:1.5px solid #E2E8F0;border-radius:9px;background:#fff;font-size:1rem;cursor:pointer;color:#4A5568;display:flex;align-items:center;justify-content:center">‹</button>
           <div id="pat-cal-title" style="font-weight:700;font-size:.92rem;color:#0D1117"></div>
-          <button onclick="patNext()" style="width:34px;height:34px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font-size:.9rem;cursor:pointer;color:#4A5568">›</button>
+          <button onclick="patNext()" style="width:36px;height:36px;border:1.5px solid #E2E8F0;border-radius:9px;background:#fff;font-size:1rem;cursor:pointer;color:#4A5568;display:flex;align-items:center;justify-content:center">›</button>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:.6rem;font-weight:700;color:#A0AEC0;margin-bottom:5px;gap:2px">
-          <div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:.62rem;font-weight:700;color:#A0AEC0;margin-bottom:6px;gap:2px">
+          <div>Lu</div><div>Ma</div><div>Me</div><div>Je</div><div>Ve</div><div>Sa</div><div>Di</div>
         </div>
         <div id="pat-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
       </div>
 
-      <!-- Slots -->
+      <!-- Créneaux -->
       <div id="pat-slots-wrap" style="display:none;margin-top:.85rem">
-        <div id="pat-slots-label" style="font-size:.78rem;font-weight:700;color:#0D1117;margin-bottom:.55rem"></div>
+        <div id="pat-slots-label" style="font-size:.8rem;font-weight:700;color:#0D1117;margin-bottom:.6rem"></div>
         <div id="pat-slots-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem"></div>
+        <div id="pat-no-slots" style="display:none;background:#fff;border-radius:12px;padding:.85rem;text-align:center;font-size:.76rem;color:#718096">Aucun créneau disponible ce jour. Choisissez une autre date.</div>
       </div>
 
-      <button id="pat-cta-btn" onclick="patToForm()" disabled style="width:100%;background:#1B4FD8;color:#fff;border:none;border-radius:14px;padding:1rem;font-size:.92rem;font-weight:700;margin-top:1rem;opacity:.4;transition:all .25s;cursor:pointer;box-shadow:0 4px 20px rgba(27,79,216,.3)">Continuer →</button>
+      <button id="pat-cta-btn" onclick="patToForm()" disabled style="width:100%;background:#1B4FD8;color:#fff;border:none;border-radius:14px;padding:1.05rem;font-size:.92rem;font-weight:700;margin-top:1rem;opacity:.4;transition:all .25s;cursor:pointer;box-shadow:0 4px 20px rgba(27,79,216,.3)">Continuer →</button>
     </div>
 
-    <!-- STEP 2: Form -->
+    <!-- ── ÉTAPE 2: Formulaire ── -->
     <div id="pat-s2" style="display:none">
-      <button onclick="patBack()" style="background:#fff;border:1px solid #E2E8F0;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:600;color:#4A5568;cursor:pointer;margin-bottom:.9rem">← Retour</button>
+      <button onclick="patBack()" style="background:#fff;border:1px solid #E2E8F0;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:600;color:#4A5568;cursor:pointer;margin-bottom:.9rem;display:inline-flex;align-items:center;gap:.35rem">← Retour</button>
+      
+      <!-- Récap RDV -->
       <div id="pat-recap" style="background:linear-gradient(135deg,#EEF2FF,#F0FDF9);border:1.5px solid #C7D2FE;border-radius:14px;padding:1rem;margin-bottom:1rem;font-size:.8rem;color:#4A5568;line-height:1.9"></div>
-      <div style="background:#fff;border-radius:16px;padding:1.1rem;box-shadow:0 2px 16px rgba(0,0,0,.08)">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.65rem">
-          <div><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Prénom *</label><input id="pat-fn" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="Yassine"/></div>
-          <div><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Nom *</label><input id="pat-ln" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="Trabelsi"/></div>
+      
+      <!-- Formulaire -->
+      <div style="background:#fff;border-radius:16px;padding:1.25rem;box-shadow:0 2px 16px rgba(0,0,0,.08)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.7rem">
+          <div>
+            <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.3rem">Prénom *</label>
+            <input id="pat-fn" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.6rem .85rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none;transition:border-color .2s" placeholder="Yassine" onfocus="this.style.borderColor='#1B4FD8'" onblur="this.style.borderColor='#E2E8F0'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.3rem">Nom *</label>
+            <input id="pat-ln" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.6rem .85rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none;transition:border-color .2s" placeholder="Trabelsi" onfocus="this.style.borderColor='#1B4FD8'" onblur="this.style.borderColor='#E2E8F0'"/>
+          </div>
         </div>
-        <div style="margin-bottom:.65rem"><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Email * (rappels automatiques)</label><input id="pat-email" type="email" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="vous@email.com"/></div>
-        <div style="margin-bottom:.65rem"><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Téléphone</label><input id="pat-tel" type="tel" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="+216 55 …"/></div>
-        <div style="margin-bottom:.65rem"><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Motif</label><select id="pat-motif" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;background:#fff;outline:none;appearance:none"></select></div>
-        <label style="display:flex;align-items:flex-start;gap:.5rem;background:#F7F8FC;border:1px solid #E2E8F0;border-radius:10px;padding:.65rem;margin-bottom:.85rem;cursor:pointer">
+        <div style="margin-bottom:.7rem">
+          <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.3rem">Email * <span style="font-weight:400;color:#A0AEC0">(rappels automatiques)</span></label>
+          <input id="pat-email" type="email" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.6rem .85rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="vous@email.com" onfocus="this.style.borderColor='#1B4FD8'" onblur="this.style.borderColor='#E2E8F0'"/>
+        </div>
+        <div style="margin-bottom:.7rem">
+          <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.3rem">Téléphone <span style="font-weight:400;color:#A0AEC0">(optionnel)</span></label>
+          <input id="pat-tel" type="tel" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.6rem .85rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="+216 55 …" onfocus="this.style.borderColor='#1B4FD8'" onblur="this.style.borderColor='#E2E8F0'"/>
+        </div>
+        <div style="margin-bottom:.7rem">
+          <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.3rem">Motif de consultation</label>
+          <select id="pat-motif" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.6rem .85rem;font-size:.84rem;font-family:inherit;color:#0D1117;background:#fff;outline:none;appearance:none;-webkit-appearance:none"></select>
+        </div>
+        <label style="display:flex;align-items:flex-start;gap:.5rem;background:#F7F8FC;border:1px solid #E2E8F0;border-radius:10px;padding:.65rem;margin-bottom:.9rem;cursor:pointer">
           <input type="checkbox" id="pat-rgpd" style="margin-top:.15rem;accent-color:#1B4FD8;flex-shrink:0;width:15px;height:15px"/>
           <span style="font-size:.72rem;color:#718096;line-height:1.55">J'accepte que mes données soient utilisées pour ce rendez-vous et l'envoi de rappels. Conforme à la réglementation tunisienne.</span>
         </label>
-        <button id="pat-confirm-btn" onclick="patConfirm()" style="width:100%;background:#1B4FD8;color:#fff;border:none;border-radius:14px;padding:1rem;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(27,79,216,.3)">✅ Confirmer le rendez-vous</button>
+        <button id="pat-confirm-btn" onclick="patConfirm()" style="width:100%;background:#1B4FD8;color:#fff;border:none;border-radius:14px;padding:1.05rem;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(27,79,216,.3);font-family:inherit;transition:all .2s">✅ Confirmer le rendez-vous</button>
       </div>
     </div>
 
-    <!-- STEP 3: Success -->
+    <!-- ── ÉTAPE 3: Confirmation ── -->
     <div id="pat-s3" style="display:none;padding:2rem 0;text-align:center">
       <div style="font-size:3.5rem;margin-bottom:.75rem">✅</div>
       <div style="font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:800;color:#0D1117;margin-bottom:.5rem">Rendez-vous confirmé !</div>
@@ -3194,22 +3338,22 @@ init();
       <div id="pat-success-detail" style="background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:1.1rem;margin-bottom:1rem;text-align:left;font-size:.8rem;line-height:1.9;color:#4A5568"></div>
       <div style="background:#ECFDF5;border:1px solid #A7F3D0;border-radius:12px;padding:.9rem;margin-bottom:1rem;text-align:left;font-size:.76rem;color:#065F46;line-height:1.7">
         📧 Rappels automatiques programmés<br/>
-        ✅ Confirmation envoyée à <span id="pat-conf-email"></span><br/>
+        ✅ Confirmation envoyée à <span id="pat-conf-email" style="font-weight:700"></span><br/>
         ⏰ Rappel 24h avant · ⏰ Rappel 2h avant
       </div>
-      <button onclick="patAddGcal()" style="width:100%;background:#1A73E8;color:#fff;border:none;border-radius:12px;padding:.75rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📅 Google Calendar</button>
-      <button onclick="patAddIcal()" style="width:100%;background:#fff;color:#0D1117;border:1.5px solid #E2E8F0;border-radius:12px;padding:.72rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📆 Télécharger .ics</button>
-      <button id="pat-wa-btn" onclick="patContactWA()" style="display:none;width:100%;background:#25D366;color:#fff;border:none;border-radius:12px;padding:.72rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📱 Contacter via WhatsApp</button>
-      <button onclick="patReset()" style="width:100%;background:#F7F8FC;color:#4A5568;border:1px solid #E2E8F0;border-radius:12px;padding:.7rem;font-size:.8rem;cursor:pointer">🔄 Autre rendez-vous</button>
+      <button onclick="patAddGcal()" style="width:100%;background:#1A73E8;color:#fff;border:none;border-radius:12px;padding:.78rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer;font-family:inherit">📅 Ajouter à Google Calendar</button>
+      <button onclick="patAddIcal()" style="width:100%;background:#fff;color:#0D1117;border:1.5px solid #E2E8F0;border-radius:12px;padding:.75rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer;font-family:inherit">📆 Télécharger .ics (Apple / Outlook)</button>
+      <button id="pat-wa-btn" onclick="patContactWA()" style="display:none;width:100%;background:#25D366;color:#fff;border:none;border-radius:12px;padding:.75rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer;font-family:inherit">📱 Contacter Dr. via WhatsApp</button>
+      <button onclick="patReset()" style="width:100%;background:#F7F8FC;color:#4A5568;border:1px solid #E2E8F0;border-radius:12px;padding:.72rem;font-size:.8rem;cursor:pointer;font-family:inherit">🔄 Prendre un autre rendez-vous</button>
     </div>
 
-    <!-- Share -->
+    <!-- ── Barre de partage ── -->
     <div style="display:flex;gap:.45rem;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #E2E8F0">
       <button onclick="patCopyLink()" style="flex:1;border:1.5px solid #E2E8F0;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#4A5568;background:#fff;cursor:pointer">📋 Copier</button>
       <button onclick="patShareWA()" style="flex:1;border:1.5px solid #25D366;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#25D366;background:#fff;cursor:pointer">📱 WhatsApp</button>
       <button onclick="patShareEmail()" style="flex:1;border:1.5px solid #E2E8F0;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#4A5568;background:#fff;cursor:pointer">📧 Email</button>
     </div>
-    <div style="text-align:center;padding:1.5rem 0 .5rem;font-size:.65rem;color:#A0AEC0">Propulsé par <strong style="color:#1B4FD8">MedBook</strong> · 🇹🇳 Tunisie</div>
+    <div style="text-align:center;padding:1.5rem 0 .5rem;font-size:.65rem;color:#A0AEC0">Propulsé par <strong style="color:#1B4FD8">MedBook</strong> · 🇹🇳 Tunisie · Vos données sont protégées</div>
   </div>
 </div>
 
