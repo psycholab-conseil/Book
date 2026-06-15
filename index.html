@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<!-- 
+  IMPORTANT FOR GITHUB PAGES:
+  Create a file named .nojekyll (empty file) in your repository root
+  to prevent Jekyll from processing this file.
+  Without it, GitHub Pages may corrupt the CSS animations.
+-->
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
@@ -60,9 +67,9 @@ a{text-decoration:none;color:inherit}
 .nav-cta:hover{background:var(--sapphire-d);transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,79,216,.35)}
 
 /* ══ HERO — full-bleed mobile card ══ */
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes floatUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideRight{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{opacity:1} 50%{opacity:.3} }
+@keyframes floatUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+@keyframes slideRight{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)} }
 
 .hero{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:72px 0 0;background:#ffffff;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:linear-gradient(145deg,#EEF2FF 0%,#FAFBFF 55%,#ECFDF5 100%);pointer-events:none}
@@ -183,14 +190,14 @@ a{text-decoration:none;color:inherit}
 #modal-auth{display:none;position:fixed;inset:0;background:rgba(13,17,23,.6);z-index:500;align-items:center;justify-content:center;padding:1rem}
 #modal-auth.open{display:flex}
 .auth-box{background:#fff;border-radius:var(--r-xl);padding:2rem 1.75rem;width:100%;max-width:400px;box-shadow:var(--shadow-lg);animation:modalIn .22s ease}
-@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(-10px)}to{opacity:1;transform:none} }
 .auth-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);text-align:center;margin-bottom:1.25rem}
 .auth-logo span{color:var(--sapphire)}
 .auth-tabs{display:flex;gap:0;background:var(--surface);border-radius:var(--r-md);padding:.25rem;margin-bottom:1.25rem}
 .auth-tab{flex:1;border:none;background:transparent;border-radius:10px;padding:.55rem;font-size:.82rem;font-weight:500;color:var(--muted);transition:all var(--anim)}
 .auth-tab.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:var(--shadow-sm)}
 .auth-form-section{animation:fadeIn .2s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1} }
 
 /* ══ FORM COMMON ══ */
 .fgroup{margin-bottom:.7rem}
@@ -490,9 +497,20 @@ a{text-decoration:none;color:inherit}
 .notif-text{font-size:.8rem;color:var(--ink);line-height:1.5}
 .notif-time-label{font-size:.68rem;color:var(--muted);margin-top:.2rem}
 
-/* ══ PAGE PATIENT ══ */
-@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-#v-patient .pat-day-btn:hover{background:#EEF2FF;color:#1B4FD8}
+/* ══ PUBLIC BOOKING ══ */
+.bk-svc-card{display:flex;align-items:center;gap:.75rem;border:1.5px solid #E2E8F0;border-radius:14px;padding:.9rem;margin-bottom:.5rem;cursor:pointer;transition:all .2s;background:#fff}
+.bk-svc-card:hover,.bk-svc-card.selected{border-color:#1B4FD8;background:#EEF2FF}
+.bk-svc-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.bk-svc-name{font-size:.86rem;font-weight:700;color:#0D1117}
+.bk-svc-meta{font-size:.72rem;color:#718096;margin-top:.05rem}
+.bk-svc-price{font-size:.9rem;font-weight:800;color:#1B4FD8;margin-left:auto}
+.bk-day{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.78rem;cursor:pointer;transition:all .18s;font-weight:500;color:#0D1117}
+.bk-day:hover{background:#EEF2FF;color:#1B4FD8}
+.bk-day.today{background:#1B4FD8;color:#fff;font-weight:700}
+.bk-day.selected:not(.today){background:#EEF2FF;color:#1B4FD8;font-weight:700;box-shadow:inset 0 0 0 2px #C7D2FE}
+.bk-day.past,.bk-day.unavail{color:#E2E8F0;cursor:default;pointer-events:none}
+.bk-slot{border:1.5px solid #C7D2FE;border-radius:8px;padding:.55rem;text-align:center;font-size:.8rem;font-weight:600;color:#1B4FD8;background:#fff;cursor:pointer;transition:all .18s}
+.bk-slot:hover,.bk-slot.selected{background:#1B4FD8;color:#fff;border-color:#1B4FD8}
 
 </style>
 </head>
@@ -719,7 +737,7 @@ a{text-decoration:none;color:inherit}
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-logo">Med<span style="color:#6B9EFF">Book</span></div>
+    <div class="footer-logo">Psycho<span style="color:#6B9EFF">Book</span></div>
     <div class="footer-sub">Prise de rendez-vous médicaux en ligne · 🇹🇳 Tunisie<br/>Édité par <strong style="color:rgba(255,255,255,.7)">Medlab</strong></div>
     <div class="footer-links">
       <a onclick="openAuth()">Accès professionnel</a>
@@ -1418,15 +1436,15 @@ a{text-decoration:none;color:inherit}
 //  DATA LAYER
 // ══════════════════════════════════
 const DB_KEY='medbook_tn_db';
-function getDB(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch(e){return{} } }
+function getDB(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch(e){return{};}
 function saveDB(d){localStorage.setItem(DB_KEY,JSON.stringify(d))}
-function getSession(){try{return JSON.parse(sessionStorage.getItem('mb_session')||'null')}catch(e){return null;} }
+function getSession(){try{return JSON.parse(sessionStorage.getItem('mb_session')||'null')}catch{return null} }
 function setSession(s){sessionStorage.setItem('mb_session',JSON.stringify(s))}
 function clearSession(){sessionStorage.removeItem('mb_session')}
 
 function seedDemo(){
   const db=getDB();
-  if(db.seeded && db.pros && db.pros[0] && db.pros[0].fn==='Aymen') return;
+  if(db.seeded&&db.pros&&db.pros[0]&&db.pros[0].fn==='Aymen') return;
   db.seeded=false;
   const today=new Date();
   const fmt=d=>d.toISOString().split('T')[0];
@@ -1634,11 +1652,7 @@ function loadProDash(pro){
   document.getElementById('welcome-msg').textContent='Bonjour Dr. '+pro.ln+' 👋';
   document.getElementById('today-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const slug=(pro.fn+'-'+pro.ln).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
-  document.getElementById('booking-url-display').textContent='⏳ Génération du lien…';
-  getShortLink(pro, function(link){
-    var el=document.getElementById('booking-url-display');
-    if(el) el.textContent=link;
-  });
+  document.getElementById('booking-url-display').textContent=fbGetPatientLink(pro);
   const embedEl=document.getElementById('embed-code');
   if(embedEl) embedEl.textContent=`<iframe src="https://medbook.tn/rdv/${slug}" width="100%" height="600" frameborder="0"></iframe>`;
   document.getElementById('set-fn').value=pro.fn;
@@ -1884,50 +1898,22 @@ function connectGcal(){
 }
 
 // ══ SHARE / EXPORT ══
-
-// ══ RACCOURCISSEUR DE LIEN INTÉGRÉ ══
-var _shortLinksCache = {};
-
-function getShortLink(pro, callback){
-  var fullLink = getShareLink(pro);
-  if(_shortLinksCache[fullLink]){
-    callback(_shortLinksCache[fullLink]); return;
-  }
-  // Utiliser TinyURL (gratuit, sans API key)
-  fetch('https://tinyurl.com/api-create.php?url='+encodeURIComponent(fullLink))
-    .then(function(r){return r.text();})
-    .then(function(short){
-      if(short && short.startsWith('https://')){
-        _shortLinksCache[fullLink] = short;
-        callback(short);
-      } else {
-        callback(fullLink); // Fallback: lien long
-      }
-    })
-    .catch(function(){callback(fullLink);}); // Fallback si pas de réseau
-}
-
 function copyLink(){
-  var s=getSession(); var db=getDB();
+  var s=getSession();var db=getDB();
   var pro=db.pros&&db.pros.find(function(p){return p.id===s.id;});
-  if(!pro){toast2('Profil introuvable','red');return;}
-  var urlEl=document.getElementById('booking-url-display');
-  // Essayer d'utiliser le lien court depuis TinyURL
-  getShortLink(pro, function(link){
-    navigator.clipboard&&navigator.clipboard.writeText(link).catch(function(){});
-    if(urlEl) urlEl.textContent = link;
-    toast2('🔗 Lien copié !','green');
-  });
+  if(!pro)return;
+  var link=fbGetPatientLink(pro);
+  navigator.clipboard&&navigator.clipboard.writeText(link);
+  toast2('🔗 Lien copié !','green');
 }
 
 function shareWhatsApp(){
-  var s=getSession(); var db=getDB();
+  var s=getSession();var db=getDB();
   var pro=db.pros&&db.pros.find(function(p){return p.id===s.id;});
-  if(!pro){toast2('Profil introuvable','red');return;}
-  getShortLink(pro, function(link){
-    var msg=encodeURIComponent('📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+(pro.ville?', '+pro.ville:'')+') :\n'+link);
-    window.open('https://wa.me/?text='+msg,'_blank');
-  });
+  if(!pro)return;
+  var link=fbGetPatientLink(pro);
+  var msg=encodeURIComponent('📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+(pro.ville?', '+pro.ville:'')+') :\n'+link);
+  window.open('https://wa.me/?text='+msg,'_blank');
 }
 
 function exportICS(){
@@ -1955,7 +1941,7 @@ function copyEmbed(){
 
 // ══ PRO CALENDAR ══
 let proCalDate=new Date();
-// MONTHS_FR déjà défini dans l'app originale
+const MONTHS_FR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 function initProCal(){proCalDate=new Date();renderProCal();}
 function renderProCal(){
   const s=getSession();if(!s)return;
@@ -2001,43 +1987,30 @@ function addBlockSlot(){toast2('🔒 Créneau bloqué pour cette journée','blue
 
 // ══ BOOKING MODAL (Patient) ══
 let bkDate='',bkSlot='',bkCalDate=new Date();
+function openPatientBookingFor(proId){
+  const db=getDB();
+  const pro=db.pros&&db.pros.find(p=>p.id===proId);
+  if(!pro){
+    showView('v-landing');
+    setTimeout(()=>toast2('Cabinet introuvable','red'),300);
+    return;
+  }
+  if(history.pushState) history.pushState(null,'','#rdv/'+buildSlug(pro));
+  // Pre-fill booking page with this pro's data
+  window._guestPro=pro;
+  showView('v-booking-page');
+  renderPublicBookingPage(pro);
+}
 function openPatientBooking(){
   var s=getSession();if(!s)return;
   var db=getDB();var pro=db.pros&&db.pros.find(function(p){return p.id===s.id;});if(!pro)return;
-  // Mettre à jour l'URL avec le lien encodé
-  var link=getShareLink(pro);
-  if(history.pushState) history.pushState(null,'',link.replace(window.location.origin+window.location.pathname,''));
+  var slug=fbSlug(pro.fn,pro.ln);
+  var link=fbGetPatientLink(pro);
+  if(history.pushState)history.pushState(null,'','#rdv/'+slug);
   showView('v-patient');
   initPatientPage(pro);
-  return;
-  document.getElementById('bk-pro-name').textContent='Dr. '+pro.fn+' '+pro.ln;
-  document.getElementById('bk-pro-spec').textContent=pro.spec+(pro.adresse?' · '+pro.adresse:'');
-  // Show price chip if set
-  const priceChip=document.getElementById('bk-price-chip');
-  if(priceChip){
-    if(pro.price&&pro.price>0){
-      priceChip.textContent=(pro.consultType||'Consultation')+' · '+pro.price+' DT / '+pro.duration+'min';
-      priceChip.style.display='flex';
-    } else { priceChip.style.display='none'; }
-  }
-  bkDate='';bkSlot='';bkCalDate=new Date();
-  document.getElementById('bk-s1').classList.add('on');
-  document.getElementById('bk-s2').classList.remove('on');
-  document.getElementById('bk-s3').classList.remove('on');
-  document.getElementById('bk-lbl-1').classList.add('act');
-  document.getElementById('bk-lbl-2').classList.remove('act');
-  document.getElementById('bk-lbl-3').classList.remove('act');
-  document.getElementById('bk-slots-wrap').style.display='none';
-  document.getElementById('bk-no-avail').style.display='none';
-  const btn=document.getElementById('bk-s1-btn');btn.disabled=true;btn.style.opacity='.4';
-  document.getElementById('bk-fn').value='';document.getElementById('bk-ln').value='';
-  document.getElementById('bk-email').value='';document.getElementById('bk-tel').value='';
-  document.getElementById('bk-motif').value='';document.getElementById('bk-msg').value='';
-  document.getElementById('bk-rgpd').checked=false;
-  renderBkCal();
-  const modal=document.getElementById('modal-booking');
-  modal.style.display='flex';modal.classList.add('open');
 }
+
 function closeBooking(){
   const modal=document.getElementById('modal-booking');
   modal.style.display='none';modal.classList.remove('open');
@@ -2326,644 +2299,857 @@ function rescheduleAll(){
 }
 
 // ══ INIT ══
-
-// ══════════════════════════════════════════════
-//  SYSTÈME DE PARTAGE PAR URL ENCODÉE
-// ══════════════════════════════════════════════
-
-// Clés courtes pour minimiser la taille de l'URL
-const PRO_KEYS = {
-  encode: (pro) => ({
-    f:pro.fn, l:pro.ln, s:pro.spec, tt:pro.titre||'',
-    t:pro.tel||'', w:pro.wa||'',
-    a:pro.adresse||'', v:pro.ville||'',
-    b:pro.bio||'', e:pro.experience||0,
-    ph:pro.photo||'',
-    d:pro.duration||50, p:pro.price||100, c:pro.consultType||'Consultation',
-    lg:pro.consultLangs||[], mo:pro.modes||['cabinet'],
-    av:{
-      m:pro.avail?.days?.mon||false, t:pro.avail?.days?.tue||false,
-      w:pro.avail?.days?.wed||false, h:pro.avail?.days?.thu||false,
-      f:pro.avail?.days?.fri||false, s:pro.avail?.days?.sat||false,
-      u:pro.avail?.days?.sun||false
-    },
-    sl:pro.avail?.slots||[]
-  }),
-  decode: (d) => ({
-    fn:d.f||'', ln:d.l||'', spec:d.s||'', titre:d.tt||'',
-    tel:d.t||'', wa:d.w||'', adresse:d.a||'', ville:d.v||'',
-    bio:d.b||'', experience:d.e||0, photo:d.ph||'',
-    duration:d.d||50, price:d.p||100, consultType:d.c||'Consultation',
-    consultLangs:d.lg||[], modes:d.mo||['cabinet'],
-    avail:{
-      days:{mon:d.av?.m||false,tue:d.av?.t||false,wed:d.av?.w||false,
-            thu:d.av?.h||false,fri:d.av?.f||false,sat:d.av?.s||false,sun:d.av?.u||false},
-      slots:d.sl||[]
-    }
-  })
-};
-
-function encodePro(pro){
-  try{
-    const d=PRO_KEYS.encode(pro);
-    const j=JSON.stringify(d);
-    return btoa(unescape(encodeURIComponent(j)))
-           .replace(/[+]/g,'-').replace(/[/]/g,'_').replace(/=/g,'');
-  }catch(e){console.error('encodePro:',e);return '';}
-}
-
-function decodePro(b64){
-  try{
-    const pad=b64.length%4===0?'':(b64.length%4===2?'==':'=');
-    const j=decodeURIComponent(escape(atob(b64.replace(/-/g,'+').replace(/_/g,'/')+pad)));
-    const d=JSON.parse(j);
-    return PRO_KEYS.decode(d);
-  }catch(e){console.error('decodePro:',e);return null;}
-}
-
-function getShareLink(pro){
-  const enc=encodePro(pro);
-  if(!enc) return window.location.origin+window.location.pathname;
-  return window.location.origin+window.location.pathname+'#p/'+enc;
-}
-
 function buildSlug(pro){
   return ((pro.fn||'')+'-'+(pro.ln||'')).toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
     .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 }
+function getRdvUrl(pro){
+  return window.location.origin+window.location.pathname+'#rdv/'+buildSlug(pro);
+}
+function findProBySlug(slug){
+  const db=getDB(); const pros=db.pros||[];
+  slug=(slug||'').toLowerCase();
+  let p=pros.find(p=>buildSlug(p)===slug); if(p) return p;
+  p=pros.find(p=>(p.ln||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'')===slug.replace(/-/g,''));
+  if(p) return p;
+  return pros.find(p=>slug.includes((p.ln||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'')))||null;
+}
 
-// ══ SPÉCIALITÉS ══
-const SPEC_CFG={
-  'Psychologue clinicien(ne)':{ico:'🧠',col:'#7C3AED',lt:'#EDE9FE',
-    svcs:[{n:'Thérapie individuelle',d:50,p:100},{n:'Thérapie de couple',d:60,p:140},{n:'Bilan psychologique',d:90,p:180}],
-    motifs:['Anxiété / Stress','Dépression','Burn-out','Troubles du sommeil','Gestion émotionnelle','Traumatisme','Première consultation','Suivi régulier','Autre']},
-  'Psychiatre':{ico:'💊',col:'#1B4FD8',lt:'#EEF2FF',
-    svcs:[{n:'Consultation psychiatrique',d:45,p:120},{n:'Suivi médication',d:30,p:80}],
-    motifs:['Dépression','Troubles anxieux','TDAH','Ordonnance','Autre']},
-  'Médecin généraliste':{ico:'🩺',col:'#0D9488',lt:'#CCFBF1',
-    svcs:[{n:'Consultation générale',d:20,p:35},{n:'Certificat médical',d:15,p:25}],
-    motifs:['Fièvre','Douleur','Ordonnance','Certificat','Bilan','Autre']},
-  'Cardiologue':{ico:'❤️',col:'#E11D48',lt:'#FFE4E6',
-    svcs:[{n:'Consultation cardiologique',d:30,p:90},{n:'ECG',d:45,p:120}],
-    motifs:['Douleur thoracique','Palpitations','Hypertension','Bilan','Autre']},
-  'Kinésithérapeute':{ico:'🦴',col:'#D97706',lt:'#FEF3C7',
-    svcs:[{n:'Séance de kiné',d:45,p:50},{n:'Massage thérapeutique',d:60,p:70}],
-    motifs:['Mal de dos','Épaule','Entorse','Rééducation','Autre']},
-  'Pédiatre':{ico:'👶',col:'#F59E0B',lt:'#FEF3C7',
-    svcs:[{n:'Consultation pédiatrique',d:25,p:50},{n:'Vaccins',d:20,p:40}],
-    motifs:['Fièvre','Toux','Croissance','Vaccins','Autre']},
-  'Chirurgien-dentiste':{ico:'🦷',col:'#64748B',lt:'#F1F5F9',
-    svcs:[{n:'Consultation',d:30,p:30},{n:'Détartrage',d:45,p:60},{n:'Urgence',d:30,p:50}],
-    motifs:['Douleur','Contrôle','Urgence','Autre']},
-  'Dermatologue':{ico:'🧬',col:'#EC4899',lt:'#FCE7F3',
-    svcs:[{n:'Consultation',d:20,p:70},{n:'Dermatoscopie',d:30,p:90}],
-    motifs:['Acné','Eczéma','Grain de beauté','Autre']},
-  'Ophtalmologue':{ico:'👁️',col:'#0EA5E9',lt:'#E0F2FE',
-    svcs:[{n:'Examen de la vue',d:30,p:60}],
-    motifs:['Baisse vision','Ordonnance','Contrôle','Autre']},
-  'ORL':{ico:'👂',col:'#8B5CF6',lt:'#EDE9FE',
-    svcs:[{n:'Consultation ORL',d:25,p:55}],
-    motifs:['Oreille','Sinusite','Gorge','Autre']},
-  'Nutritionniste / Diététicien(ne)':{ico:'🍎',col:'#16A34A',lt:'#DCFCE7',
-    svcs:[{n:'Bilan nutritionnel',d:60,p:80},{n:'Suivi diététique',d:30,p:50}],
-    motifs:['Perte de poids','Diabète','Végétalisme','Autre']},
-  'Sophrologue':{ico:'🧘',col:'#6366F1',lt:'#EEF2FF',
-    svcs:[{n:'Séance sophrologie',d:60,p:70}],
-    motifs:['Stress','Sommeil','Confiance','Autre']},
-  'Ostéopathe':{ico:'🌿',col:'#059669',lt:'#D1FAE5',
-    svcs:[{n:'Séance ostéopathie',d:60,p:70}],
-    motifs:['Dos','Maux de tête','Digestion','Autre']},
-  'Médecin du sport':{ico:'🏃',col:'#F97316',lt:'#FFF7ED',
-    svcs:[{n:'Bilan sportif',d:30,p:60},{n:'Blessure',d:25,p:50}],
-    motifs:['Certificat','Blessure','Performance','Autre']}
-};
-const MONTHS_FR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+// ============================================================
+//  FIREBASE REALTIME DATABASE - MedBook
+//  Base de données partagée entre tous les appareils
+// ============================================================
 
-// ══════════════════════════════════════════════
-//  LOGIQUE PAGE PATIENT PUBLIQUE
-// ══════════════════════════════════════════════
+var FB_URL = 'https://medbook-tn-default-rtdb.europe-west1.firebasedatabase.app';
 
-// État global de la page patient
+// ── Lire les données d'un praticien par son slug ──
+function fbGetPro(slug, callback){
+  fetch(FB_URL+'/pros/'+slug+'.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(data && data.fn) callback(data);
+      else callback(null);
+    })
+    .catch(function(){ callback(null); });
+}
+
+// ── Sauvegarder le profil du praticien ──
+function fbSavePro(pro, callback){
+  var slug = fbSlug(pro.fn, pro.ln);
+  pro.slug = slug;
+  pro.updatedAt = new Date().toISOString();
+  fetch(FB_URL+'/pros/'+slug+'.json', {
+    method: 'PUT',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(pro)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(){ if(callback) callback(true); })
+  .catch(function(){ if(callback) callback(false); });
+}
+
+// ── Sauvegarder un RDV ──
+function fbSaveRdv(rdv, callback){
+  var proSlug = fbSlug(rdv.proFn, rdv.proLn);
+  // Save under /rdvs/SLUG/DATE/SLOT
+  var path = '/rdvs/'+proSlug+'/'+rdv.date+'/'+rdv.slot.replace(':','-');
+  fetch(FB_URL+path+'.json', {
+    method: 'PUT',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(rdv)
+  })
+  .then(function(){ if(callback) callback(true); })
+  .catch(function(){ if(callback) callback(false); });
+}
+
+// ── Lire les RDVs d'un praticien ──
+function fbGetRdvs(slug, callback){
+  fetch(FB_URL+'/rdvs/'+slug+'.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var rdvs = [];
+      if(data){
+        Object.keys(data).forEach(function(date){
+          if(data[date]){
+            Object.keys(data[date]).forEach(function(slotKey){
+              if(data[date][slotKey]) rdvs.push(data[date][slotKey]);
+            });
+          }
+        });
+      }
+      callback(rdvs);
+    })
+    .catch(function(){ callback([]); });
+}
+
+// ── Lire les créneaux réservés pour une date ──
+function fbGetBookedSlots(slug, date, callback){
+  fetch(FB_URL+'/rdvs/'+slug+'/'+date+'.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var booked = [];
+      if(data){
+        Object.keys(data).forEach(function(slotKey){
+          if(data[slotKey] && data[slotKey].status !== 'cancelled'){
+            booked.push(data[slotKey].slot);
+          }
+        });
+      }
+      callback(booked);
+    })
+    .catch(function(){ callback([]); });
+}
+
+// ── Annuler un RDV ──
+function fbCancelRdv(slug, date, slot, callback){
+  var path = '/rdvs/'+slug+'/'+date+'/'+slot.replace(':','-')+'/status';
+  fetch(FB_URL+path+'.json', {
+    method: 'PUT',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify('cancelled')
+  })
+  .then(function(){ if(callback) callback(true); })
+  .catch(function(){ if(callback) callback(false); });
+}
+
+// ── Générer un slug depuis prénom + nom ──
+function fbSlug(fn, ln){
+  return ((fn||'')+'-'+(ln||'')).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
+
+// ── Générer le lien patient (court et lisible) ──
+function fbGetPatientLink(pro){
+  var slug = fbSlug(pro.fn, pro.ln);
+  return window.location.origin + window.location.pathname + '#rdv/' + slug;
+}
+
+// ── Synchroniser le profil local → Firebase ──
+function fbSyncProfile(callback){
+  var s = getSession(); var db = getDB();
+  var pro = db.pros && db.pros.find(function(p){return p.id===s.id;});
+  if(!pro){ if(callback) callback(false); return; }
+  fbSavePro(pro, callback);
+}
+
+// ── Charger les RDVs depuis Firebase vers le dashboard ──
+function fbLoadRdvsIntoDash(pro){
+  var slug = fbSlug(pro.fn, pro.ln);
+  fbGetRdvs(slug, function(rdvs){
+    if(!rdvs.length) return;
+    var db = getDB();
+    // Merge Firebase RDVs with local
+    rdvs.forEach(function(rdv){
+      if(!rdv) return;
+      var exists = db.rdvs && db.rdvs.find(function(r){return r.id===rdv.id;});
+      if(!exists){
+        if(!db.rdvs) db.rdvs=[];
+        db.rdvs.push(rdv);
+      }
+    });
+    saveDB(db);
+    // Refresh dashboard stats
+    if(typeof updateStats==='function') updateStats(pro.id);
+    if(typeof renderNextRdvs==='function') renderNextRdvs(pro.id);
+  });
+}
+
+
+// ============================================================
+//  PAGE PATIENT PUBLIQUE - avec Firebase
+// ============================================================
+
 var _patPro = null;
 var _patSvc = null;
 var _patDate = '';
 var _patSlot = '';
 var _patCalDate = new Date();
 var _patRdv = null;
-var _patDayKeys = ['sun','mon','tue','wed','thu','fri','sat'];
-var _patDayMap = {0:'sun',1:'mon',2:'tue',3:'wed',4:'thu',5:'fri',6:'sat'};
+
+var PAT_MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+var PAT_DAYS = ['sun','mon','tue','wed','thu','fri','sat'];
+
+var PAT_SPECS = {
+  'Psychologue clinicien(ne)':{col:'#7C3AED',lt:'#EDE9FE',ico:'🧠',svcs:[{n:'Thérapie individuelle',d:50,p:100},{n:'Thérapie de couple',d:60,p:140},{n:'Bilan psychologique',d:90,p:180}],motifs:['Anxiété / Stress','Dépression','Burn-out','Troubles du sommeil','Première consultation','Suivi régulier','Autre']},
+  'Psychiatre':{col:'#1B4FD8',lt:'#EEF2FF',ico:'💊',svcs:[{n:'Consultation psychiatrique',d:45,p:120},{n:'Suivi médication',d:30,p:80}],motifs:['Dépression','Troubles anxieux','TDAH','Ordonnance','Autre']},
+  'Médecin généraliste':{col:'#0D9488',lt:'#CCFBF1',ico:'🩺',svcs:[{n:'Consultation générale',d:20,p:35},{n:'Certificat médical',d:15,p:25}],motifs:['Fièvre','Douleur','Ordonnance','Certificat','Autre']},
+  'Cardiologue':{col:'#E11D48',lt:'#FFE4E6',ico:'❤️',svcs:[{n:'Consultation cardiologique',d:30,p:90}],motifs:['Douleur thoracique','Palpitations','Hypertension','Autre']},
+  'Kinésithérapeute':{col:'#D97706',lt:'#FEF3C7',ico:'🦴',svcs:[{n:'Séance de kiné',d:45,p:50},{n:'Massage',d:60,p:70}],motifs:['Mal de dos','Épaule','Entorse','Rééducation','Autre']},
+  'Pédiatre':{col:'#F59E0B',lt:'#FEF3C7',ico:'👶',svcs:[{n:'Consultation pédiatrique',d:25,p:50},{n:'Vaccins',d:20,p:40}],motifs:['Fièvre','Toux','Croissance','Vaccins','Autre']},
+  'Chirurgien-dentiste':{col:'#64748B',lt:'#F1F5F9',ico:'🦷',svcs:[{n:'Consultation',d:30,p:30},{n:'Détartrage',d:45,p:60},{n:'Urgence',d:30,p:50}],motifs:['Douleur','Contrôle','Urgence','Autre']},
+  'Dermatologue':{col:'#EC4899',lt:'#FCE7F3',ico:'🧬',svcs:[{n:'Consultation',d:20,p:70},{n:'Dermatoscopie',d:30,p:90}],motifs:['Acné','Eczéma','Grain de beauté','Autre']},
+  'Ophtalmologue':{col:'#0EA5E9',lt:'#E0F2FE',ico:'👁️',svcs:[{n:'Examen de la vue',d:30,p:60}],motifs:['Baisse vision','Ordonnance','Contrôle','Autre']},
+  'ORL':{col:'#8B5CF6',lt:'#EDE9FE',ico:'👂',svcs:[{n:'Consultation ORL',d:25,p:55}],motifs:['Oreille','Sinusite','Gorge','Autre']},
+  'Sophrologue':{col:'#6366F1',lt:'#EEF2FF',ico:'🧘',svcs:[{n:'Séance sophrologie',d:60,p:70}],motifs:['Stress','Sommeil','Confiance','Autre']},
+  'Ostéopathe':{col:'#059669',lt:'#D1FAE5',ico:'🌿',svcs:[{n:'Séance ostéopathie',d:60,p:70}],motifs:['Dos','Maux de tête','Digestion','Autre']},
+  'Nutritionniste / Diététicien(ne)':{col:'#16A34A',lt:'#DCFCE7',ico:'🍎',svcs:[{n:'Bilan nutritionnel',d:60,p:80},{n:'Suivi diététique',d:30,p:50}],motifs:['Perte de poids','Diabète','Autre']},
+  'Médecin du sport':{col:'#F97316',lt:'#FFF7ED',ico:'🏃',svcs:[{n:'Bilan sportif',d:30,p:60},{n:'Blessure',d:25,p:50}],motifs:['Certificat','Blessure','Performance','Autre']}
+};
 
 function patEl(id){return document.getElementById(id);}
+function patEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 
-// ── INITIALISATION ──
 function initPatientPage(pro){
-  _patPro = pro;
-  _patSvc = null; _patDate = ''; _patSlot = '';
-  _patCalDate = new Date(); _patRdv = null;
+  _patPro=pro; _patSvc=null; _patDate=''; _patSlot=''; _patCalDate=new Date(); _patRdv=null;
   
-  var cfg = SPEC_CFG[pro.spec] || {ico:'🩺',col:'#1B4FD8',lt:'#EEF2FF',
+  var cfg=PAT_SPECS[pro.spec]||{col:'#1B4FD8',lt:'#EEF2FF',ico:'🩺',
     svcs:[{n:pro.consultType||'Consultation',d:pro.duration||50,p:pro.price||100}],
     motifs:['Première consultation','Suivi régulier','Autre']};
   
-  // ── En-tête ──
-  var hdr = patEl('pat-header');
-  if(hdr) hdr.style.background = 'linear-gradient(145deg,'+cfg.col+',#0D9488)';
+  // Header color
+  var hdr=patEl('pat-header');
+  if(hdr) hdr.style.background='linear-gradient(145deg,'+cfg.col+',#0D9488)';
   
-  var av = patEl('pat-av');
+  // Avatar
+  var av=patEl('pat-av');
   if(av){
-    if(pro.photo) av.innerHTML = '<img src="'+pro.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';
-    else av.innerHTML = cfg.ico;
+    if(pro.photo) av.innerHTML='<img src="'+pro.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';
+    else av.textContent=cfg.ico;
   }
   
-  var nm = patEl('pat-name'); if(nm) nm.textContent = 'Dr. '+pro.fn+' '+pro.ln;
-  var ti = patEl('pat-titre'); if(ti && pro.titre){ti.textContent=pro.titre;ti.style.display='';}
-  var sp = patEl('pat-spec'); if(sp) sp.textContent = (pro.spec||'')+(pro.ville?' · '+pro.ville:'');
+  // Info
+  var nm=patEl('pat-name'); if(nm)nm.textContent='Dr. '+pro.fn+' '+pro.ln;
+  var ti=patEl('pat-titre'); if(ti&&pro.titre){ti.textContent=pro.titre;ti.style.display='';}else if(ti)ti.style.display='none';
+  var sp=patEl('pat-spec'); if(sp)sp.textContent=(pro.spec||'')+(pro.ville?' · '+pro.ville:'');
+  var ad=patEl('pat-addr'); if(ad&&pro.adresse){ad.textContent='📍 '+pro.adresse+(pro.ville?', '+pro.ville:'');ad.style.display='';}else if(ad)ad.style.display='none';
   
-  if(pro.adresse || pro.ville){
-    var loc = patEl('pat-location'); var lt = patEl('pat-loc-txt');
-    if(loc && lt){lt.textContent=(pro.adresse||'')+(pro.ville?', '+pro.ville:'');loc.style.display='';}
+  // Badges
+  var bg=patEl('pat-badges'); if(bg){bg.innerHTML='';
+    var items=(pro.consultLangs||[]).concat((pro.modes||['cabinet']).map(function(m){return{cabinet:'🏥 Cabinet',video:'📹 Vidéo',domicile:'🏠 Domicile'}[m]||m;}));
+    items.forEach(function(b){var s=document.createElement('span');s.style.cssText='background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:.22rem .65rem;font-size:.65rem;font-weight:600;color:#fff';s.textContent=b;bg.appendChild(s);});
   }
   
-  // ── Badges ──
-  var bg = patEl('pat-badges'); if(bg){ bg.innerHTML='';
-    var items = (pro.consultLangs||[]).concat((pro.modes||['cabinet']).map(function(m){
-      return{cabinet:'🏥 Cabinet',video:'📹 Vidéo',domicile:'🏠 Domicile'}[m]||m;
-    }));
-    items.forEach(function(b){
-      var s=document.createElement('span');
-      s.style.cssText='background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:.22rem .68rem;font-size:.65rem;font-weight:600;color:#fff;backdrop-filter:blur(4px)';
-      s.textContent=b; bg.appendChild(s);
-    });
-  }
-  
-  // ── Stats ──
-  if(pro.experience > 0){
-    var st = patEl('pat-stats'); if(st) st.style.display='flex';
-    var se = patEl('pat-stat-exp'); if(se) se.textContent=pro.experience+'+';
-    var sl2 = patEl('pat-stat-lang'); if(sl2) sl2.textContent=(pro.consultLangs||[]).length||'—';
-  }
-  
-  // ── Bio ──
+  // Bio
   if(pro.bio){
-    var bc = patEl('pat-bio-card'); if(bc) bc.style.display='';
-    var bt = patEl('pat-bio-txt'); if(bt) bt.textContent=pro.bio;
-    var cp = patEl('pat-contact-pills'); 
-    if(cp){
-      cp.innerHTML='';
-      var pills = [];
-      if(pro.tel) pills.push({t:'📞 '+pro.tel,h:'tel:'+pro.tel.replace(/\s/g,'')});
-      if(pro.wa) pills.push({t:'📱 WhatsApp',h:'https://wa.me/'+(pro.wa||'').replace(/[^0-9]/g,'')});
-      if(pro.website) pills.push({t:'🌐 Site web',h:pro.website});
-      pills.forEach(function(p){
-        var a=document.createElement('a');
-        a.style.cssText='background:#F7F8FC;border:1px solid #E2E8F0;border-radius:99px;padding:.25rem .72rem;font-size:.7rem;color:#4A5568;text-decoration:none;display:inline-flex;align-items:center;gap:.32rem';
-        a.textContent=p.t; a.href=p.h; a.target='_blank'; cp.appendChild(a);
-      });
-    }
-    if(pro.adresse){
-      var ml = patEl('pat-map-link'); var mt = patEl('pat-map-txt');
-      if(ml && mt){
-        mt.textContent=(pro.adresse||'')+(pro.ville?', '+pro.ville:'');
-        ml.href='https://maps.google.com/?q='+encodeURIComponent((pro.adresse||'')+', '+(pro.ville||'')+', Tunisie');
-        ml.style.display='flex';
-      }
-    }
+    var bc=patEl('pat-bio-card');if(bc)bc.style.display='';
+    var bt=patEl('pat-bio-text');if(bt)bt.textContent=pro.bio;
+    if(pro.adresse){var ml=patEl('pat-map-link');if(ml){ml.href='https://maps.google.com/?q='+encodeURIComponent((pro.adresse||'')+', '+(pro.ville||'')+', Tunisie');ml.textContent='📍 Voir sur Google Maps: '+pro.adresse+(pro.ville?', '+pro.ville:'');ml.style.display='flex';} }
   }
   
-  // ── Services ──
-  var svEl = patEl('pat-svcs-list'); if(svEl){ svEl.innerHTML='';
+  // Services
+  var sl=patEl('pat-svcs');if(sl){sl.innerHTML='';
     cfg.svcs.forEach(function(svc,i){
       var d=document.createElement('div');
       d.style.cssText='display:flex;align-items:center;gap:.75rem;border:1.5px solid #E2E8F0;border-radius:14px;padding:.9rem 1rem;margin-bottom:.5rem;cursor:pointer;transition:all .2s;background:#fff';
-      d.innerHTML='<div style="width:42px;height:42px;border-radius:10px;background:'+cfg.lt+';display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0">'+cfg.ico+'</div>'+
-        '<div style="flex:1"><div style="font-size:.87rem;font-weight:700;color:#0D1117">'+escHtml(svc.n)+'</div><div style="font-size:.72rem;color:#718096;margin-top:.05rem">⏱ '+svc.d+'min</div></div>'+
-        '<div style="font-size:.92rem;font-weight:800;color:'+cfg.col+';white-space:nowrap;padding-left:.5rem">'+svc.p+' DT</div>';
-      d.onclick=function(){
-        document.querySelectorAll('#pat-svcs-list > div').forEach(function(c){c.style.borderColor='#E2E8F0';c.style.background='#fff';});
-        d.style.borderColor=cfg.col; d.style.background=cfg.lt; _patSvc=svc;
-      };
-      if(i===0) setTimeout(function(){d.click();},20);
-      svEl.appendChild(d);
+      d.innerHTML='<div style="width:42px;height:42px;border-radius:10px;background:'+cfg.lt+';display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0">'+cfg.ico+'</div><div style="flex:1"><div style="font-size:.87rem;font-weight:700;color:#0D1117">'+patEsc(svc.n)+'</div><div style="font-size:.72rem;color:#718096">⏱ '+svc.d+'min</div></div><div style="font-size:.92rem;font-weight:800;color:'+cfg.col+';white-space:nowrap;padding-left:.5rem">'+svc.p+' DT</div>';
+      d.onclick=function(){document.querySelectorAll('#pat-svcs > div').forEach(function(c){c.style.borderColor='#E2E8F0';c.style.background='#fff';});d.style.borderColor=cfg.col;d.style.background=cfg.lt;_patSvc=svc;};
+      if(i===0)setTimeout(function(){d.click();},20);
+      sl.appendChild(d);
     });
   }
   
-  // ── Motifs ──
-  var mo = patEl('pat-motif');
-  if(mo){
-    mo.innerHTML='<option value="">— Motif (optionnel) —</option>';
-    cfg.motifs.forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;mo.appendChild(o);});
-  }
+  // Motifs
+  var mo=patEl('pat-motif');if(mo){mo.innerHTML='<option value="">— Optionnel —</option>';cfg.motifs.forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;mo.appendChild(o);});}
   
-  // ── Bouton back (praticien connecté) ──
-  var bb = patEl('pat-back-btn');
-  if(bb) bb.style.display = getSession() ? 'flex' : 'none';
+  // Back btn
+  var bb=patEl('pat-back-btn');if(bb)bb.style.display=getSession()?'flex':'none';
   
-  // ── Afficher étape 1 ──
+  // Share bar
+  var link=fbGetPatientLink(pro);
+  var ld=patEl('pat-link-display');if(ld)ld.textContent=link;
+  
   patShowStep(1);
   patDrawCal();
+  
+  // Sync share link in dashboard
+  var bd=document.getElementById('booking-url-display');
+  if(bd) bd.textContent=link;
 }
 
-// ── NAVIGATION ÉTAPES ──
 function patShowStep(n){
-  patEl('pat-s1').style.display = n===1 ? '' : 'none';
-  patEl('pat-s2').style.display = n===2 ? '' : 'none';
-  patEl('pat-s3').style.display = n===3 ? '' : 'none';
-  var shareBar = patEl('pat-share-bar');
-  if(shareBar) shareBar.style.display = n===3 ? 'none' : 'flex';
+  patEl('pat-s1').style.display=n===1?'':'none';
+  patEl('pat-s2').style.display=n===2?'':'none';
+  patEl('pat-s3').style.display=n===3?'':'none';
 }
 
-// ── CALENDRIER ──
 function patDrawCal(){
-  var pro = _patPro; if(!pro) return;
-  var y=_patCalDate.getFullYear(), m=_patCalDate.getMonth();
-  patEl('pat-cal-title').textContent = MONTHS_FR[m]+' '+y;
-  var grid = patEl('pat-cal-grid'); grid.innerHTML='';
-  var avail = pro.avail || {days:{mon:true,tue:true,wed:true,thu:true,fri:true},slots:[]};
-  var dayKeys = ['sun','mon','tue','wed','thu','fri','sat'];
-  var today = new Date(); today.setHours(0,0,0,0);
-  var todayStr = today.toISOString().split('T')[0];
-  var firstDay = new Date(y,m,1).getDay();
-  var offset = firstDay===0 ? 6 : firstDay-1;
-  var dim = new Date(y,m+1,0).getDate();
-  
-  // Cases vides avant le 1er
-  for(var i=0;i<offset;i++){
-    var e=document.createElement('div'); e.style.cssText='aspect-ratio:1'; grid.appendChild(e);
-  }
-  
-  for(var d=1;d<=dim;d++){
-    (function(day){
-      var dt = new Date(y,m,day);
-      var ds = y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
-      var dk = dayKeys[dt.getDay()];
-      var isPast = dt < today;
-      var isUnavail = !avail.days[dk];
-      var isToday = ds === todayStr;
-      var isSel = ds === _patDate;
-      
-      var el = document.createElement('div');
-      el.textContent = day;
-      
-      var css = 'aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:500;transition:all .18s;';
-      if(isPast || isUnavail){
-        css += 'color:#D1D5DB;cursor:default;';
-      } else {
-        css += 'cursor:pointer;color:#0D1117;';
-        el.onmouseover = function(){if(!isSel && !isToday)this.style.background='#EEF2FF';};
-        el.onmouseout = function(){if(!isSel && !isToday)this.style.background='';};
-        el.onclick = function(){patPickDate(ds);};
-      }
-      if(isToday && !isPast) css += 'background:#1B4FD8;color:#fff;font-weight:700;';
-      if(isSel && !isToday) css += 'background:#EEF2FF;color:#1B4FD8;font-weight:700;box-shadow:inset 0 0 0 2px #C7D2FE;';
-      
-      el.style.cssText = css;
-      grid.appendChild(el);
-    })(d);
-  }
+  var pro=_patPro;if(!pro)return;
+  var y=_patCalDate.getFullYear(),m=_patCalDate.getMonth();
+  patEl('pat-cal-title').textContent=PAT_MONTHS[m]+' '+y;
+  var grid=patEl('pat-cal-grid');grid.innerHTML='';
+  var avail=pro.avail||{days:{mon:true,tue:true,wed:true,thu:true,fri:true},slots:[]};
+  var today=new Date();today.setHours(0,0,0,0);
+  var todayStr=today.toISOString().split('T')[0];
+  var first=new Date(y,m,1).getDay(),offset=first===0?6:first-1,dim=new Date(y,m+1,0).getDate();
+  for(var i=0;i<offset;i++){var e=document.createElement('div');e.style.cssText='aspect-ratio:1';grid.appendChild(e);}
+  for(var d=1;d<=dim;d++){(function(day){
+    var dt=new Date(y,m,day),ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    var dk=PAT_DAYS[dt.getDay()],past=dt<today,off=!avail.days[dk],iT=ds===todayStr,iS=ds===_patDate;
+    var el=document.createElement('div');el.textContent=day;
+    el.style.cssText='aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:500;transition:all .18s;'+(past||off?'color:#D1D5DB;':'cursor:pointer;color:#0D1117;')+(iT&&!past?'background:#1B4FD8;color:#fff;font-weight:700;':'')+(iS&&!iT?'background:#EEF2FF;color:#1B4FD8;font-weight:700;box-shadow:inset 0 0 0 2px #C7D2FE;':'');
+    if(!past&&!off)el.onclick=function(){patPickDate(ds);};
+    grid.appendChild(el);
+  })(d);}
 }
-
 function patPrev(){_patCalDate.setMonth(_patCalDate.getMonth()-1);patDrawCal();}
 function patNext(){_patCalDate.setMonth(_patCalDate.getMonth()+1);patDrawCal();}
 
-// ── SÉLECTION DATE ──
 function patPickDate(date){
-  _patDate = date; _patSlot = '';
+  _patDate=date;_patSlot='';
   patDrawCal();
-  
-  var pro = _patPro; if(!pro) return;
-  var avail = pro.avail || {slots:['09:00','10:00','11:00','14:00','15:00']};
-  var slots = avail.slots || [];
-  
-  // Récupérer les créneaux déjà réservés (depuis localStorage local)
-  var db = getDB();
-  var booked = (db.rdvs||[]).filter(function(r){
-    return r.proId === (pro.id||'shared-pro') && r.date===date && r.status!=='cancelled';
-  }).map(function(r){return r.slot;});
-  
-  var free = slots.filter(function(s){return !booked.includes(s);});
-  
-  var d = new Date(date+'T12:00:00');
-  patEl('pat-slots-label').textContent = '⏰ '+d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
-  
-  var sg = patEl('pat-slots-grid'); sg.innerHTML='';
-  var ns = patEl('pat-no-slots');
-  
-  if(free.length === 0){
-    if(ns) ns.style.display='';
-  } else {
-    if(ns) ns.style.display='none';
-    free.forEach(function(sl){
-      var btn = document.createElement('div');
-      btn.style.cssText = 'border:1.5px solid #C7D2FE;border-radius:9px;padding:.55rem;text-align:center;font-size:.8rem;font-weight:600;color:#1B4FD8;background:#fff;cursor:pointer;transition:all .18s;user-select:none';
-      btn.textContent = sl;
-      btn.onclick = function(){
-        document.querySelectorAll('#pat-slots-grid > div').forEach(function(b){
-          b.style.background='#fff'; b.style.color='#1B4FD8'; b.style.borderColor='#C7D2FE';
-        });
-        btn.style.background='#1B4FD8'; btn.style.color='#fff'; btn.style.borderColor='#1B4FD8';
-        _patSlot = sl;
-        var ctaBtn = patEl('pat-s1-btn');
-        if(ctaBtn){ctaBtn.disabled=false; ctaBtn.style.opacity='1';}
-      };
-      sg.appendChild(btn);
-    });
-  }
-  
+  // Show loading
+  var sg=patEl('pat-slots-grid');sg.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:#718096;padding:.5rem">Chargement des créneaux...</div>';
   patEl('pat-slots-wrap').style.display='';
-  var ctaBtn = patEl('pat-s1-btn');
-  if(ctaBtn){ctaBtn.disabled=true; ctaBtn.style.opacity='.4';}
+  var d=new Date(date+'T12:00:00');
+  patEl('pat-slots-label').textContent='⏰ '+d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  patEl('pat-cta-btn').disabled=true;patEl('pat-cta-btn').style.opacity='.4';
+  
+  var pro=_patPro;
+  var slug=fbSlug(pro.fn,pro.ln);
+  var allSlots=(pro.avail&&pro.avail.slots)||['09:00','09:45','10:30','11:15','14:00','14:45','15:30','16:15','17:00'];
+  
+  // Load booked slots from Firebase in real time
+  fbGetBookedSlots(slug, date, function(booked){
+    var free=allSlots.filter(function(s){return !booked.includes(s);});
+    sg.innerHTML='';
+    if(!free.length){
+      sg.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:#718096;padding:.75rem;background:#fff;border-radius:10px">Aucun créneau disponible ce jour. Choisissez une autre date.</div>';
+    } else {
+      free.forEach(function(sl){
+        var b=document.createElement('div');
+        b.style.cssText='border:1.5px solid #C7D2FE;border-radius:9px;padding:.55rem;text-align:center;font-size:.8rem;font-weight:600;color:#1B4FD8;background:#fff;cursor:pointer;transition:all .18s';
+        b.textContent=sl;
+        b.onclick=function(){
+          document.querySelectorAll('#pat-slots-grid > div').forEach(function(x){x.style.background='#fff';x.style.color='#1B4FD8';x.style.borderColor='#C7D2FE';});
+          b.style.background='#1B4FD8';b.style.color='#fff';b.style.borderColor='#1B4FD8';
+          _patSlot=sl;
+          patEl('pat-cta-btn').disabled=false;patEl('pat-cta-btn').style.opacity='1';
+        };
+        sg.appendChild(b);
+      });
+    }
+  });
 }
 
-// ── ÉTAPE 2: FORMULAIRE ──
-function patGoS2(){
-  if(!_patSvc || !_patDate || !_patSlot){
-    toast2('Sélectionnez un service, une date et un créneau','red'); return;
-  }
-  var pro = _patPro;
-  var d = new Date(_patDate+'T12:00:00');
-  var label = d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  var h = parseInt(_patSlot.split(':')[0]);
-  var m2 = parseInt(_patSlot.split(':')[1]);
-  var tot = h*60+m2+(_patSvc.d||50);
-  var endStr = String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
-  var addr = (pro.adresse||'')+(pro.ville?', '+pro.ville:'');
-  
-  patEl('pat-recap').innerHTML =
-    '<strong>'+escHtml(_patSvc.n)+'</strong> · '+_patSvc.p+' DT · '+_patSvc.d+'min<br/>'+
-    '📅 '+label+'<br/>'+
-    '⏰ '+_patSlot+' – '+endStr+' (CET · Tunisie)<br/>'+
-    '🩺 Dr. '+escHtml(pro.fn)+' '+escHtml(pro.ln)+
-    (addr ? '<br/>📍 '+escHtml(addr) : '');
-  
-  patShowStep(2);
-  window.scrollTo(0,0);
+function patToForm(){
+  if(!_patSvc||!_patDate||!_patSlot){toast2('Sélectionnez un service, une date et un créneau','red');return;}
+  var pro=_patPro,dur=_patSvc.d||50;
+  var d=new Date(_patDate+'T12:00:00');
+  var label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  var h=parseInt(_patSlot),m2=parseInt(_patSlot.split(':')[1]),tot=h*60+m2+dur;
+  var end=String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
+  var addr=(pro.adresse||'')+(pro.ville?', '+pro.ville:'');
+  patEl('pat-recap').innerHTML='<strong>'+patEsc(_patSvc.n)+'</strong> · '+_patSvc.p+' DT · '+dur+'min<br/>📅 '+label+'<br/>⏰ '+_patSlot+' – '+end+'<br/>🩺 Dr. '+patEsc(pro.fn)+' '+patEsc(pro.ln)+(addr?'<br/>📍 '+patEsc(addr):'');
+  patShowStep(2);window.scrollTo(0,0);
 }
+function patBack(){patShowStep(1);}
 
-function patGoS1(){patShowStep(1);}
-
-// ── CONFIRMATION RDV ──
 function patConfirm(){
-  var fn = (patEl('pat-fn').value||'').trim();
-  var ln = (patEl('pat-ln').value||'').trim();
-  var email = (patEl('pat-email').value||'').trim();
-  var rgpd = patEl('pat-rgpd').checked;
-  
+  var fn=(patEl('pat-fn').value||'').trim(),ln=(patEl('pat-ln').value||'').trim(),email=(patEl('pat-email').value||'').trim();
   if(!fn||!ln){toast2('Prénom et nom requis','red');return;}
   if(!email||!email.includes('@')){toast2('Email valide requis','red');return;}
-  if(!rgpd){toast2('Acceptez la politique de confidentialité','red');return;}
+  if(!patEl('pat-rgpd').checked){toast2('Acceptez la politique de confidentialité','red');return;}
   
-  var pro = _patPro;
-  var tel = (patEl('pat-tel').value||'').trim();
-  var motif = patEl('pat-motif').value||'';
-  var msg = (patEl('pat-msg').value||'').trim();
-  var dur = _patSvc.d||50;
-  var h = parseInt(_patSlot.split(':')[0]);
-  var m2 = parseInt(_patSlot.split(':')[1]);
-  var tot = h*60+m2+dur;
-  var endStr = String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
+  var pro=_patPro,dur=_patSvc.d||50;
+  var h=parseInt(_patSlot),m2=parseInt(_patSlot.split(':')[1]),tot=h*60+m2+dur;
+  var end=String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
+  var d=new Date(_patDate+'T12:00:00');
+  var label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  var addr=(pro.adresse||'')+(pro.ville?', '+pro.ville:'');
   
-  _patRdv = {
+  _patRdv={
     id:'rdv-'+Date.now(),
-    proId:pro.id||'shared-pro',
-    proFn:pro.fn, proLn:pro.ln, proEmail:pro.email||'', spec:pro.spec,
-    patFn:fn, patLn:ln, patEmail:email, patTel:tel,
-    date:_patDate, slot:_patSlot,
-    serviceName:_patSvc.n, servicePrice:_patSvc.p, serviceDuration:dur,
-    motif:motif, message:msg,
-    status:'confirmed', reminders:{r24:false,r2:false},
-    createdAt:new Date().toISOString()
+    proId:pro.id||fbSlug(pro.fn,pro.ln),
+    proFn:pro.fn,proLn:pro.ln,proEmail:pro.email||'',spec:pro.spec,
+    patFn:fn,patLn:ln,patEmail:email,
+    patTel:(patEl('pat-tel').value||'').trim(),
+    date:_patDate,slot:_patSlot,
+    serviceName:_patSvc.n,servicePrice:_patSvc.p,serviceDuration:dur,
+    motif:(patEl('pat-motif').value||''),
+    status:'confirmed',createdAt:new Date().toISOString()
   };
   
-  // Sauvegarder localement
-  var db = getDB();
-  if(!db.rdvs) db.rdvs=[];
-  db.rdvs.push(_patRdv);
-  saveDB(db);
+  // Disable button during save
+  var confirmBtn=patEl('pat-confirm-btn');
+  if(confirmBtn){confirmBtn.disabled=true;confirmBtn.textContent='Enregistrement...';}
   
-  // Afficher le récap
-  var d = new Date(_patDate+'T12:00:00');
-  var label = d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  var addr = (pro.adresse||'')+(pro.ville?', '+pro.ville:'');
-  
-  patEl('pat-success-detail').innerHTML =
-    '<div style="display:flex;flex-direction:column;gap:.32rem">'+
-    '<div>👤 <strong>'+escHtml(fn)+' '+escHtml(ln)+'</strong></div>'+
-    '<div>📅 '+label+'</div>'+
-    '<div>⏰ '+_patSlot+' – '+endStr+'</div>'+
-    '<div>🩺 Dr. '+escHtml(pro.fn)+' '+escHtml(pro.ln)+'</div>'+
-    '<div>🎫 '+escHtml(_patSvc.n)+' · '+_patSvc.p+' DT / '+dur+'min</div>'+
-    (motif ? '<div>📋 '+escHtml(motif)+'</div>' : '')+
-    (addr ? '<div>📍 '+escHtml(addr)+'</div>' : '')+
-    (pro.tel ? '<div>📞 '+escHtml(pro.tel)+'</div>' : '')+
-    '<div style="margin-top:.4rem;padding:.5rem;background:#EEF2FF;border-radius:8px;font-size:.72rem;color:#1B4FD8">'+
-    '📧 Confirmation envoyée à <strong>'+escHtml(email)+'</strong></div>'+
-    '</div>';
-  
-  var confEmail = patEl('pat-conf-email');
-  if(confEmail) confEmail.textContent = email;
-  
-  // Bouton WhatsApp si le praticien a un numéro WA
-  var waBtn = patEl('pat-wa-contact-btn');
-  if(waBtn) waBtn.style.display = pro.wa ? '' : 'none';
-  
-  patShowStep(3);
-  window.scrollTo(0,0);
-  toast2('✅ Rendez-vous confirmé !','green');
-  
-  // Notifier le praticien par WA si disponible
-  if(pro.wa){
-    setTimeout(function(){
-      var waMsg = '🔔 Nouveau RDV MedBook\n'+
-        '👤 '+fn+' '+ln+'\n'+
-        '📅 '+label+' à '+_patSlot+'\n'+
-        '🎫 '+_patSvc.n+
-        (motif ? '\n📋 '+motif : '')+
-        (tel ? '\n📞 '+tel : '')+'\n'+
-        '📧 '+email;
-      // Ouvrir WA en arrière-plan pour notifier le praticien
-      // (Le patient peut aussi cliquer "Contacter via WhatsApp")
-    },100);
-  }
+  // Save to Firebase
+  fbSaveRdv(_patRdv, function(ok){
+    if(!ok){
+      if(confirmBtn){confirmBtn.disabled=false;confirmBtn.textContent='✅ Confirmer le rendez-vous';}
+      toast2('Erreur de connexion. Réessayez.','red');return;
+    }
+    
+    // Show success
+    var d2=new Date(_patDate+'T12:00:00');
+    patEl('pat-success-detail').innerHTML=
+      '<div style="display:flex;flex-direction:column;gap:.3rem">'+
+      '<div>👤 <strong>'+patEsc(fn)+' '+patEsc(ln)+'</strong></div>'+
+      '<div>📅 '+label+'</div>'+
+      '<div>⏰ '+_patSlot+' – '+end+'</div>'+
+      '<div>🩺 Dr. '+patEsc(pro.fn)+' '+patEsc(pro.ln)+'</div>'+
+      '<div>🎫 '+patEsc(_patSvc.n)+' · '+_patSvc.p+' DT / '+dur+'min</div>'+
+      (addr?'<div>📍 '+patEsc(addr)+'</div>':'')+
+      (pro.tel?'<div>📞 '+patEsc(pro.tel)+'</div>':'')+
+      '<div style="margin-top:.4rem;padding:.5rem;background:#EEF2FF;border-radius:8px;font-size:.72rem;color:#1B4FD8">📧 Confirmation envoyée à <strong>'+patEsc(email)+'</strong></div>'+
+      '</div>';
+    
+    patEl('pat-conf-email').textContent=email;
+    var waBtn=patEl('pat-wa-btn');if(waBtn)waBtn.style.display=pro.wa?'':'none';
+    patShowStep(3);window.scrollTo(0,0);
+    toast2('✅ Rendez-vous confirmé !','green');
+    
+    // Also notify pro via localStorage for same-device
+    var db=getDB();if(!db.rdvs)db.rdvs=[];db.rdvs.push(_patRdv);saveDB(db);
+  });
 }
 
-// ── CALENDRIER ET ICS ──
 function patAddGcal(){
-  var r=_patRdv; if(!r) return;
+  var r=_patRdv;if(!r)return;
   var pro=_patPro;
-  var d=new Date(r.date+'T'+r.slot+':00');
-  var end=new Date(d.getTime()+r.serviceDuration*60000);
+  var d=new Date(r.date+'T'+r.slot+':00'),end=new Date(d.getTime()+r.serviceDuration*60000);
   var fmt=function(dt){return dt.toISOString().replace(/[-:]/g,'').split('.')[0];};
-  var title=r.serviceName+' — Dr. '+pro.fn+' '+pro.ln;
-  var loc=(pro.adresse||'')+(pro.ville?', '+pro.ville:'');
-  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE'+
-    '&text='+encodeURIComponent(title)+
-    '&dates='+fmt(d)+'/'+fmt(end)+
-    '&location='+encodeURIComponent(loc)+
-    '&details='+encodeURIComponent('Rendez-vous MedBook\nDr. '+pro.fn+' '+pro.ln+'\n'+loc),
-    '_blank');
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(r.serviceName+' — Dr. '+pro.fn+' '+pro.ln)+'&dates='+fmt(d)+'/'+fmt(end)+'&location='+encodeURIComponent(pro.adresse||''),'_blank');
 }
 
 function patAddIcal(){
-  var r=_patRdv; if(!r) return;
+  var r=_patRdv;if(!r)return;
   var pro=_patPro;
-  var d=new Date(r.date+'T'+r.slot+':00');
-  var end=new Date(d.getTime()+r.serviceDuration*60000);
+  var d=new Date(r.date+'T'+r.slot+':00'),end=new Date(d.getTime()+r.serviceDuration*60000);
   var fmt=function(dt){return dt.toISOString().replace(/[-:]/g,'').split('.')[0];};
-  var ics=[
-    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//MedBook//TN//FR',
-    'BEGIN:VEVENT',
-    'SUMMARY:'+r.serviceName+' — Dr. '+pro.fn+' '+pro.ln,
-    'DTSTART:'+fmt(d),'DTEND:'+fmt(end),
-    'LOCATION:'+(pro.adresse||'')+(pro.ville?', '+pro.ville:''),
-    'DESCRIPTION:Rendez-vous MedBook',
-    'END:VEVENT','END:VCALENDAR'
-  ].join('\r\n');
-  var blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(blob); a.download='rdv-medbook.ics'; a.click();
+  var ics='BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:'+r.serviceName+' — Dr. '+pro.fn+' '+pro.ln+'\nDTSTART:'+fmt(d)+'\nDTEND:'+fmt(end)+'\nLOCATION:'+(pro.adresse||'')+'\nEND:VEVENT\nEND:VCALENDAR';
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='rdv-medbook.ics';a.click();
 }
 
 function patContactWA(){
-  var pro=_patPro; if(!pro||!pro.wa) return;
-  var r=_patRdv; if(!r) return;
-  var d=new Date(r.date+'T12:00:00');
+  var pro=_patPro;if(!pro||!pro.wa||!_patRdv)return;
+  var d=new Date(_patDate+'T12:00:00');
   var label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
-  var msg='Bonjour Dr. '+pro.fn+' '+pro.ln+', je viens de confirmer mon rendez-vous du '+label+' à '+r.slot+' via MedBook.';
+  var msg='Bonjour Dr. '+pro.fn+' '+pro.ln+', je viens de confirmer mon RDV du '+label+' à '+_patSlot+' via MedBook.';
   window.open('https://wa.me/'+(pro.wa||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg),'_blank');
 }
 
 function patReset(){
-  _patDate=''; _patSlot=''; _patSvc=null; _patRdv=null;
-  var fields=['pat-fn','pat-ln','pat-email','pat-tel','pat-msg'];
-  fields.forEach(function(id){var e=patEl(id);if(e)e.value='';});
-  var mo=patEl('pat-motif'); if(mo)mo.value='';
-  var rg=patEl('pat-rgpd'); if(rg)rg.checked=false;
-  var ns=patEl('pat-no-slots'); if(ns)ns.style.display='none';
-  var sw=patEl('pat-slots-wrap'); if(sw)sw.style.display='none';
-  var sb=patEl('pat-share-bar'); if(sb)sb.style.display='flex';
-  patShowStep(1); patDrawCal();
-  window.scrollTo(0,0);
+  _patDate='';_patSlot='';_patSvc=null;_patRdv=null;
+  ['pat-fn','pat-ln','pat-email','pat-tel'].forEach(function(id){var e=patEl(id);if(e)e.value='';});
+  var mo=patEl('pat-motif');if(mo)mo.value='';
+  var rg=patEl('pat-rgpd');if(rg)rg.checked=false;
+  var sw=patEl('pat-slots-wrap');if(sw)sw.style.display='none';
+  patShowStep(1);patDrawCal();window.scrollTo(0,0);
 }
 
-// ── PARTAGE ──
 function patCopyLink(){
-  var pro=_patPro; if(!pro) return;
-  getShortLink(pro, function(link){
-    navigator.clipboard&&navigator.clipboard.writeText(link).catch(function(){});
-    toast2('🔗 Lien copié !','green');
-  });
+  var pro=_patPro;if(!pro)return;
+  var link=fbGetPatientLink(pro);
+  navigator.clipboard&&navigator.clipboard.writeText(link);
+  toast2('🔗 Lien copié !','green');
 }
+
 function patShareWA(){
-  var pro=_patPro; if(!pro) return;
-  getShortLink(pro, function(link){
-    var msg='📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+(pro.ville?', '+pro.ville:'')+') :\n'+link;
-    window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
-  });
+  var pro=_patPro;if(!pro)return;
+  var link=fbGetPatientLink(pro);
+  var msg='📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+(pro.ville?', '+pro.ville:'')+') :\n'+link;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
+
 function patShareEmail(){
-  var pro=_patPro; if(!pro) return;
-  var link=getShareLink(pro);
+  var pro=_patPro;if(!pro)return;
+  var link=fbGetPatientLink(pro);
   var sub=encodeURIComponent('Rendez-vous en ligne — Dr. '+pro.fn+' '+pro.ln);
   var body=encodeURIComponent('Bonjour,\n\nPrenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+') :\n'+link+'\n\nCordialement');
   window.open('mailto:?subject='+sub+'&body='+body,'_blank');
 }
+
 function patGoBack(){
-  if(history.pushState) history.pushState(null,'',window.location.pathname);
+  if(history.pushState)history.pushState(null,'',window.location.pathname);
   showView('v-pro');
-}
-function patGoHome(){
-  if(history.pushState) history.pushState(null,'',window.location.pathname);
-  showView('v-landing');
 }
 
 function init(){
   seedDemo();
   var hash=window.location.hash.replace('#','');
   
-  // ── Lien patient avec données encodées: #p/BASE64 ──
-  if(hash.startsWith('p/')){
-    var enc=hash.slice(2);
-    var pro=decodePro(enc);
-    if(pro){
-      pro.id=pro.id||'shared-pro';
-      showView('v-patient');
-      initPatientPage(pro);
-      return;
-    }
+  // Patient link: #rdv/aymen-khalsi → load from Firebase
+  if(hash.startsWith('rdv/')){
+    var slug=hash.slice(4);
+    // Show loading
+    document.body.innerHTML='<div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#F0F4FF;font-family:DM Sans,sans-serif"><div style="width:48px;height:48px;border:4px solid #EEF2FF;border-top-color:#1B4FD8;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:1rem"></div><div style="font-family:Playfair Display,serif;font-size:1.1rem;font-weight:700;color:#1B4FD8">MedBook</div><div style="font-size:.76rem;color:#718096;margin-top:.25rem">Chargement du cabinet...</div><style>@keyframes spin{to{transform:rotate(360deg)} }</style></div>';
+    fbGetPro(slug, function(pro){
+      if(pro){
+        document.body.innerHTML='';
+        location.reload();
+        // Actually we need to restore the page - use a flag
+        sessionStorage.setItem('mb_load_pro', JSON.stringify({pro:pro,slug:slug}));
+        location.reload();
+      } else {
+        document.body.innerHTML='<div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#F0F4FF;text-align:center;padding:2rem;font-family:DM Sans,sans-serif"><div style="font-size:3rem;margin-bottom:1rem">🔍</div><div style="font-family:Playfair Display,serif;font-size:1.4rem;font-weight:700;color:#0D1117;margin-bottom:.5rem">Cabinet introuvable</div><div style="font-size:.86rem;color:#718096;margin-bottom:1.5rem">Ce lien de réservation est invalide ou inactif.</div><a href="'+window.location.pathname+'" style="background:#1B4FD8;color:#fff;text-decoration:none;border-radius:10px;padding:.75rem 1.5rem;font-size:.88rem;font-weight:700">Retour à MedBook</a></div>';
+      }
+    });
+    return;
   }
   
-  // ── Admin ──
-  if(hash==='admin'){ try{openAdminPortal();}catch(e){} return; }
+  // Check for pre-loaded pro data (after reload)
+  var loadPro = sessionStorage.getItem('mb_load_pro');
+  if(loadPro){
+    sessionStorage.removeItem('mb_load_pro');
+    try{
+      var data=JSON.parse(loadPro);
+      if(data.pro){
+        showView('v-patient');
+        initPatientPage(data.pro);
+        if(history.pushState)history.pushState(null,'','#rdv/'+data.slug);
+        return;
+      }
+    }catch(e){}
+  }
   
-  // ── Dashboard praticien ──
+  if(hash==='admin'){try{openAdminPortal();}catch(e){}return;}
+  
   var s=getSession();
   if(s){
     var db=getDB(); var pro=db.pros&&db.pros.find(function(p){return p.id===s.id;});
-    if(pro){ closeAuthModal(); loadProDash(pro); }
-    else showView('v-landing');
+    if(pro){
+      closeAuthModal();
+      loadProDash(pro);
+      // Sync profile to Firebase
+      fbSavePro(pro, null);
+      // Load Firebase RDVs
+      fbLoadRdvsIntoDash(pro);
+    } else showView('v-landing');
   } else {
     showView('v-landing');
   }
   rescheduleAll();
 }
 
+
+// ══ PUBLIC PATIENT BOOKING PAGE ══
+function renderPublicBookingPage(pro){
+  const cfg=(typeof SPECIALTY_CONFIG!=='undefined'&&SPECIALTY_CONFIG[pro.spec])||{ico:'🩺',colorL:'#EEF2FF',services:[{name:pro.consultType||'Consultation',duration:pro.duration||50,price:pro.price||100,desc:''}],motifs:['Première consultation','Suivi régulier','Autre']};
+  // Header
+  const avEl=document.getElementById('bk-pro-av'); if(avEl){if(pro.photo)avEl.innerHTML='<img src="'+pro.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';else avEl.textContent=cfg.ico||'🩺';}
+  const nmEl=document.getElementById('bk-pro-name'); if(nmEl)nmEl.textContent='Dr. '+pro.fn+' '+pro.ln;
+  const spEl=document.getElementById('bk-pro-spec'); if(spEl)spEl.textContent=(pro.spec||'')+(pro.ville?' · '+pro.ville:'');
+  const adEl=document.getElementById('bk-pro-addr'); if(adEl)adEl.textContent=(pro.bureau?pro.bureau+' — ':'')+pro.adresse+(pro.ville?', '+pro.ville:'');
+  // Services
+  const svcEl=document.getElementById('bk-services-list'); 
+  if(svcEl){
+    svcEl.innerHTML='';
+    const services=cfg.services||[{name:pro.consultType||'Consultation',duration:pro.duration||50,price:pro.price||100}];
+    services.forEach((svc,i)=>{
+      const d=document.createElement('div');
+      d.className='bk-svc-card'+(i===0?' selected':'');
+      d.innerHTML='<div class="bk-svc-ico" style="background:'+cfg.colorL+'">'+cfg.ico+'</div><div style="flex:1"><div class="bk-svc-name">'+escHtml(svc.name)+'</div><div class="bk-svc-meta">⏱ '+svc.duration+'min</div></div><div class="bk-svc-price">'+svc.price+' DT</div>';
+      d.onclick=()=>{document.querySelectorAll('.bk-svc-card').forEach(c=>c.classList.remove('selected'));d.classList.add('selected');window._guestService=svc;};
+      if(i===0) window._guestService=svc;
+      svcEl.appendChild(d);
+    });
+  }
+  // Motifs
+  const motifEl=document.getElementById('bk-motif'); if(motifEl){motifEl.innerHTML='<option value="">— Motif (optionnel) —</option>';(cfg.motifs||[]).forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;motifEl.appendChild(o);});}
+  // Back button
+  const bb=document.getElementById('bk-back-btn');
+  if(bb){
+    const s=getSession();
+    bb.style.display=s?'flex':'none';
+    bb.onclick=()=>{if(history.pushState)history.pushState(null,'',window.location.pathname);showView('v-pro');};
+  }
+  // Init calendar
+  if(typeof bkRenderCal==='function') bkRenderCal(pro);
+}
+
+function bkConfirmRdv(){
+  const pro=window._guestPro; if(!pro){toast2('Erreur: professionnel introuvable','red');return;}
+  const fn=(document.getElementById('bk-fn')||{value:''}).value.trim();
+  const ln=(document.getElementById('bk-ln')||{value:''}).value.trim();
+  const email=(document.getElementById('bk-email')||{value:''}).value.trim();
+  const rgpd=(document.getElementById('bk-rgpd')||{checked:false}).checked;
+  if(!fn||!ln){toast2('Prénom et nom requis','red');return;}
+  if(!email||!email.includes('@')){toast2('Email valide requis','red');return;}
+  if(!rgpd){toast2('Acceptez la politique de confidentialité','red');return;}
+  if(!window._guestDate||!window._guestSlot){toast2('Choisissez une date et un créneau','red');return;}
+  const svc=window._guestService||{name:pro.consultType||'Consultation',price:pro.price||100,duration:pro.duration||50};
+  const db=getDB();
+  if(!db.rdvs)db.rdvs=[];
+  const dur=svc.duration||50;
+  const rdv={id:'rdv-'+Date.now(),proId:pro.id,proFn:pro.fn,proLn:pro.ln,spec:pro.spec,
+    patFn:fn,patLn:ln,patEmail:email,patTel:(document.getElementById('bk-tel')||{value:''}).value.trim(),
+    date:window._guestDate,slot:window._guestSlot,serviceName:svc.name,servicePrice:svc.price,
+    serviceDuration:dur,motif:(document.getElementById('bk-motif')||{value:''}).value,
+    status:'confirmed',createdAt:new Date().toISOString()};
+  db.rdvs.push(rdv);saveDB(db);
+  // Show success
+  const successEl=document.getElementById('bk-success');
+  const formEl=document.getElementById('bk-form-section');
+  const cal=document.getElementById('bk-cal-section');
+  if(formEl)formEl.style.display='none';
+  if(cal)cal.style.display='none';
+  if(successEl){
+    successEl.style.display='';
+    const d=new Date(window._guestDate+'T12:00:00');
+    const label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    const [h,m2]=window._guestSlot.split(':').map(Number);
+    const endT=h*60+m2+dur;
+    const endStr=String(Math.floor(endT/60)).padStart(2,'0')+':'+String(endT%60).padStart(2,'0');
+    document.getElementById('bk-success-detail').innerHTML=
+      '<div>✅ <strong>'+escHtml(fn)+' '+escHtml(ln)+'</strong></div>'+
+      '<div>📅 '+label+'</div><div>⏰ '+window._guestSlot+' – '+endStr+'</div>'+
+      '<div>🩺 Dr. '+escHtml(pro.fn)+' '+escHtml(pro.ln)+'</div>'+
+      '<div>💊 '+escHtml(svc.name)+' · '+svc.price+' DT</div>'+
+      (pro.adresse?'<div>📍 '+escHtml(pro.adresse)+', '+escHtml(pro.ville||'')+'</div>':'')+
+      '<div style="margin-top:.5rem;padding:.5rem;background:#ECFDF5;border-radius:8px;font-size:.72rem;color:#065F46">📧 Confirmation envoyée à '+escHtml(email)+'</div>';
+  }
+  toast2('✅ RDV confirmé !','green');
+  window._guestDate='';window._guestSlot='';
+}
+
+function bkAddGcal(){
+  const pro=window._guestPro; if(!pro||!window._bkLastRdv) return;
+  const r=window._bkLastRdv;
+  const d=new Date(r.date+'T'+r.slot+':00');
+  const end=new Date(d.getTime()+r.serviceDuration*60000);
+  const fmt=dt=>dt.toISOString().replace(/[-:]/g,'').split('.')[0];
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(r.serviceName+' — Dr. '+pro.fn+' '+pro.ln)+'&dates='+fmt(d)+'/'+fmt(end)+'&location='+encodeURIComponent(pro.adresse||''),'_blank');
+}
+
+
+
+// ══ BOOKING PAGE CALENDAR ══
+var _bkCalDate=new Date();
+var _bkPro=null;
+window._guestDate='';window._guestSlot='';window._guestService=null;window._guestPro=null;
+
+var BK_MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+var BK_DAYS=['sun','mon','tue','wed','thu','fri','sat'];
+
+function bkRenderCal(pro){
+  _bkPro=pro||window._guestPro;
+  if(!_bkPro) return;
+  var y=_bkCalDate.getFullYear(),m=_bkCalDate.getMonth();
+  document.getElementById('bk-cal-title').textContent=BK_MONTHS[m]+' '+y;
+  var grid=document.getElementById('bk-cal-grid'); grid.innerHTML='';
+  var avail=_bkPro.avail||{days:{mon:true,tue:true,wed:true,thu:true,fri:true},slots:[]};
+  var today=new Date();today.setHours(0,0,0,0);
+  var firstDay=new Date(y,m,1).getDay();
+  var offset=firstDay===0?6:firstDay-1;
+  var daysInMonth=new Date(y,m+1,0).getDate();
+  for(var i=0;i<offset;i++){var empty=document.createElement('div');empty.className='bk-day';grid.appendChild(empty);}
+  for(var d=1;d<=daysInMonth;d++){
+    (function(day){
+      var dateObj=new Date(y,m,day);
+      var dateStr=y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+      var dayKey=BK_DAYS[dateObj.getDay()];
+      var isPast=dateObj<today;
+      var isUnavail=!avail.days[dayKey];
+      var isToday=dateStr===today.toISOString().split('T')[0];
+      var el=document.createElement('div');
+      el.textContent=day;
+      el.className='bk-day'+(isPast||isUnavail?' past':'')+(isToday?' today':'');
+      if(dateStr===window._guestDate) el.classList.add('selected');
+      if(!isPast&&!isUnavail) el.onclick=function(){bkSelectDate(dateStr,el);};
+      grid.appendChild(el);
+    })(d);
+  }
+}
+function bkCalPrev(){_bkCalDate.setMonth(_bkCalDate.getMonth()-1);bkRenderCal();}
+function bkCalNext(){_bkCalDate.setMonth(_bkCalDate.getMonth()+1);bkRenderCal();}
+
+function bkSelectDate(date,el){
+  window._guestDate=date;window._guestSlot='';
+  document.querySelectorAll('.bk-day').forEach(function(d){d.classList.remove('selected');});
+  el.classList.add('selected');
+  var pro=window._guestPro; if(!pro) return;
+  var db=getDB();
+  var avail=pro.avail&&pro.avail.slots||['09:00','10:00','11:00','14:00','15:00','16:00'];
+  var booked=(db.rdvs||[]).filter(function(r){return r.proId===pro.id&&r.date===date&&r.status!=='cancelled';}).map(function(r){return r.slot;});
+  var free=avail.filter(function(s){return !booked.includes(s);});
+  var d=new Date(date+'T12:00:00');
+  document.getElementById('bk-slots-day').textContent='⏰ '+d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  var sg=document.getElementById('bk-slots-grid'); sg.innerHTML='';
+  if(free.length===0){
+    sg.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:#718096;padding:.75rem">Aucun créneau disponible. Choisissez une autre date.</div>';
+  } else {
+    free.forEach(function(sl){
+      var btn=document.createElement('div');btn.className='bk-slot';btn.textContent=sl;
+      btn.onclick=function(){
+        document.querySelectorAll('.bk-slot').forEach(function(b){b.classList.remove('selected');});
+        btn.classList.add('selected');window._guestSlot=sl;
+        bkShowForm();
+      };
+      sg.appendChild(btn);
+    });
+  }
+  document.getElementById('bk-slots-section').style.display='';
+}
+
+function bkShowForm(){
+  var pro=window._guestPro; var svc=window._guestService;
+  if(!pro||!window._guestDate||!window._guestSlot) return;
+  var d=new Date(window._guestDate+'T12:00:00');
+  var label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  var dur=svc&&svc.duration||pro.duration||50;
+  var hh=parseInt(window._guestSlot.split(':')[0]);
+  var mm=parseInt(window._guestSlot.split(':')[1]);
+  var tot=hh*60+mm+dur;
+  var endStr=String(Math.floor(tot/60)).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
+  var addr=(pro.bureau?pro.bureau+', ':'')+pro.adresse+(pro.ville?', '+pro.ville:'');
+  document.getElementById('bk-rdv-summary').innerHTML=
+    '<strong>'+(svc?escHtml(svc.name):escHtml(pro.consultType||'Consultation'))+'</strong> · '+(svc?svc.price:pro.price)+' DT · '+dur+'min<br/>'+
+    '📅 '+label+'<br/>⏰ '+window._guestSlot+' – '+endStr+'<br/>'+
+    '🩺 Dr. '+escHtml(pro.fn)+' '+escHtml(pro.ln)+
+    (addr?'<br/>📍 '+escHtml(addr):'');
+  document.getElementById('bk-cal-section').style.display='none';
+  document.getElementById('bk-form-section').style.display='';
+}
+
+function bkBackToCal(){
+  document.getElementById('bk-form-section').style.display='none';
+  document.getElementById('bk-cal-section').style.display='';
+  window._guestSlot='';
+}
+
+function bkNewRdv(){
+  window._guestDate='';window._guestSlot='';
+  var success=document.getElementById('bk-success');if(success)success.style.display='none';
+  var form=document.getElementById('bk-form-section');if(form)form.style.display='none';
+  var cal=document.getElementById('bk-cal-section');if(cal){cal.style.display='';bkRenderCal();}
+  document.getElementById('bk-slots-section').style.display='none';
+  ['bk-fn','bk-ln','bk-email','bk-tel'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  var rgpd=document.getElementById('bk-rgpd');if(rgpd)rgpd.checked=false;
+}
+
+function bkCopyLink(){
+  var pro=window._guestPro; if(!pro) return;
+  var url=getRdvUrl(pro);
+  navigator.clipboard&&navigator.clipboard.writeText(url).catch(function(){});
+  toast2('🔗 Lien copié !','green');
+}
+function bkShareWA(){
+  var pro=window._guestPro; if(!pro) return;
+  var url=getRdvUrl(pro);
+  var msg=encodeURIComponent('📅 Prenez rendez-vous avec Dr. '+pro.fn+' '+pro.ln+' ('+pro.spec+(pro.ville?', '+pro.ville:'')+') :\n'+url);
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
+
+// popstate for browser back button
+window.addEventListener('popstate',function(){
+  var hash=window.location.hash.replace('#','');
+  if(hash.startsWith('rdv/')){
+    var slug=hash.slice(4);
+    var pro=findProBySlug(slug);
+    if(pro){window._guestPro=pro;openPatientBookingFor(pro.id);}
+  } else {
+    var s=getSession();
+    if(s)showView('v-pro');else showView('v-landing');
+  }
+});
+
+}
 init();
 </script>
 
-<!-- ═══════════════════════════════════════════════
-     PAGE PATIENT PUBLIQUE
-     Accessible via: index.html#p/BASE64DATA
-═══════════════════════════════════════════════ -->
-<div class="view" id="v-patient" style="background:#F0F4FF;min-height:100dvh">
-  
-  <!-- Bouton retour dashboard (visible uniquement pour le praticien connecté) -->
-  <button id="pat-back-btn" onclick="patGoBack()" style="display:none;position:fixed;top:.75rem;left:.75rem;z-index:300;background:rgba(255,255,255,.95);border:1.5px solid #C7D2FE;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:700;color:#1B4FD8;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.12);align-items:center;gap:.35rem">← Mon espace</button>
+<!-- ════ PUBLIC BOOKING PAGE ════ -->
+<div class="view" id="v-booking-page">
+  <button id="bk-back-btn" style="display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:rgba(255,255,255,.95);border:1px solid #C7D2FE;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:700;color:#1B4FD8;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.1);align-items:center;gap:.35rem">&#8592; Tableau de bord</button>
 
-  <!-- ENTÊTE PRATICIEN -->
+  <div style="background:linear-gradient(145deg,#1B4FD8,#0D9488);padding:2rem 1.25rem 4rem;text-align:center;position:relative;overflow:hidden">
+    <div style="position:absolute;bottom:-1px;left:0;right:0;height:40px;background:#F0F4FF;border-radius:50% 50% 0 0/100% 100% 0 0"></div>
+    <div id="bk-pro-av" style="width:80px;height:80px;border-radius:50%;border:3px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin:0 auto .85rem;position:relative;z-index:1;overflow:hidden">🩺</div>
+    <div id="bk-pro-name" style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;position:relative;z-index:1">Dr. —</div>
+    <div id="bk-pro-spec" style="font-size:.82rem;color:rgba(255,255,255,.8);margin-top:.2rem;position:relative;z-index:1">—</div>
+    <div id="bk-pro-addr" style="font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.25rem;position:relative;z-index:1"></div>
+  </div>
+
+  <div style="background:#F0F4FF;min-height:60vh;padding-bottom:3rem">
+    <div style="max-width:560px;margin:0 auto;padding:0 1.1rem">
+      <div style="padding-top:1rem;padding-bottom:.5rem">
+        <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin-bottom:.65rem">Type de consultation</div>
+        <div id="bk-services-list"></div>
+      </div>
+
+      <div id="bk-cal-section">
+        <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin:.75rem 0 .5rem">Choisissez une date</div>
+        <div style="background:#fff;border-radius:16px;padding:1rem;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+            <button onclick="bkCalPrev()" style="width:32px;height:32px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font-size:.85rem;cursor:pointer">‹</button>
+            <div id="bk-cal-title" style="font-weight:700;font-size:.9rem;color:#0D1117"></div>
+            <button onclick="bkCalNext()" style="width:32px;height:32px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font-size:.85rem;cursor:pointer">›</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;text-align:center;font-size:.6rem;font-weight:700;color:#A0AEC0">
+            <div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div>
+          </div>
+          <div id="bk-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
+        </div>
+        <div id="bk-slots-section" style="display:none;margin-top:.85rem">
+          <div id="bk-slots-day" style="font-size:.78rem;font-weight:700;color:#0D1117;margin-bottom:.5rem"></div>
+          <div id="bk-slots-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem"></div>
+        </div>
+      </div>
+
+      <div id="bk-form-section" style="display:none;margin-top:1rem">
+        <div id="bk-rdv-summary" style="background:linear-gradient(135deg,#EEF2FF,#F0FDF9);border:1.5px solid #C7D2FE;border-radius:14px;padding:1rem;margin-bottom:1rem;font-size:.8rem;color:#4A5568;line-height:1.85"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.65rem">
+          <div><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.25rem">Prénom *</label><input id="bk-fn" class="finput" placeholder="Yassine"/></div>
+          <div><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.25rem">Nom *</label><input id="bk-ln" class="finput" placeholder="Trabelsi"/></div>
+        </div>
+        <div style="margin-bottom:.65rem"><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.25rem">Email * (rappels auto)</label><input id="bk-email" class="finput" type="email" placeholder="vous@email.com"/></div>
+        <div style="margin-bottom:.65rem"><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.25rem">Téléphone</label><input id="bk-tel" class="finput" type="tel" placeholder="+216 55 …"/></div>
+        <div style="margin-bottom:.65rem"><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.25rem">Motif</label><select id="bk-motif" class="fselect"></select></div>
+        <label style="display:flex;align-items:flex-start;gap:.5rem;background:#F7F8FC;border:1px solid #E2E8F0;border-radius:8px;padding:.65rem;margin-bottom:.85rem;font-size:.71rem;color:#718096;cursor:pointer;line-height:1.55">
+          <input type="checkbox" id="bk-rgpd" style="margin-top:.1rem;accent-color:#1B4FD8;flex-shrink:0"/>
+          J'accepte que mes données soient utilisées pour ce rendez-vous. Conforme à la réglementation tunisienne.
+        </label>
+        <button onclick="bkConfirmRdv()" style="width:100%;background:#1B4FD8;color:#fff;border:none;border-radius:14px;padding:1rem;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(27,79,216,.3)">✅ Confirmer le rendez-vous</button>
+        <button onclick="bkBackToCal()" style="width:100%;background:transparent;color:#718096;border:1px solid #E2E8F0;border-radius:10px;padding:.65rem;font-size:.8rem;font-weight:500;cursor:pointer;margin-top:.5rem">← Modifier la date</button>
+      </div>
+
+      <div id="bk-success" style="display:none;padding:2rem 0;text-align:center">
+        <div style="font-size:3rem;margin-bottom:.75rem">✅</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:800;color:#0D1117;margin-bottom:.5rem">Rendez-vous confirmé !</div>
+        <div style="font-size:.84rem;color:#4A5568;margin-bottom:1rem;line-height:1.7">Un email de confirmation a été envoyé avec des rappels automatiques.</div>
+        <div id="bk-success-detail" style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1rem;margin-bottom:1rem;text-align:left;font-size:.8rem;line-height:1.85;color:#4A5568"></div>
+        <button onclick="bkNewRdv()" style="width:100%;background:#F7F8FC;color:#4A5568;border:1px solid #E2E8F0;border-radius:10px;padding:.7rem;font-size:.82rem;cursor:pointer">🔄 Prendre un autre rendez-vous</button>
+      </div>
+
+      <div style="display:flex;gap:.5rem;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #E2E8F0">
+        <button onclick="bkCopyLink()" style="flex:1;border:1.5px solid #E2E8F0;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#4A5568;background:#fff;cursor:pointer">📋 Copier le lien</button>
+        <button onclick="bkShareWA()" style="flex:1;border:1.5px solid #25D366;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#25D366;background:#fff;cursor:pointer">📱 WhatsApp</button>
+      </div>
+      <div style="text-align:center;padding:1.5rem 0 .5rem;font-size:.65rem;color:#A0AEC0">Propulsé par <a href="#" style="color:#1B4FD8;font-weight:600">MedBook</a> · 🇹🇳 Tunisie</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- PAGE PATIENT PUBLIQUE -->
+<div class="view" id="v-patient" style="background:#F0F4FF;min-height:100dvh">
+
+  <button id="pat-back-btn" onclick="patGoBack()" style="display:none;position:fixed;top:.75rem;left:.75rem;z-index:300;background:rgba(255,255,255,.95);border:1.5px solid #C7D2FE;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:700;color:#1B4FD8;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.12);align-items:center;gap:.35rem">← Tableau de bord</button>
+
+  <!-- HEADER -->
   <div id="pat-header" style="background:linear-gradient(145deg,#1B4FD8,#0D9488);padding:2.5rem 1.25rem 5rem;text-align:center;position:relative;overflow:hidden">
     <div style="position:absolute;inset:0;opacity:.05;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:18px 18px"></div>
     <div style="position:absolute;bottom:-2px;left:0;right:0;height:52px;background:#F0F4FF;border-radius:60% 60% 0 0/100% 100% 0 0;z-index:1"></div>
-    
-    <!-- Avatar -->
     <div id="pat-av" style="width:90px;height:90px;border-radius:50%;border:4px solid rgba(255,255,255,.45);background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:2.4rem;margin:0 auto 1rem;position:relative;z-index:2;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.15)">🩺</div>
-    
-    <div id="pat-name" style="font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;color:#fff;position:relative;z-index:2;text-shadow:0 2px 8px rgba(0,0,0,.15)">Dr. —</div>
+    <div id="pat-name" style="font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;color:#fff;position:relative;z-index:2">Dr. —</div>
     <div id="pat-titre" style="font-size:.74rem;color:rgba(255,255,255,.78);margin-top:.22rem;position:relative;z-index:2;display:none"></div>
     <div id="pat-spec" style="font-size:.86rem;color:rgba(255,255,255,.9);margin-top:.22rem;position:relative;z-index:2;font-weight:500">—</div>
-    <div id="pat-location" style="font-size:.72rem;color:rgba(255,255,255,.65);margin-top:.28rem;position:relative;z-index:2;display:none">📍 <span id="pat-loc-txt"></span></div>
-    
-    <!-- Badges -->
+    <div id="pat-addr" style="font-size:.72rem;color:rgba(255,255,255,.65);margin-top:.25rem;position:relative;z-index:2;display:none"></div>
     <div id="pat-badges" style="display:flex;flex-wrap:wrap;justify-content:center;gap:.35rem;margin-top:.75rem;position:relative;z-index:2"></div>
-    
-    <!-- Stats -->
-    <div id="pat-stats" style="display:none;justify-content:center;gap:2.5rem;margin-top:1rem;position:relative;z-index:2">
-      <div style="text-align:center"><div id="pat-stat-exp" style="font-size:1.15rem;font-weight:800;color:#fff">—</div><div style="font-size:.63rem;color:rgba(255,255,255,.65)">ans exp.</div></div>
-      <div style="text-align:center"><div id="pat-stat-lang" style="font-size:1.15rem;font-weight:800;color:#fff">—</div><div style="font-size:.63rem;color:rgba(255,255,255,.65)">langues</div></div>
-    </div>
   </div>
 
-  <!-- CONTENU PRINCIPAL -->
+  <!-- CONTENT -->
   <div style="max-width:560px;margin:0 auto;padding:0 1rem 4rem">
 
-    <!-- Carte Bio -->
-    <div id="pat-bio-card" style="display:none;background:#fff;border-radius:16px;padding:1.1rem;margin:-.5rem 0 .85rem;box-shadow:0 2px 16px rgba(0,0,0,.08)">
-      <div id="pat-bio-txt" style="font-size:.82rem;color:#4A5568;line-height:1.78"></div>
-      <div id="pat-contact-pills" style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.65rem"></div>
-      <a id="pat-map-link" href="#" target="_blank" style="display:none;align-items:center;gap:.5rem;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:.6rem .9rem;font-size:.76rem;color:#1B4FD8;font-weight:600;margin-top:.65rem;text-decoration:none">📍 <span id="pat-map-txt">Voir sur Google Maps</span></a>
+    <!-- Bio -->
+    <div id="pat-bio-card" style="display:none;background:#fff;border-radius:16px;padding:1.1rem;margin-bottom:.85rem;box-shadow:0 2px 16px rgba(0,0,0,.08)">
+      <div id="pat-bio-text" style="font-size:.82rem;color:#4A5568;line-height:1.78"></div>
+      <a id="pat-map-link" href="#" target="_blank" style="display:none;align-items:center;gap:.5rem;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:.6rem .9rem;font-size:.76rem;color:#1B4FD8;font-weight:600;margin-top:.65rem;text-decoration:none"></a>
     </div>
 
-    <!-- ÉTAPE 1: Choisir service + date + créneau -->
+    <!-- STEP 1: Service + Calendar + Slots -->
     <div id="pat-s1">
-      <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin:.75rem 0 .6rem">Type de consultation</div>
-      <div id="pat-svcs-list"></div>
+      <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin:.5rem 0 .6rem">Type de consultation</div>
+      <div id="pat-svcs"></div>
 
-      <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin:.9rem 0 .55rem">Choisissez une date</div>
+      <div style="font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#718096;margin:.85rem 0 .5rem">Choisissez une date</div>
       <div style="background:#fff;border-radius:16px;padding:1rem;box-shadow:0 2px 16px rgba(0,0,0,.08)">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
-          <button onclick="patPrev()" style="width:34px;height:34px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font-size:.9rem;cursor:pointer;color:#4A5568;display:flex;align-items:center;justify-content:center">‹</button>
+          <button onclick="patPrev()" style="width:34px;height:34px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font-size:.9rem;cursor:pointer;color:#4A5568">‹</button>
           <div id="pat-cal-title" style="font-weight:700;font-size:.92rem;color:#0D1117"></div>
-          <button onclick="patNext()" style="width:34px;height:34px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font-size:.9rem;cursor:pointer;color:#4A5568;display:flex;align-items:center;justify-content:center">›</button>
+          <button onclick="patNext()" style="width:34px;height:34px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font-size:.9rem;cursor:pointer;color:#4A5568">›</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:.6rem;font-weight:700;color:#A0AEC0;margin-bottom:5px;gap:2px">
           <div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div>
@@ -2971,101 +3157,61 @@ init();
         <div id="pat-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
       </div>
 
-      <!-- Créneaux -->
+      <!-- Slots -->
       <div id="pat-slots-wrap" style="display:none;margin-top:.85rem">
         <div id="pat-slots-label" style="font-size:.78rem;font-weight:700;color:#0D1117;margin-bottom:.55rem"></div>
         <div id="pat-slots-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem"></div>
-        <div id="pat-no-slots" style="display:none;background:#fff;border-radius:10px;padding:.85rem;text-align:center;font-size:.76rem;color:#718096">Aucun créneau disponible ce jour. Choisissez une autre date.</div>
       </div>
 
-      <!-- Bouton continuer -->
-      <button id="pat-s1-btn" onclick="patGoS2()" disabled
-        style="width:100%;background:#1B4FD8;color:#fff;border:none;border-radius:14px;padding:1rem;font-size:.92rem;font-weight:700;margin-top:1rem;opacity:.4;transition:all .25s;cursor:pointer;box-shadow:0 4px 20px rgba(27,79,216,.3)">
-        Continuer →
-      </button>
+      <button id="pat-cta-btn" onclick="patToForm()" disabled style="width:100%;background:#1B4FD8;color:#fff;border:none;border-radius:14px;padding:1rem;font-size:.92rem;font-weight:700;margin-top:1rem;opacity:.4;transition:all .25s;cursor:pointer;box-shadow:0 4px 20px rgba(27,79,216,.3)">Continuer →</button>
     </div>
 
-    <!-- ÉTAPE 2: Formulaire -->
+    <!-- STEP 2: Form -->
     <div id="pat-s2" style="display:none">
-      <button onclick="patGoS1()" style="background:#fff;border:1px solid #E2E8F0;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:600;color:#4A5568;cursor:pointer;margin-bottom:.9rem;display:flex;align-items:center;gap:.35rem">← Modifier</button>
-
-      <!-- Récapitulatif RDV -->
+      <button onclick="patBack()" style="background:#fff;border:1px solid #E2E8F0;border-radius:99px;padding:.42rem .9rem;font-size:.76rem;font-weight:600;color:#4A5568;cursor:pointer;margin-bottom:.9rem">← Retour</button>
       <div id="pat-recap" style="background:linear-gradient(135deg,#EEF2FF,#F0FDF9);border:1.5px solid #C7D2FE;border-radius:14px;padding:1rem;margin-bottom:1rem;font-size:.8rem;color:#4A5568;line-height:1.9"></div>
-
-      <!-- Formulaire patient -->
       <div style="background:#fff;border-radius:16px;padding:1.1rem;box-shadow:0 2px 16px rgba(0,0,0,.08)">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.65rem">
-          <div>
-            <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Prénom *</label>
-            <input id="pat-fn" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;transition:border-color .2s;outline:none" placeholder="Yassine"
-              onfocus="this.style.borderColor='#1B4FD8'" onblur="this.style.borderColor='#E2E8F0'"/>
-          </div>
-          <div>
-            <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Nom *</label>
-            <input id="pat-ln" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;transition:border-color .2s;outline:none" placeholder="Trabelsi"
-              onfocus="this.style.borderColor='#1B4FD8'" onblur="this.style.borderColor='#E2E8F0'"/>
-          </div>
+          <div><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Prénom *</label><input id="pat-fn" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="Yassine"/></div>
+          <div><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Nom *</label><input id="pat-ln" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="Trabelsi"/></div>
         </div>
-        <div style="margin-bottom:.65rem">
-          <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Email * <span style="font-weight:400;color:#A0AEC0">(rappels automatiques)</span></label>
-          <input id="pat-email" type="email" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="vous@email.com"
-            onfocus="this.style.borderColor='#1B4FD8'" onblur="this.style.borderColor='#E2E8F0'"/>
-        </div>
-        <div style="margin-bottom:.65rem">
-          <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Téléphone <span style="font-weight:400;color:#A0AEC0">(optionnel)</span></label>
-          <input id="pat-tel" type="tel" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="+216 55 …"
-            onfocus="this.style.borderColor='#1B4FD8'" onblur="this.style.borderColor='#E2E8F0'"/>
-        </div>
-        <div style="margin-bottom:.65rem">
-          <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Motif de consultation</label>
-          <select id="pat-motif" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;background:#fff;outline:none;appearance:none;-webkit-appearance:none"></select>
-        </div>
-        <div style="margin-bottom:.85rem">
-          <label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Message <span style="font-weight:400;color:#A0AEC0">(optionnel)</span></label>
-          <textarea id="pat-msg" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.82rem;font-family:inherit;color:#0D1117;min-height:72px;resize:none;outline:none;line-height:1.55" placeholder="Précisez votre situation si vous le souhaitez…"></textarea>
-        </div>
-        <label style="display:flex;align-items:flex-start;gap:.5rem;background:#F7F8FC;border:1px solid #E2E8F0;border-radius:10px;padding:.65rem;margin-bottom:.85rem;cursor:pointer;line-height:1.55">
+        <div style="margin-bottom:.65rem"><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Email * (rappels automatiques)</label><input id="pat-email" type="email" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="vous@email.com"/></div>
+        <div style="margin-bottom:.65rem"><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Téléphone</label><input id="pat-tel" type="tel" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;outline:none" placeholder="+216 55 …"/></div>
+        <div style="margin-bottom:.65rem"><label style="display:block;font-size:.7rem;font-weight:700;color:#4A5568;margin-bottom:.28rem">Motif</label><select id="pat-motif" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:.58rem .8rem;font-size:.84rem;font-family:inherit;color:#0D1117;background:#fff;outline:none;appearance:none"></select></div>
+        <label style="display:flex;align-items:flex-start;gap:.5rem;background:#F7F8FC;border:1px solid #E2E8F0;border-radius:10px;padding:.65rem;margin-bottom:.85rem;cursor:pointer">
           <input type="checkbox" id="pat-rgpd" style="margin-top:.15rem;accent-color:#1B4FD8;flex-shrink:0;width:15px;height:15px"/>
-          <span style="font-size:.72rem;color:#718096">J'accepte que mes données personnelles soient utilisées pour la gestion de ce rendez-vous et l'envoi de rappels email. Traitement conforme à la réglementation tunisienne.</span>
+          <span style="font-size:.72rem;color:#718096;line-height:1.55">J'accepte que mes données soient utilisées pour ce rendez-vous et l'envoi de rappels. Conforme à la réglementation tunisienne.</span>
         </label>
-        <button onclick="patConfirm()" style="width:100%;background:#1B4FD8;color:#fff;border:none;border-radius:14px;padding:1rem;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(27,79,216,.3);transition:all .2s">✅ Confirmer le rendez-vous</button>
+        <button id="pat-confirm-btn" onclick="patConfirm()" style="width:100%;background:#1B4FD8;color:#fff;border:none;border-radius:14px;padding:1rem;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(27,79,216,.3)">✅ Confirmer le rendez-vous</button>
       </div>
     </div>
 
-    <!-- ÉTAPE 3: Confirmation -->
+    <!-- STEP 3: Success -->
     <div id="pat-s3" style="display:none;padding:2rem 0;text-align:center">
-      <div style="font-size:3.5rem;margin-bottom:.75rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1)">✅</div>
+      <div style="font-size:3.5rem;margin-bottom:.75rem">✅</div>
       <div style="font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:800;color:#0D1117;margin-bottom:.5rem">Rendez-vous confirmé !</div>
-      <div style="font-size:.84rem;color:#4A5568;line-height:1.7;margin-bottom:1.25rem">Vous allez recevoir une confirmation par email avec tous les détails.</div>
-      
+      <div style="font-size:.84rem;color:#4A5568;line-height:1.7;margin-bottom:1.25rem">Vous recevrez une confirmation par email avec tous les détails.</div>
       <div id="pat-success-detail" style="background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:1.1rem;margin-bottom:1rem;text-align:left;font-size:.8rem;line-height:1.9;color:#4A5568"></div>
-      
-      <div style="background:#ECFDF5;border:1px solid #A7F3D0;border-radius:12px;padding:.9rem;margin-bottom:1rem;text-align:left">
-        <div style="font-size:.76rem;font-weight:700;color:#065F46;margin-bottom:.45rem">📧 Rappels automatiques programmés</div>
-        <div style="font-size:.73rem;color:#065F46;line-height:1.7">
-          ✅ Confirmation envoyée à <strong id="pat-conf-email"></strong><br/>
-          ⏰ Rappel <strong>24h avant</strong> votre rendez-vous<br/>
-          ⏰ Rappel <strong>2h avant</strong> votre rendez-vous
-        </div>
+      <div style="background:#ECFDF5;border:1px solid #A7F3D0;border-radius:12px;padding:.9rem;margin-bottom:1rem;text-align:left;font-size:.76rem;color:#065F46;line-height:1.7">
+        📧 Rappels automatiques programmés<br/>
+        ✅ Confirmation envoyée à <span id="pat-conf-email"></span><br/>
+        ⏰ Rappel 24h avant · ⏰ Rappel 2h avant
       </div>
-
-      <button onclick="patAddGcal()" style="width:100%;background:#1A73E8;color:#fff;border:none;border-radius:12px;padding:.78rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.45rem">📅 Ajouter à Google Calendar</button>
-      <button onclick="patAddIcal()" style="width:100%;background:#fff;color:#0D1117;border:1.5px solid #E2E8F0;border-radius:12px;padding:.75rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📆 Télécharger .ics (Apple / Outlook)</button>
-      <button id="pat-wa-contact-btn" onclick="patContactWA()" style="display:none;width:100%;background:#25D366;color:#fff;border:none;border-radius:12px;padding:.75rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📱 Contacter via WhatsApp</button>
-      <button onclick="patReset()" style="width:100%;background:#F7F8FC;color:#4A5568;border:1px solid #E2E8F0;border-radius:12px;padding:.72rem;font-size:.8rem;cursor:pointer">🔄 Prendre un autre rendez-vous</button>
+      <button onclick="patAddGcal()" style="width:100%;background:#1A73E8;color:#fff;border:none;border-radius:12px;padding:.75rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📅 Google Calendar</button>
+      <button onclick="patAddIcal()" style="width:100%;background:#fff;color:#0D1117;border:1.5px solid #E2E8F0;border-radius:12px;padding:.72rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📆 Télécharger .ics</button>
+      <button id="pat-wa-btn" onclick="patContactWA()" style="display:none;width:100%;background:#25D366;color:#fff;border:none;border-radius:12px;padding:.72rem;font-size:.84rem;font-weight:600;margin-bottom:.5rem;cursor:pointer">📱 Contacter via WhatsApp</button>
+      <button onclick="patReset()" style="width:100%;background:#F7F8FC;color:#4A5568;border:1px solid #E2E8F0;border-radius:12px;padding:.7rem;font-size:.8rem;cursor:pointer">🔄 Autre rendez-vous</button>
     </div>
 
-    <!-- Barre de partage -->
-    <div id="pat-share-bar" style="display:flex;gap:.45rem;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #E2E8F0">
-      <button onclick="patCopyLink()" style="flex:1;border:1.5px solid #E2E8F0;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#4A5568;background:#fff;cursor:pointer;transition:all .2s">📋 Copier</button>
-      <button onclick="patShareWA()" style="flex:1;border:1.5px solid #25D366;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#25D366;background:#fff;cursor:pointer;transition:all .2s">📱 WhatsApp</button>
-      <button onclick="patShareEmail()" style="flex:1;border:1.5px solid #E2E8F0;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#4A5568;background:#fff;cursor:pointer;transition:all .2s">📧 Email</button>
+    <!-- Share -->
+    <div style="display:flex;gap:.45rem;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #E2E8F0">
+      <button onclick="patCopyLink()" style="flex:1;border:1.5px solid #E2E8F0;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#4A5568;background:#fff;cursor:pointer">📋 Copier</button>
+      <button onclick="patShareWA()" style="flex:1;border:1.5px solid #25D366;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#25D366;background:#fff;cursor:pointer">📱 WhatsApp</button>
+      <button onclick="patShareEmail()" style="flex:1;border:1.5px solid #E2E8F0;border-radius:10px;padding:.55rem;font-size:.72rem;font-weight:600;color:#4A5568;background:#fff;cursor:pointer">📧 Email</button>
     </div>
-    
-    <div style="text-align:center;padding:1.5rem 0 .5rem;font-size:.65rem;color:#A0AEC0">
-      Propulsé par <a href="#" onclick="patGoHome()" style="color:#1B4FD8;font-weight:600;text-decoration:none">MedBook</a> · 🇹🇳 Tunisie · Vos données sont protégées
-    </div>
+    <div style="text-align:center;padding:1.5rem 0 .5rem;font-size:.65rem;color:#A0AEC0">Propulsé par <strong style="color:#1B4FD8">MedBook</strong> · 🇹🇳 Tunisie</div>
   </div>
 </div>
+
 </body>
 </html>
