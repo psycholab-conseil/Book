@@ -2507,27 +2507,85 @@ function ppDrawCal(){
 function ppPrev(){_pp.cal.setMonth(_pp.cal.getMonth()-1);ppDrawCal();}
 function ppNext(){_pp.cal.setMonth(_pp.cal.getMonth()+1);ppDrawCal();}
 
-function ppPickDate(date){
-  _pp.date=date;_pp.slot='';ppDrawCal();
-  var sg=ppEl('pp-slots-grid');sg.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:#718096;padding:.5rem">Chargement...</div>';
-  ppEl('pp-slots-wrap').style.display='';
-  var d=new Date(date+'T12:00:00');
-  ppEl('pp-slots-lbl').textContent='⏰ '+d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
-  ppEl('pp-cta').disabled=true;ppEl('pp-cta').style.opacity='.4';
-  var pro=_pp.pro,slug=fbSlug(pro.fn,pro.ln);
-  var allSlots=(pro.avail&&pro.avail.slots)||['09:00','09:45','10:30','11:15','14:00','14:45','15:30','16:15'];
-  fbGetBookedSlots(slug,date,function(booked){
-    var free=allSlots.filter(function(s){return !booked.includes(s);});
-    sg.innerHTML='';
-    if(!free.length){sg.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:#718096;padding:.75rem;background:#fff;border-radius:10px">Aucun créneau disponible ce jour.</div>';}
-    else{free.forEach(function(sl){
-      var b=document.createElement('div');
-      b.style.cssText='border:1.5px solid #C7D2FE;border-radius:9px;padding:.55rem;text-align:center;font-size:.8rem;font-weight:600;color:#1B4FD8;background:#fff;cursor:pointer;transition:all .18s';
-      b.textContent=sl;
-      b.onclick=function(){document.querySelectorAll('#pp-slots-grid > div').forEach(function(x){x.style.background='#fff';x.style.color='#1B4FD8';x.style.borderColor='#C7D2FE';});b.style.background='#1B4FD8';b.style.color='#fff';b.style.borderColor='#1B4FD8';_pp.slot=sl;ppEl('pp-cta').disabled=false;ppEl('pp-cta').style.opacity='1';};
-      sg.appendChild(b);
-    });}
+// Auto-refresh timer for slots
+var _ppRefreshTimer = null;
+
+function ppLoadSlots(date){
+  var pro = _pp.pro; if(!pro) return;
+  var slug = fbSlug(pro.fn, pro.ln);
+  var allSlots = (pro.avail && pro.avail.slots) || ['09:00','09:45','10:30','11:15','14:00','14:45','15:30','16:15'];
+  var sg = ppEl('pp-slots-grid');
+  
+  fbGetBookedSlots(slug, date, function(booked){
+    sg.innerHTML = '';
+    var free = allSlots.filter(function(s){ return !booked.includes(s); });
+    
+    if(!free.length){
+      sg.innerHTML = '<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:#718096;padding:.75rem;background:#fff;border-radius:10px">Aucun créneau disponible ce jour. Choisissez une autre date.</div>';
+      // Reset CTA if selected slot is now booked
+      if(_pp.slot && booked.includes(_pp.slot)){
+        _pp.slot = '';
+        ppEl('pp-cta').disabled = true;
+        ppEl('pp-cta').style.opacity = '.4';
+      }
+    } else {
+      free.forEach(function(sl){
+        var b = document.createElement('div');
+        var isSelected = sl === _pp.slot;
+        b.style.cssText = 'border:1.5px solid ' + (isSelected ? '#1B4FD8' : '#C7D2FE') + ';border-radius:9px;padding:.55rem;text-align:center;font-size:.8rem;font-weight:600;color:' + (isSelected ? '#fff' : '#1B4FD8') + ';background:' + (isSelected ? '#1B4FD8' : '#fff') + ';cursor:pointer;transition:all .18s';
+        b.textContent = sl;
+        b.onclick = function(){
+          document.querySelectorAll('#pp-slots-grid > div').forEach(function(x){
+            x.style.background = '#fff'; x.style.color = '#1B4FD8'; x.style.borderColor = '#C7D2FE';
+          });
+          b.style.background = '#1B4FD8'; b.style.color = '#fff'; b.style.borderColor = '#1B4FD8';
+          _pp.slot = sl;
+          ppEl('pp-cta').disabled = false;
+          ppEl('pp-cta').style.opacity = '1';
+        };
+        sg.appendChild(b);
+      });
+      
+      // If previously selected slot is still free, keep it selected visually
+      if(_pp.slot && free.includes(_pp.slot)){
+        ppEl('pp-cta').disabled = false;
+        ppEl('pp-cta').style.opacity = '1';
+      } else if(_pp.slot && !free.includes(_pp.slot)){
+        // Slot was just taken by someone else
+        _pp.slot = '';
+        ppEl('pp-cta').disabled = true;
+        ppEl('pp-cta').style.opacity = '.4';
+        toast2('⚠️ Ce créneau vient d\'être réservé. Choisissez-en un autre.', 'orange');
+      }
+    }
   });
+}
+
+function ppPickDate(date){
+  _pp.date = date; _pp.slot = '';
+  ppDrawCal();
+  
+  // Clear old refresh timer
+  if(_ppRefreshTimer) clearInterval(_ppRefreshTimer);
+  
+  var d = new Date(date + 'T12:00:00');
+  ppEl('pp-slots-lbl').textContent = '⏰ ' + d.toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long'});
+  ppEl('pp-slots-grid').innerHTML = '<div style="grid-column:1/-1;text-align:center;font-size:.76rem;color:#718096;padding:.5rem">Chargement des créneaux...</div>';
+  ppEl('pp-slots-wrap').style.display = '';
+  ppEl('pp-cta').disabled = true;
+  ppEl('pp-cta').style.opacity = '.4';
+  
+  // Load immediately
+  ppLoadSlots(date);
+  
+  // Auto-refresh every 30 seconds for real-time updates
+  _ppRefreshTimer = setInterval(function(){
+    if(_pp.date === date && ppEl('pp-s1').style.display !== 'none'){
+      ppLoadSlots(date);
+    } else {
+      clearInterval(_ppRefreshTimer);
+    }
+  }, 30000);
 }
 
 function ppToForm(){
@@ -2545,31 +2603,65 @@ function ppConfirm(){
   if(!fn||!ln){toast2('Prénom et nom requis','red');return;}
   if(!email||!email.includes('@')){toast2('Email valide requis','red');return;}
   if(!ppEl('pp-rgpd').checked){toast2('Acceptez la politique de confidentialité','red');return;}
-  var pro=_pp.pro,dur=_pp.svc.d||50,end=ppEnd(_pp.slot,dur);
-  var d=new Date(_pp.date+'T12:00:00'),label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  
+  var pro=_pp.pro, dur=_pp.svc.d||50, end=ppEnd(_pp.slot,dur);
+  var d=new Date(_pp.date+'T12:00:00');
+  var label=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   var addr=(pro.adresse||'')+(pro.ville?', '+pro.ville:'');
-  _pp.rdv={id:'rdv-'+Date.now(),proFn:pro.fn,proLn:pro.ln,proEmail:pro.email||'',spec:pro.spec,
-    patFn:fn,patLn:ln,patEmail:email,patTel:(ppEl('pp-tel').value||'').trim(),
-    date:_pp.date,slot:_pp.slot,serviceName:_pp.svc.n,servicePrice:_pp.svc.p,serviceDuration:dur,
-    motif:(ppEl('pp-motif').value||''),status:'confirmed',createdAt:new Date().toISOString()};
-  var btn=ppEl('pp-confirm-btn');btn.disabled=true;btn.textContent='Enregistrement...';
-  fbSaveRdv(_pp.rdv,function(){
-    // Also save locally for dashboard
-    var db=getDB();if(!db.rdvs)db.rdvs=[];db.rdvs.push(_pp.rdv);saveDB(db);
-    ppEl('pp-ok').innerHTML='<div style="display:flex;flex-direction:column;gap:.3rem">'
+  
+  _pp.rdv={
+    id:'rdv-'+Date.now(),
+    proFn:pro.fn,proLn:pro.ln,proEmail:pro.email||'',spec:pro.spec,
+    patFn:fn,patLn:ln,patEmail:email,
+    patTel:(ppEl('pp-tel').value||'').trim(),
+    date:_pp.date,slot:_pp.slot,
+    serviceName:_pp.svc.n,servicePrice:_pp.svc.p,serviceDuration:dur,
+    motif:(ppEl('pp-motif').value||''),
+    status:'confirmed',createdAt:new Date().toISOString()
+  };
+  
+  var btn=ppEl('pp-confirm-btn');
+  btn.disabled=true; btn.textContent='Enregistrement...';
+  
+  // Save to Firebase
+  fbSaveRdv(_pp.rdv, function(ok){
+    // Also save locally
+    var db=getDB(); if(!db.rdvs)db.rdvs=[]; db.rdvs.push(_pp.rdv); saveDB(db);
+    
+    // Stop auto-refresh
+    if(_ppRefreshTimer){ clearInterval(_ppRefreshTimer); _ppRefreshTimer=null; }
+    
+    // Show success
+    ppEl('pp-ok').innerHTML=
+      '<div style="display:flex;flex-direction:column;gap:.3rem">'
       +'<div>👤 <strong>'+ppEsc(fn)+' '+ppEsc(ln)+'</strong></div>'
-      +'<div>📅 '+label+'</div><div>⏰ '+_pp.slot+' – '+end+'</div>'
+      +'<div>📅 '+label+'</div>'
+      +'<div>⏰ '+_pp.slot+' – '+end+'</div>'
       +'<div>🩺 Dr. '+ppEsc(pro.fn)+' '+ppEsc(pro.ln)+'</div>'
-      +'<div>🎫 '+ppEsc(_pp.svc.n)+' · '+_pp.svc.p+' DT</div>'
+      +'<div>🎫 '+ppEsc(_pp.svc.n)+' · '+_pp.svc.p+' DT / '+dur+'min</div>'
       +(addr?'<div>📍 '+ppEsc(addr)+'</div>':'')
       +(pro.tel?'<div>📞 '+ppEsc(pro.tel)+'</div>':'')
-      +'<div style="margin-top:.4rem;padding:.5rem;background:#EEF2FF;border-radius:8px;font-size:.72rem;color:#1B4FD8">📧 Confirmation envoyée à <strong>'+ppEsc(email)+'</strong></div>'
+      +'<div style="margin-top:.4rem;padding:.5rem;background:#EEF2FF;border-radius:8px;font-size:.72rem;color:#1B4FD8">'
+      +'📧 Confirmation envoyée à <strong>'+ppEsc(email)+'</strong></div>'
       +'</div>';
+    
     ppEl('pp-conf-email').textContent=email;
-    var wb=ppEl('pp-wa-btn');if(wb)wb.style.display=pro.wa?'':'none';
-    ppStep(3);window.scrollTo(0,0);toast2('✅ Rendez-vous confirmé !','green');
+    var wb=ppEl('pp-wa-btn'); if(wb)wb.style.display=pro.wa?'':'none';
+    ppStep(3); window.scrollTo(0,0);
+    toast2('✅ Rendez-vous confirmé !','green');
+    
+    // Notify practitioner dashboard if open
+    if(ok){
+      var db2=getDB();
+      var s=getSession();
+      if(s){
+        var dashPro=db2.pros&&db2.pros.find(function(p){return p.id===s.id;});
+        if(dashPro) fbSyncToDash(dashPro);
+      }
+    }
   });
 }
+
 function ppGcal(){
   var r=_pp.rdv,pro=_pp.pro;if(!r)return;
   var d=new Date(r.date+'T'+r.slot+':00'),e=new Date(d.getTime()+r.serviceDuration*60000);
@@ -2671,6 +2763,13 @@ function init(){
       closeAuthModal();loadProDash(pro);
       fbSavePro(pro);
       fbSyncToDash(pro);
+      // Auto-refresh dashboard RDVs every 60 seconds
+      if(window._dashRefresh) clearInterval(window._dashRefresh);
+      window._dashRefresh = setInterval(function(){
+        var s2=getSession(); var db2=getDB();
+        var p2=db2.pros&&db2.pros.find(function(x){return x.id===s2.id;});
+        if(p2) fbSyncToDash(p2);
+      }, 60000);
       var le=document.getElementById('booking-url-display');
       if(le)le.textContent=fbGetProLink(pro);
     } else showView('v-landing');
