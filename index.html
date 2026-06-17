@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 /* ══ RESET & VARS ══ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1912,21 +1913,6 @@ function saveSettings(){
   toast2('✅ Paramètres sauvegardés','green');
 }
 
-// ══ GOOGLE CALENDAR ══
-function connectGcal(){
-  const s=getSession();if(!s)return;
-  const db=getDB();const pro=db.pros.find(p=>p.id===s.id);if(!pro)return;
-  pro.gcal=true;saveDB(db);
-  document.getElementById('gcal-status-text').textContent='🟢 Synchronisé avec Google Agenda';
-  document.getElementById('gcal-connect-btn').textContent='✅ Connecté';
-  document.getElementById('gcal-connect-btn').style.background='var(--emerald-l)';
-  document.getElementById('gcal-connect-btn').style.color='var(--emerald)';
-  if(document.getElementById('gcal-status2')) document.getElementById('gcal-status2').textContent='🟢 Synchronisé';
-  const intBtn=document.getElementById('integ-gcal-btn');
-  if(intBtn){intBtn.textContent='✅ Connecté';intBtn.classList.add('connected');}
-  toast2('✅ Google Agenda connecté avec succès','green');
-}
-
 // ══ SHARE / EXPORT ══
 function copyLink(){
   var s=getSession();var db=getDB();
@@ -2310,6 +2296,104 @@ function rescheduleAll(){
 }
 
 // ══ INIT ══
+
+// ═══════════════════════════════════════════════════════════
+//  GOOGLE CALENDAR — OAuth réel (Google Identity Services)
+// ═══════════════════════════════════════════════════════════
+var GCAL_CLIENT_ID = '395818632863-c1vcprk64k56atopj7l6un2je23hsa00.apps.googleusercontent.com';
+var GCAL_SCOPE = 'https://www.googleapis.com/auth/calendar.events';
+var gcalTokenClient = null;
+var gcalAccessToken = null;
+var gcalTokenExpiry = 0;
+
+function gcalGetTokenClient(){
+  if(gcalTokenClient) return gcalTokenClient;
+  if(typeof google==='undefined'||!google.accounts||!google.accounts.oauth2) return null;
+  gcalTokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: GCAL_CLIENT_ID,
+    scope: GCAL_SCOPE,
+    callback: function(resp){
+      if(resp && resp.access_token){
+        gcalAccessToken = resp.access_token;
+        gcalTokenExpiry = Date.now() + ((resp.expires_in||3600)*1000) - 60000;
+        gcalOnConnected();
+      } else {
+        toast2('❌ Connexion Google Agenda annulée','red');
+      }
+    },
+    error_callback: function(){
+      toast2('❌ Connexion Google Agenda impossible','red');
+    }
+  });
+  return gcalTokenClient;
+}
+
+// Appelé quand l'utilisateur clique sur "Connecter →"
+function connectGcal(){
+  var tc = gcalGetTokenClient();
+  if(!tc){ toast2('⏳ Google en cours de chargement, réessayez dans 1s','orange'); return; }
+  tc.requestAccessToken({prompt:'consent'});
+}
+
+// Met à jour l'UI + sauvegarde + lance la synchro après une connexion réussie
+function gcalOnConnected(){
+  var s=getSession(); if(!s) return;
+  var db=getDB(); var pro=db.pros.find(function(p){return p.id===s.id;}); if(!pro) return;
+  pro.gcal=true; saveDB(db); fbSavePro(pro);
+  var t1=document.getElementById('gcal-status-text'); if(t1) t1.textContent='🟢 Synchronisé avec Google Agenda';
+  var btn=document.getElementById('gcal-connect-btn');
+  if(btn){btn.textContent='✅ Connecté';btn.style.background='var(--emerald-l)';btn.style.color='var(--emerald)';}
+  var t2=document.getElementById('gcal-status2'); if(t2) t2.textContent='🟢 Synchronisé';
+  var intBtn=document.getElementById('integ-gcal-btn');
+  if(intBtn){intBtn.textContent='✅ Connecté';intBtn.classList.add('connected');}
+  toast2('✅ Google Agenda connecté avec succès','green');
+  gcalSyncRdvs(pro);
+}
+
+// Tente d'obtenir un jeton silencieusement (sans écran de consentement)
+// si le praticien a déjà connecté son agenda lors d'une session précédente.
+function gcalTrySilent(pro){
+  if(!pro || !pro.gcal) return;
+  if(gcalAccessToken && Date.now()<gcalTokenExpiry) { gcalSyncRdvs(pro); return; }
+  var tc = gcalGetTokenClient();
+  if(!tc) return;
+  try{ tc.requestAccessToken({prompt:''}); }catch(e){}
+}
+
+// Pousse les RDV à venir (non annulés, pas encore synchronisés) vers Google Agenda
+function gcalSyncRdvs(pro){
+  if(!gcalAccessToken || Date.now()>gcalTokenExpiry) return;
+  var db=getDB();
+  var now=new Date();
+  var rdvs=(db.rdvs||[]).filter(function(r){
+    return r.proId===pro.id && r.status!=='cancelled' && !r.gcalEventId
+      && new Date(r.date+'T'+r.slot+':00') >= now;
+  });
+  rdvs.forEach(function(r){ gcalPushEvent(r,pro); });
+}
+
+function gcalPushEvent(r,pro){
+  var d=new Date(r.date+'T'+r.slot+':00');
+  var end=new Date(d.getTime()+((pro.duration||50)*60*1000));
+  var event={
+    summary:'RDV '+r.patFn+' '+r.patLn,
+    description:'Motif : '+(r.motif||'—')+'\nPatient : '+(r.patEmail||'')+(r.patTel?('\nTéléphone : '+r.patTel):''),
+    location:pro.adresse||'',
+    start:{dateTime:d.toISOString()},
+    end:{dateTime:end.toISOString()}
+  };
+  fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events',{
+    method:'POST',
+    headers:{'Authorization':'Bearer '+gcalAccessToken,'Content-Type':'application/json'},
+    body:JSON.stringify(event)
+  }).then(function(res){return res.json();}).then(function(data){
+    if(data && data.id){
+      r.gcalEventId=data.id;
+      var db2=getDB(); saveDB(db2);
+      fbSaveRdv(r,null);
+    }
+  }).catch(function(){});
+}
 
 // ═══════════════════════════════════════════════════════════
 //  FIREBASE REALTIME DATABASE
@@ -2763,12 +2847,13 @@ function init(){
       closeAuthModal();loadProDash(pro);
       fbSavePro(pro);
       fbSyncToDash(pro);
-      // Auto-refresh dashboard RDVs every 60 seconds
+      gcalTrySilent(pro);
+      // Auto-refresh dashboard RDVs every 60 secondes
       if(window._dashRefresh) clearInterval(window._dashRefresh);
       window._dashRefresh = setInterval(function(){
         var s2=getSession(); var db2=getDB();
         var p2=db2.pros&&db2.pros.find(function(x){return x.id===s2.id;});
-        if(p2) fbSyncToDash(p2);
+        if(p2){ fbSyncToDash(p2); gcalTrySilent(p2); }
       }, 60000);
       var le=document.getElementById('booking-url-display');
       if(le)le.textContent=fbGetProLink(pro);
